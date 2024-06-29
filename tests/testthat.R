@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(igr2)
+library(igr)
 
-test_check("igr2")
+test_check("igr")
