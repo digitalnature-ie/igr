@@ -1,11 +1,14 @@
 Package: igr
-Title: Itish Grid Reference Utilities
+Title: Irish Grid Reference Utilities
 Version: 0.0.0.9000
 Authors@R: 
     person("John", "Kennedy", , "john@digitalnature.ie", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1128-987X"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
+Imports:
+    dplyr,
+    sf
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
