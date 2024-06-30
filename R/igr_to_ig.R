@@ -1,34 +1,15 @@
-# Irish Grid 100km squares
-igr_100 <- list(
-  letter = LETTERS[-9], # Letter reference (no I)
-  x = rep(c(0:4) * 100000, 5), # SW corner Easting in metres
-  y = rep(c(4:0), each = 5) * 100000 # SW corner Northing in metres
-)
-
-
-stop_custom <- function(.subclass, message, call = NULL, ...) {
-  err <- structure(list(message = message, call = call, ...),
-    class = c(.subclass, "error", "condition")
-  )
-  stop(err)
-}
-
-
-# TODO hex
-# TODO badges
-# TODO transform into sf? with optional crs?
-
-#' Title
+#' Convert Irish Grid References to Irish Grid coordinates
 #'
-#' @param igr A character vector of Irish Grid References.
+#' @param igr A character vector of Irish Grid references.
+#' @param coords A character vector of column names to contain the easting and northing.
 #'
-#' @return A something of Irish Grid coordinates.
+#' @return A list of Irish Grid coordinates.
 #' @export
 #'
 #' @examples
 #' igr_to_ig("A00")
 #' igr_to_ig(c("N8090", "D1234588800"))
-igr_to_ig <- function(igr) {
+igr_to_ig <- function(igr, coords = c("x", "y")) {
   # igr <- "A00"
 
   invalid <- !grepl("^[a-h,j-z,A-H,J-Z]([0-9][0-9]){0,5}$", igr)
@@ -68,7 +49,10 @@ igr_to_ig <- function(igr) {
   ig_y <- igr_100$y[igr_100_index] + offset_y
 
 
-  res <- data.frame(x = ig_x, y = ig_y)
+  #res <- data.frame(x = ig_x, y = ig_y)
 
+  res <- list(ig_x,ig_y)
+  names(res) <- coords
+  
   return(res)
 }

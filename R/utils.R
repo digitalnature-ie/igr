@@ -1,0 +1,22 @@
+# Irish Grid 100km squares
+igr_100 <- list(
+  letter = LETTERS[-9], # Letter reference (no I)
+  x = rep(c(0:4) * 100000, 5), # SW corner eastng in metres
+  y = rep(c(4:0), each = 5) * 100000 # SW corner northing in metres
+)
+
+
+#' Create custom error subclass
+#'
+#' @param .subclass Name of the error subclass.
+#' @param message Error message.
+#' @param call The call generating the error.
+#' @param ... Additional parameters to be passed into the error subclass.
+#'
+#' @noRd
+stop_custom <- function(.subclass, message, call = NULL, ...) {
+  err <- structure(list(message = message, call = call, ...),
+                   class = c(.subclass, "error", "condition")
+  )
+  stop(err)
+}
