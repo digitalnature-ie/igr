@@ -2,18 +2,20 @@
 % Please edit documentation in R/igr_to_ig.R
 \name{igr_to_ig}
 \alias{igr_to_ig}
-\title{Title}
+\title{Convert Irish Grid References to Irish Grid coordinates}
 \usage{
-igr_to_ig(igr)
+igr_to_ig(igr, coords = c("x", "y"))
 }
 \arguments{
-\item{igr}{A character vector of Irish Grid References.}
+\item{igr}{A character vector of Irish Grid references.}
+
+\item{coords}{A character vector of column names to contain the easting and northing.}
 }
 \value{
-A something of Irish Grid coordinates.
+A list of Irish Grid coordinates.
 }
 \description{
-Title
+Convert Irish Grid References to Irish Grid coordinates
 }
 \examples{
 igr_to_ig("A00")

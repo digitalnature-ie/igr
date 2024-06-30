@@ -4,18 +4,27 @@
 \alias{igr_as_sf}
 \title{Convert data frame containing Irish Grid References to an sf object}
 \usage{
-igr_as_sf(data, igrefs, crs = 29903, remove = FALSE, add_coords = FALSE)
+igr_as_sf(
+  data,
+  igrefs,
+  crs = 29903,
+  remove = FALSE,
+  add_coords = FALSE,
+  coords = c("x", "y")
+)
 }
 \arguments{
-\item{data}{data to be converted into an object class sf}
+\item{data}{data to be converted into an object class sf. Must not contain columns specified in coords.}
 
-\item{igrefs}{column holding irish grid references}
+\item{igrefs}{name or number of the character column holding Irish Grid References.}
 
-\item{crs}{coordinate reference system to be assigned; object of class crs}
+\item{crs}{coordinate reference system to be assigned; object of class crs.}
 
-\item{remove}{logical; remove irish grid references column from data.frame?}
+\item{remove}{logical; remove Irish Grid References column?}
 
-\item{add_coords}{logical; add irish grid coordinates x and y columns to data.frame?}
+\item{add_coords}{logical; add Irish Grid coordinate columns?}
+
+\item{coords}{A character vector of column names to contain the Irish Grid easting and northing.}
 }
 \value{
 An sf object.
@@ -25,6 +34,6 @@ Convert data frame containing Irish Grid References to an sf object
 }
 \examples{
 x <- data.frame(igr = c("A00", "N8000"))
-igr_as_sf(x, igr)
-igr_as_sf(x, igr, crs = 4326)
+igr_as_sf(x, "igr")
+igr_as_sf(x, "igr", crs = 4326)
 }
