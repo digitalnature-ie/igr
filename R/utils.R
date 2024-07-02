@@ -5,6 +5,13 @@ igr_100 <- list(
   y = rep(c(4:0), each = 5) * 100000 # SW corner northing in metres
 )
 
+lookup_igr_100 <- function(x, y) {
+  igr_100$letter[
+    (igr_100$x/100000 == (x %/% 100000)) &
+      (igr_100$y/100000 == (y %/% 100000))
+  ]
+}
+
 
 #' Create custom error subclass
 #'
@@ -16,7 +23,7 @@ igr_100 <- list(
 #' @noRd
 stop_custom <- function(.subclass, message, call = NULL, ...) {
   err <- structure(list(message = message, call = call, ...),
-                   class = c(.subclass, "error", "condition")
+    class = c(.subclass, "error", "condition")
   )
   stop(err)
 }

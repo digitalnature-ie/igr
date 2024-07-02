@@ -4,10 +4,10 @@
 \alias{igr_to_ig}
 \title{Convert Irish Grid References to Irish Grid coordinates}
 \usage{
-igr_to_ig(igr, coords = c("x", "y"))
+igr_to_ig(x, coords = c("x", "y"))
 }
 \arguments{
-\item{igr}{A character vector of Irish Grid references.}
+\item{x}{A character vector of Irish Grid references.}
 
 \item{coords}{A character vector of column names to contain the easting and northing.}
 }
