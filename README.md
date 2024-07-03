@@ -11,7 +11,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/igr)](https://CRAN.R-project.org/package=igr)
 <!-- badges: end -->
 
-The goal of igr is to …
+Convert Irish Grid References to Irish Grid coordinates or a simple
+feature object in any coordinate reference system, and vice versa.
 
 ## Installation
 
@@ -23,33 +24,103 @@ You can install the development version of igr like so:
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+### Converting from Irish Grid References
+
+Convert Irish Grid References to Irish Grid coordinates:
 
 ``` r
 library(igr)
-## basic example code
+
+igrs <- c("A09", "B", "D12", "N8090", "S1234588800", "Z90")
+
+igr_to_ig(igrs)
+#> $x
+#> [1]      0 100000 310000 280000 212345 490000
+#> 
+#> $y
+#> [1] 490000 400000 420000 290000 188800      0
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+Convert Irish Grid References to an sf object with Irish Grid coordinate
+reference system:
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+p_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr")
+
+p_sf
+#> Simple feature collection with 6 features and 1 field
+#> Geometry type: POINT
+#> Dimension:     XY
+#> Bounding box:  xmin: 0 ymin: 0 xmax: 490000 ymax: 490000
+#> Projected CRS: TM75 / Irish Grid
+#>           igr              geometry
+#> 1         A09      POINT (0 490000)
+#> 2           B   POINT (1e+05 4e+05)
+#> 3         D12 POINT (310000 420000)
+#> 4       N8090 POINT (280000 290000)
+#> 5 S1234588800 POINT (212345 188800)
+#> 6         Z90      POINT (490000 0)
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+Plot the results:
 
-You can also embed plots, for example:
+``` r
+library(maps)
+library(tmap)
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+ie_uk <- maps::map("world", regions = c("Ireland", "UK"), plot = FALSE, fill = TRUE)
+ie_uk_sf <- sf::st_as_sf(ie_uk)
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+tm_shape(p_sf, ext = 1.2) +
+  tm_dots(size = 1, col = "cornflowerblue") +
+  tm_text("igr", ymod = 1) +
+  tm_shape(ie_uk_sf) +
+  tm_borders()
+```
+
+<img src="man/figures/README-example-igr-sf-plot-1.png" width="100%" />
+
+### Converting to Irish Grid References
+
+Starting with a list of Irish Grid coordinates:
+
+``` r
+
+p <- list(x = c(0, 490000), y = c(400000, 0))
+
+ig_to_igr(p)
+#> [1] "A000000" "Z900000"
+```
+
+``` r
+ig_to_igr(p, sep = " ")
+#> [1] "A 000 000" "Z 900 000"
+```
+
+``` r
+ig_to_igr(p, digits = 1)
+#> [1] "A00" "Z90"
+```
+
+Starting with an sf object:
+
+``` r
+
+p_sf <- sf::st_as_sf(data.frame(p),
+ crs = 29903,
+ coords = c("x", "y")
+)
+
+st_irishgridrefs(p_sf)
+#> [1] "A000000" "Z900000"
+```
+
+``` r
+st_irishgridrefs(p_sf, sep = " ")
+#> [1] "A 000 000" "Z 900 000"
+```
+
+``` r
+st_irishgridrefs(p_sf, digits = 1)
+#> [1] "A00" "Z90"
+```
