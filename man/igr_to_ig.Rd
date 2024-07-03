@@ -9,7 +9,7 @@ igr_to_ig(x, coords = c("x", "y"))
 \arguments{
 \item{x}{A character vector of Irish Grid references.}
 
-\item{coords}{A character vector of column names to contain the easting and northing.}
+\item{coords}{A character vector of column names for easting and northing respectively.}
 }
 \value{
 A list of Irish Grid coordinates.

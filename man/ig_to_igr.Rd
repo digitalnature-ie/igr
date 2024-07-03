@@ -4,12 +4,14 @@
 \alias{ig_to_igr}
 \title{Convert Irish Grid coordinates to Irish Grid References}
 \usage{
-ig_to_igr(x, digits = 3)
+ig_to_igr(x, digits = 3, sep = "")
 }
 \arguments{
 \item{x}{a list of two character vectors containing Irish Grid eastings and northings respectively.}
 
 \item{digits}{the resolution of grid reference required, between 0 (100km) and 6 (1m).}
+
+\item{sep}{a character to separate the 100km grid letter, easting, and northing.}
 }
 \value{
 A character vector of Irish Grid References.
