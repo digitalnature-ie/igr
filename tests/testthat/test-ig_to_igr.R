@@ -13,7 +13,7 @@ test_that("all resolutions 100km > 1m", {
   expect_equal(ig_to_igr(x1, digits = 3), c("A000000"))
   expect_equal(ig_to_igr(x1, digits = 4), c("A00000000"))
   expect_equal(ig_to_igr(x1, digits = 5), c("A0000000000"))
-  
+
   expect_equal(ig_to_igr(x2, digits = 0), c("A", "Z"))
   expect_equal(ig_to_igr(x2, digits = 5), c("A0000000000", "Z9000000000"))
 })
