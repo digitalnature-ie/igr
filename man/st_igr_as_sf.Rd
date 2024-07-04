@@ -10,7 +10,9 @@ st_igr_as_sf(
   crs = 29903,
   remove = FALSE,
   add_coords = FALSE,
-  coords = c("x", "y")
+  coords = c("x", "y"),
+  res = NULL,
+  polygons = FALSE
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ st_igr_as_sf(
 \item{add_coords}{logical; add Irish Grid coordinate columns?}
 
 \item{coords}{A character vector of column names to contain the Irish Grid easting and northing.}
+
+\item{res}{The name of column to contain grid reference resolution, if required.}
+
+\item{polygons}{return polygon objects spanning the extent of each grid reference, rather than point objects.}
 }
 \value{
 An sf object.

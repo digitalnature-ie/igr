@@ -40,14 +40,14 @@ Convert Irish Grid References to Irish Grid coordinates:
 ```{r example-igr}
 library(igr)
 
-igrs <- c("A09", "B", "D12", "N8090", "S1234588800", "Z90")
+igrs <- c("A", "C12", "J53", "N8090", "S1234550000", "V")
 
 igr_to_ig(igrs)
 ```
 
-Convert Irish Grid References to an sf object with Irish Grid coordinate reference system:
+Convert Irish Grid References to sf object of points in the Irish Grid coordinate reference system:
 
-```{r example-igr-sf}
+```{r example-igr-p-sf}
 p_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr")
 
 p_sf
@@ -55,18 +55,40 @@ p_sf
 
 Plot the results:
 
-```{r example-igr-sf-plot, message=FALSE}
+```{r example-igr-p-sf-plot, message=FALSE}
 library(maps)
 library(tmap)
 
-ie_uk <- maps::map("world", regions = c("Ireland", "UK"), plot = FALSE, fill = TRUE)
-ie_uk_sf <- sf::st_as_sf(ie_uk)
+ie_uk_sf <- maps::map("world", 
+                      regions = c("Ireland", "UK"), 
+                      plot = FALSE, 
+                      fill = TRUE) |>
+  sf::st_as_sf(ie_uk) |>
+  sf::st_transform(29903)
 
 tm_shape(p_sf, ext = 1.2) +
   tm_dots(size = 1, col = "cornflowerblue") +
   tm_text("igr", ymod = 1) +
   tm_shape(ie_uk_sf) +
   tm_borders()
+```
+
+Convert Irish Grid References to sf object of polygons in the Irish Grid coordinate reference system:
+
+```{r example-igr-s-sf}
+s_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr", polygons = TRUE)
+
+s_sf
+```
+
+Plot the results:
+
+```{r example-igr-s-sf-plot, message=FALSE}
+tm_shape(ie_uk_sf, bbox = s_sf, ext = 1.2) +
+  tm_borders() +
+  tm_shape(s_sf, ext = 1.2) +
+  tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
+  tm_text("igr", ymod = -1)
 ```
 
 ## Converting to Irish Grid References

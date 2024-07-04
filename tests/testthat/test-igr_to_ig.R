@@ -1,6 +1,7 @@
 test_that("basic conversions", {
   expect_equal(igr_to_ig("A"), list(x = 0, y = 400000))
   expect_equal(igr_to_ig("A1234"), list(x = 12000, y = 434000))
+  expect_equal(igr_to_ig("a1234"), list(x = 12000, y = 434000))
   expect_equal(igr_to_ig("A09"), list(x = 0, y = 490000))
 
   expect_equal(igr_to_ig("Z00"), list(x = 400000, y = 0))
@@ -38,6 +39,13 @@ test_that("rename coordinates", {
   expect_equal(igr_to_ig("A00", coords = c("x", "y")), list(x = 0, y = 400000))
   expect_equal(igr_to_ig("A00", coords = c("e", "n")), list(e = 0, n = 400000))
   expect_equal(igr_to_ig(c("A00", "Z90"), coords = c("e", "n")), list(e = c(0, 490000), n = c(400000, 0)))
+})
+
+test_that("resolution", {
+  expect_equal(igr_to_ig("A", coords = c("x", "y"), res = "res"), list(x = 0, y = 400000, res = 100000))
+  expect_equal(igr_to_ig("A00", coords = c("e", "n"), res = "r"), list(e = 0, n = 400000, r = 10000))
+  expect_equal(igr_to_ig("A 00001 00002", coords = c("e", "n"), res = "r"), list(e = 1, n = 400002, r = 1))
+  expect_equal(igr_to_ig(c("A00", "Z"), coords = c("e", "n"), res = "rr"), list(e = c(0, 400000), n = c(400000, 0), rr = c(10000, 100000)))
 })
 
 test_that("catch invalid grid references", {
