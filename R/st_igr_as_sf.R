@@ -39,7 +39,7 @@ st_igr_as_sf <- function(x, igrefs, crs = 29903, remove = FALSE, add_coords = FA
     sf::st_transform(crs = crs)
 
   if (remove) {
-    res[[igrefs]] <- NULL
+    res <- res[ , !names(res) == igrefs]
   }
 
   return(res)
