@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/igr)](https://CRAN.R-project.org/package=igr)
+[![R-CMD-check](https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml)
+[![test-coverage](https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 Convert Irish Grid References to Irish Grid coordinates or a simple feature object in any coordinate reference system, and vice versa.
@@ -30,9 +32,7 @@ You can install the development version of igr like so:
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
-## Example
-
-### Converting from Irish Grid References
+## Converting from Irish Grid References
 
 Convert Irish Grid References to Irish Grid coordinates:
 
@@ -42,7 +42,6 @@ library(igr)
 igrs <- c("A09", "B", "D12", "N8090", "S1234588800", "Z90")
 
 igr_to_ig(igrs)
-
 ```
 
 Convert Irish Grid References to an sf object with Irish Grid coordinate reference system:
@@ -51,7 +50,6 @@ Convert Irish Grid References to an sf object with Irish Grid coordinate referen
 p_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr")
 
 p_sf
-
 ```
 
 Plot the results:
@@ -70,34 +68,27 @@ tm_shape(p_sf, ext = 1.2) +
   tm_borders()
 ```
 
-### Converting to Irish Grid References
+## Converting to Irish Grid References
 
 Starting with a list of Irish Grid coordinates:
 
 ```{r example-igc-igr}
-
 p <- list(x = c(0, 490000), y = c(400000, 0))
 
 ig_to_igr(p)
 ig_to_igr(p, sep = " ")
 ig_to_igr(p, digits = 1)
-
 ```
-
 
 Starting with an sf object:
 
 ```{r example-sf-igr}
-
 p_sf <- sf::st_as_sf(data.frame(p),
- crs = 29903,
- coords = c("x", "y")
+  crs = 29903,
+  coords = c("x", "y")
 )
 
 st_irishgridrefs(p_sf)
 st_irishgridrefs(p_sf, sep = " ")
 st_irishgridrefs(p_sf, digits = 1)
-
 ```
-
-

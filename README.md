@@ -22,9 +22,7 @@ You can install the development version of igr like so:
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
-## Example
-
-### Converting from Irish Grid References
+## Converting from Irish Grid References
 
 Convert Irish Grid References to Irish Grid coordinates:
 
@@ -80,12 +78,11 @@ tm_shape(p_sf, ext = 1.2) +
 
 <img src="man/figures/README-example-igr-sf-plot-1.png" width="100%" />
 
-### Converting to Irish Grid References
+## Converting to Irish Grid References
 
 Starting with a list of Irish Grid coordinates:
 
 ``` r
-
 p <- list(x = c(0, 490000), y = c(400000, 0))
 
 ig_to_igr(p)
@@ -105,10 +102,9 @@ ig_to_igr(p, digits = 1)
 Starting with an sf object:
 
 ``` r
-
 p_sf <- sf::st_as_sf(data.frame(p),
- crs = 29903,
- coords = c("x", "y")
+  crs = 29903,
+  coords = c("x", "y")
 )
 
 st_irishgridrefs(p_sf)
