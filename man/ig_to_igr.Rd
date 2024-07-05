@@ -23,5 +23,5 @@ Convert Irish Grid coordinates to Irish Grid References
 ig_to_igr(list(x = 0, y = 0))
 ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)))
 ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
-ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
+ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), digits = 2)
 }

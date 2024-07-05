@@ -1,8 +1,7 @@
 #' Generate Irish Grid References from sf point data
 #'
+#' @inheritParams ig_to_igr
 #' @param x an sf object containing point data within the Irish Grid bounding box.
-#' @param digits resolution of grid references to generate, between 0 (100km) and 5 (1m).
-#' @param sep a character to separate the 100km grid letter, easting, and northing.
 #'
 #' @return a character vector of Irish Grid References.
 #' @export
