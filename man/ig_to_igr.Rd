@@ -9,7 +9,7 @@ ig_to_igr(x, digits = 3, sep = "")
 \arguments{
 \item{x}{a list of two character vectors containing Irish Grid eastings and northings respectively.}
 
-\item{digits}{the resolution of grid reference required, between 0 (100km) and 6 (1m).}
+\item{digits}{an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).}
 
 \item{sep}{a character to separate the 100km grid letter, easting, and northing.}
 }
@@ -22,4 +22,6 @@ Convert Irish Grid coordinates to Irish Grid References
 \examples{
 ig_to_igr(list(x = 0, y = 0))
 ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)))
+ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
+ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
 }

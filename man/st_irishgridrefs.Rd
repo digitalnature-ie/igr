@@ -9,7 +9,7 @@ st_irishgridrefs(x, digits = 3, sep = "")
 \arguments{
 \item{x}{an sf object containing point data within the Irish Grid bounding box.}
 
-\item{digits}{resolution of grid references to generate, between 0 (100km) and 5 (1m).}
+\item{digits}{an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).}
 
 \item{sep}{a character to separate the 100km grid letter, easting, and northing.}
 }

@@ -16,7 +16,7 @@ st_igr_as_sf(
 )
 }
 \arguments{
-\item{x}{object to be converted into an object class sf. Must not contain columns specified in coords.}
+\item{x}{object containing column of Irish Grid References. Must not contain columns specified in coords.}
 
 \item{igrefs}{name or number of the character column holding Irish Grid References.}
 
@@ -26,14 +26,14 @@ st_igr_as_sf(
 
 \item{add_coords}{logical; add Irish Grid coordinate columns?}
 
-\item{coords}{A character vector of column names to contain the Irish Grid easting and northing.}
+\item{coords}{A character vector of column names for easting and northing.}
 
-\item{res}{The name of column to contain grid reference resolution, if required.}
+\item{res}{A character string: the column name for resolution of original grid reference in metres, if required.}
 
 \item{polygons}{return polygon objects spanning the extent of each grid reference, rather than point objects.}
 }
 \value{
-An sf object.
+An sf object containing points or polygons for each grid reference in x.
 }
 \description{
 Convert data frame containing Irish Grid References to an sf object

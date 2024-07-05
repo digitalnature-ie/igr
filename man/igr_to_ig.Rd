@@ -11,10 +11,10 @@ igr_to_ig(x, coords = c("x", "y"), res = NULL)
 
 \item{coords}{A character vector of column names for easting and northing.}
 
-\item{res}{A character string for column name for resolution, if required.}
+\item{res}{A character string: the column name for resolution of original grid reference in metres, if required.}
 }
 \value{
-A list of Irish Grid coordinates.
+A list of Irish Grid coordinates to 1m resolution.
 }
 \description{
 Convert Irish Grid References to Irish Grid coordinates
@@ -22,4 +22,6 @@ Convert Irish Grid References to Irish Grid coordinates
 \examples{
 igr_to_ig("A00")
 igr_to_ig(c("N8090", "D1234588800"))
+igr_to_ig(c("N8090", "D1234588800"), coords = c("e", "n"))
+igr_to_ig(c("N8090", "D1234588800"), res = "res")
 }
