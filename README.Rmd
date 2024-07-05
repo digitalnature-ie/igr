@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# igr
+# igr <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -23,7 +23,20 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/digitalnature-ie/igr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/digitalnature-ie/igr?branch=main)
 <!-- badges: end -->
 
-Convert Irish Grid References to Irish Grid coordinates or a simple feature object in any coordinate reference system, and vice versa.
+Convert Irish grid references to Irish Grid coordinates or a collection of simple features in an sf object, and vice versa.
+
+All resolutions of Irish grid references are supported, from 100 km (e.g. "N") to 1 m (e.g. "N 87685 27487"). 
+
+Irish grid references can be converted into point or polygon [sf](https://r-spatial.github.io/sf/) (simple features) objects of any coordinate reference system.
+
+When converting to polygons, each polygon is sized to cover the full extent of the individual grid reference. Mixed resolutions are supported.
+
+<!-- The Irish Grid is a metre-based coordinate reference system covering the island of Ireland. It is referred to as TM75 / Irish Grid and has been assigned EPSG code 29903. Irish Grid coordinates are a pair of numbers of the form x (easting), and y (northing). The resolution of the Irish Grid is 1 m. -->
+
+<!-- The Irish Grid has been divided into 100 km squares. There are 25 squares. Each has been assigned a letter from A to Z, with the letter I skipped. -->
+
+<!-- Irish grid references use the relevant letter followed by a pair of numbers to refer to a location. Valid grid references include N86, N8762, N876274, N87682748, and N8768527487. These represent squares of side 10 km, 1 km, 100 m, 10 m and 1 m respectively, all within the 100 km square N. -->
+
 
 ## Installation
 
@@ -33,36 +46,41 @@ You can install the development version of igr like so:
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
-## Converting from Irish Grid References
+## Converting from Irish grid references
 
-Convert Irish Grid References to Irish Grid coordinates:
+Convert Irish grid references to Irish Grid coordinates:
 
 ```{r example-igr}
 library(igr)
 
-igrs <- c("A", "C12", "J53", "N8090", "S1234550000", "V")
+igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "W")
 
 igr_to_ig(igrs)
 ```
 
-Convert Irish Grid References to sf object of points in the Irish Grid coordinate reference system:
+Include the resolution of each grid reference in metres:
 
-```{r example-igr-p-sf}
+```{r example-igr-res}
+igr_to_ig(igrs, res = "res")
+```
+
+Convert a list or data.frame of Irish grid references to an sf object of corresponding points:
+
+```{r example-igr-df-p-sf}
 p_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr")
 
 p_sf
 ```
 
-Plot the results:
-
-```{r example-igr-p-sf-plot, message=FALSE}
+```{r example-igr-p-sf-plot, message=FALSE, echo=FALSE}
 library(maps)
 library(tmap)
 
-ie_uk_sf <- maps::map("world", 
-                      regions = c("Ireland", "UK"), 
-                      plot = FALSE, 
-                      fill = TRUE) |>
+ie_uk_sf <- maps::map("world",
+  regions = c("Ireland", "UK"),
+  plot = FALSE,
+  fill = TRUE
+) |>
   sf::st_as_sf(ie_uk) |>
   sf::st_transform(29903)
 
@@ -73,7 +91,7 @@ tm_shape(p_sf, ext = 1.2) +
   tm_borders()
 ```
 
-Convert Irish Grid References to sf object of polygons in the Irish Grid coordinate reference system:
+Or convert Irish grid references to an sf object containing polygons, each polygon covering the full extent to which each grid reference refers:
 
 ```{r example-igr-s-sf}
 s_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr", polygons = TRUE)
@@ -81,9 +99,7 @@ s_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr", polygons = TRUE)
 s_sf
 ```
 
-Plot the results:
-
-```{r example-igr-s-sf-plot, message=FALSE}
+```{r example-igr-s-sf-plot, message=FALSE, echo=FALSE}
 tm_shape(ie_uk_sf, bbox = s_sf, ext = 1.2) +
   tm_borders() +
   tm_shape(s_sf, ext = 1.2) +
@@ -91,19 +107,23 @@ tm_shape(ie_uk_sf, bbox = s_sf, ext = 1.2) +
   tm_text("igr", ymod = -1)
 ```
 
-## Converting to Irish Grid References
+## Converting to Irish grid references
 
 Starting with a list of Irish Grid coordinates:
 
 ```{r example-igc-igr}
-p <- list(x = c(0, 490000), y = c(400000, 0))
+p <- list(
+  x = c(0, 490000),
+  y = c(400000, 0)
+)
 
+p
 ig_to_igr(p)
 ig_to_igr(p, sep = " ")
 ig_to_igr(p, digits = 1)
 ```
 
-Starting with an sf object:
+Starting with a simple feature object:
 
 ```{r example-sf-igr}
 p_sf <- sf::st_as_sf(data.frame(p),
@@ -111,7 +131,23 @@ p_sf <- sf::st_as_sf(data.frame(p),
   coords = c("x", "y")
 )
 
+p_sf
 st_irishgridrefs(p_sf)
 st_irishgridrefs(p_sf, sep = " ")
-st_irishgridrefs(p_sf, digits = 1)
+st_irishgridrefs(p_sf, sep = " ", digits = "1")
+```
+
+Append Irish grid references for simple features in an sf object to itself:
+
+```{r example-sf-b-igr}
+p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
+
+p_sf
+```
+
+Equivalent using tidy r, assuming the dplyr package is loaded:
+
+```{r example-sf-t-igr, eval = FALSE}
+p_sf <- p_sf |>
+  mutate(igr = st_irishgridrefs(sep = " "))
 ```
