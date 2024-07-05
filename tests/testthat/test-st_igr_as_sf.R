@@ -9,6 +9,11 @@ x1_sf <- sf::st_polygon(list(cbind(
 ))) |>
   sf::st_sfc() |>
   sf::st_as_sf(crs = 29903)
+x1_sf$igr[1] = "A"
+
+# with resolution
+x1_res_sf <- x1_sf
+x1_res_sf$r123[1] = 100000
 
 
 test_that("basic conversions", {
@@ -43,12 +48,23 @@ test_that("remove", {
 })
 
 test_that("polygons", {
+  # check spatially as expected
   expect_equal(
     sf::st_equals(
       st_igr_as_sf(x1, "igr", polygons = TRUE),
       x1_sf
     )[[1]],
     1
+  )
+  # check columns retained as expected
+  expect_equal(
+    sf::st_drop_geometry(st_igr_as_sf(x1, "igr", polygons = TRUE)),
+    sf::st_drop_geometry(x1_sf)
+  )
+  # check resolution column named as expected
+  expect_equal(
+    sf::st_drop_geometry(st_igr_as_sf(x1, "igr", polygons = TRUE, res = "r123")),
+    sf::st_drop_geometry(x1_res_sf)
   )
 })
 
