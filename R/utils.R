@@ -1,7 +1,7 @@
 # Irish Grid 100km squares
 igr_100 <- list(
   letter = LETTERS[-9], # Letter reference (no I)
-  x = rep(c(0:4) * 100000, 5), # SW corner eastng in metres
+  x = rep(c(0:4) * 100000, 5), # SW corner easting in metres
   y = rep(c(4:0), each = 5) * 100000 # SW corner northing in metres
 )
 

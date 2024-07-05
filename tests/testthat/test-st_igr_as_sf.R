@@ -9,11 +9,11 @@ x1_sf <- sf::st_polygon(list(cbind(
 ))) |>
   sf::st_sfc() |>
   sf::st_as_sf(crs = 29903)
-x1_sf$igr[1] = "A"
+x1_sf$igr[1] <- "A"
 
 # with resolution
 x1_res_sf <- x1_sf
-x1_res_sf$r123[1] = 100000
+x1_res_sf$r123[1] <- 100000
 
 
 test_that("basic conversions", {
