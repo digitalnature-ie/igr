@@ -2,3 +2,8 @@ url: ~
 template:
   bootstrap: 5
 
+authors:
+  Digital Nature:
+    href: "https://digitalnature.ie"
+    html: "<img src='https://digitalnature.ie/wp-content/uploads/2024/07/dn_narrow_CO.png' width=80 alt=''>"
+

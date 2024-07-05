@@ -2,7 +2,7 @@
 % Please edit documentation in R/ig_to_igr.R
 \name{ig_to_igr}
 \alias{ig_to_igr}
-\title{Convert Irish Grid coordinates to Irish Grid References}
+\title{Convert Irish Grid coordinates to Irish grid references}
 \usage{
 ig_to_igr(x, digits = 3, sep = "")
 }
@@ -11,17 +11,24 @@ ig_to_igr(x, digits = 3, sep = "")
 
 \item{digits}{an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).}
 
-\item{sep}{a character to separate the 100km grid letter, easting, and northing.}
+\item{sep}{a character to separate the 100 km grid letter, easting, and northing.}
 }
 \value{
-A character vector of Irish Grid References.
+A character vector of Irish grid references.
 }
 \description{
-Convert Irish Grid coordinates to Irish Grid References
+Convert Irish Grid coordinates to Irish grid references
 }
 \examples{
+# Convert an Irish Grid coordinate to Irish grid reference
 ig_to_igr(list(x = 0, y = 0))
+
+# Convert a list of Irish Grid coordinates to Irish grid references
 ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)))
+
+# Insert a space between the 100 km grid letter, easting, and northing
 ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
+
+# Convert into Irish grid references of 1 km resolution
 ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), digits = 2)
 }

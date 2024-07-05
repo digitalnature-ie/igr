@@ -1,20 +1,31 @@
-#' Convert data frame containing Irish Grid References to an sf object
+#' Convert data frame containing Irish grid references to an sf object
 #'
 #' @inheritParams igr_to_ig
-#' @param x object containing column of Irish Grid References. Must not contain columns specified in coords.
-#' @param igrefs name or number of the character column holding Irish Grid References.
+#' @param x object containing column of Irish grid references. Must not contain columns specified in coords.
+#' @param igrefs name or number of the character column holding Irish grid references.
 #' @param crs coordinate reference system to be assigned; object of class crs.
-#' @param remove logical; remove Irish Grid References column?
+#' @param remove logical; remove Irish grid references column?
 #' @param add_coords logical; add Irish Grid coordinate columns?
 #' @param polygons return polygon objects spanning the extent of each grid reference, rather than point objects.
 #'
-#' @return An sf object containing points or polygons for each grid reference in x.
+#' @return An sf object containing points or polygons for each Irish grid reference in x.
 #' @export
 #'
 #' @examples
+#' # A data.frame containing two Irish grid reference
 #' x <- data.frame(igr = c("A00", "N8000"))
+#' 
+#' # Convert a data.frame of Irish grid references to an sf object
 #' st_igr_as_sf(x, "igr")
+#' 
+#' # Convert to an sf object in the WGS 84 coordinate reference system
 #' st_igr_as_sf(x, "igr", crs = 4326)
+#' 
+#' # Include the Irish Grid coordinates and resolution in the results
+#' st_igr_as_sf(x, "igr", add_coords = TRUE, res = "res")
+#' 
+#' # Convert into polygons rather than points
+#' st_igr_as_sf(x, "igr", polygons = TRUE)
 st_igr_as_sf <- function(x, igrefs, crs = 29903, remove = FALSE, add_coords = FALSE, coords = c("x", "y"), res = NULL, polygons = FALSE) {
   # if x includes column names coords then stop
   coords_existing <- intersect(colnames(x), coords)

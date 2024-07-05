@@ -1,6 +1,6 @@
-#' Convert Irish Grid References to Irish Grid coordinates
+#' Convert Irish grid references to Irish Grid coordinates
 #'
-#' @param x A character vector of Irish Grid references.
+#' @param x A character vector of Irish grid references.
 #' @param coords A character vector of column names for easting and northing.
 #' @param res A character string: the column name for resolution of original grid reference in metres, if required.
 #'
@@ -8,9 +8,16 @@
 #' @export
 #'
 #' @examples
+#' # Convert an Irish grid reference to Irish Grid coordinate
 #' igr_to_ig("A00")
+#' 
+#' # Convert a vector of Irish grid references to Irish Grid coordinates
 #' igr_to_ig(c("N8090", "D1234588800"))
+#' 
+#' # Use specific column names
 #' igr_to_ig(c("N8090", "D1234588800"), coords = c("e", "n"))
+#' 
+#' # Also return the resolution in metres of each grid reference
 #' igr_to_ig(c("N8090", "D1234588800"), res = "res")
 igr_to_ig <- function(x, coords = c("x", "y"), res = NULL) {
   invalid <- !grepl("^\\s*[a-h,j-z,A-H,J-Z]\\s*(()|(\\d\\s*\\d)|(\\d{2}\\s*\\d{2})|(\\d{3}\\s*\\d{3})|(\\d{4}\\s*\\d{4})|(\\d{5}\\s*\\d{5}))\\s*$", x)

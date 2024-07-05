@@ -2,29 +2,39 @@
 % Please edit documentation in R/st_irishgridrefs.R
 \name{st_irishgridrefs}
 \alias{st_irishgridrefs}
-\title{Generate Irish Grid References from sf point data}
+\title{Generate Irish grid references from sf point data}
 \usage{
 st_irishgridrefs(x, digits = 3, sep = "")
 }
 \arguments{
-\item{x}{an sf object containing point data within the Irish Grid bounding box.}
+\item{x}{an sf object containing point data.}
 
 \item{digits}{an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).}
 
-\item{sep}{a character to separate the 100km grid letter, easting, and northing.}
+\item{sep}{a character to separate the 100 km grid letter, easting, and northing.}
 }
 \value{
-a character vector of Irish Grid References.
+a character vector of Irish grid references.
 }
 \description{
-Generate Irish Grid References from sf point data
+Points located outside the Irish Grid extent will be ignored.
 }
 \examples{
+# An sf object containing point data
 x_sf <- sf::st_as_sf(data.frame(x = c(0, 490000), y = c(400000, 0)),
   crs = 29903,
   coords = c("x", "y")
 )
+
+# Convert to Irish grid references
 st_irishgridrefs(x_sf)
+
+# Convert to Irish grid references at 100 km resolution
 st_irishgridrefs(x_sf, digits = 0)
+
+# Convert to Irish grid references at 1 m resolution
 st_irishgridrefs(x_sf, digits = 5)
+
+# Insert a space between the 100 km grid letter, easting, and northing
+st_irishgridrefs(x_sf, sep = " ")
 }

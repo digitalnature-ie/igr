@@ -2,12 +2,12 @@
 % Please edit documentation in R/igr_to_ig.R
 \name{igr_to_ig}
 \alias{igr_to_ig}
-\title{Convert Irish Grid References to Irish Grid coordinates}
+\title{Convert Irish grid references to Irish Grid coordinates}
 \usage{
 igr_to_ig(x, coords = c("x", "y"), res = NULL)
 }
 \arguments{
-\item{x}{A character vector of Irish Grid references.}
+\item{x}{A character vector of Irish grid references.}
 
 \item{coords}{A character vector of column names for easting and northing.}
 
@@ -17,11 +17,18 @@ igr_to_ig(x, coords = c("x", "y"), res = NULL)
 A list of Irish Grid coordinates to 1m resolution.
 }
 \description{
-Convert Irish Grid References to Irish Grid coordinates
+Convert Irish grid references to Irish Grid coordinates
 }
 \examples{
+# Convert an Irish grid reference to Irish Grid coordinate
 igr_to_ig("A00")
+
+# Convert a vector of Irish grid references to Irish Grid coordinates
 igr_to_ig(c("N8090", "D1234588800"))
+
+# Use specific column names
 igr_to_ig(c("N8090", "D1234588800"), coords = c("e", "n"))
+
+# Also return the resolution in metres of each grid reference
 igr_to_ig(c("N8090", "D1234588800"), res = "res")
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_igr_as_sf.R
 \name{st_igr_as_sf}
 \alias{st_igr_as_sf}
-\title{Convert data frame containing Irish Grid References to an sf object}
+\title{Convert data frame containing Irish grid references to an sf object}
 \usage{
 st_igr_as_sf(
   x,
@@ -16,13 +16,13 @@ st_igr_as_sf(
 )
 }
 \arguments{
-\item{x}{object containing column of Irish Grid References. Must not contain columns specified in coords.}
+\item{x}{object containing column of Irish grid references. Must not contain columns specified in coords.}
 
-\item{igrefs}{name or number of the character column holding Irish Grid References.}
+\item{igrefs}{name or number of the character column holding Irish grid references.}
 
 \item{crs}{coordinate reference system to be assigned; object of class crs.}
 
-\item{remove}{logical; remove Irish Grid References column?}
+\item{remove}{logical; remove Irish grid references column?}
 
 \item{add_coords}{logical; add Irish Grid coordinate columns?}
 
@@ -33,13 +33,24 @@ st_igr_as_sf(
 \item{polygons}{return polygon objects spanning the extent of each grid reference, rather than point objects.}
 }
 \value{
-An sf object containing points or polygons for each grid reference in x.
+An sf object containing points or polygons for each Irish grid reference in x.
 }
 \description{
-Convert data frame containing Irish Grid References to an sf object
+Convert data frame containing Irish grid references to an sf object
 }
 \examples{
+# A data.frame containing two Irish grid reference
 x <- data.frame(igr = c("A00", "N8000"))
+
+# Convert a data.frame of Irish grid references to an sf object
 st_igr_as_sf(x, "igr")
+
+# Convert to an sf object in the WGS 84 coordinate reference system
 st_igr_as_sf(x, "igr", crs = 4326)
+
+# Include the Irish Grid coordinates and resolution in the results
+st_igr_as_sf(x, "igr", add_coords = TRUE, res = "res")
+
+# Convert into polygons rather than points
+st_igr_as_sf(x, "igr", polygons = TRUE)
 }
