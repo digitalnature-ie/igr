@@ -5,7 +5,7 @@ Authors@R: c(
     person("John", "Kennedy", , "john@digitalnature.ie", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-1128-987X")),
     person("Digital Nature", role = c("fnd")))
-Description: Convert Irish Grid References to Irish Grid coordinates or a simple feature object in any coordinate reference system, and vice versa.
+Description: Convert Irish grid references to Irish Grid coordinates or a collection of simple features in an sf object, and vice versa.
 License: MIT + file LICENSE
 Imports:
     sf
