@@ -27,8 +27,8 @@ test_that("x and y Irish Grid coordinates", {
 })
 
 test_that("numeric x and y", {
-  expect_error(ig_to_igr(matrix(c("a", 0)), class = "non_numeric_x_y"))
-  expect_error(ig_to_igr(matrix(c(0, "qqq")), class = "non_numeric_x_y"))
+  expect_error(ig_to_igr(matrix(c("a", 0), ncol=2), class = "non_numeric_x_y"))
+  expect_error(ig_to_igr(matrix(c(0, "qqq"), ncol=2), class = "non_numeric_x_y"))
 })
 
 test_that("Warning for invalid Irish Grid coordinates", {
