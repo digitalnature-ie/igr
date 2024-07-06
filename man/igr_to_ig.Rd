@@ -29,15 +29,15 @@ references return NA.
 in metres.
 }
 \examples{
-# Convert an Irish grid reference to Irish Grid coordinate
-igr_to_ig("A00")
+# A vector of three Irish grid references of different resolutions
+v <- c("N8090", "D1234588800", "W34")
 
-# Convert a vector of Irish grid references to Irish Grid coordinates
-igr_to_ig(c("N8090", "D1234588800"))
+# Convert to Irish Grid coordinates
+igr_to_ig(v)
 
-# Use specific column names
-igr_to_ig(c("N8090", "D1234588800"), coords = c("e", "n"))
+# Specify column names
+igr_to_ig(v, coords = c("e", "n"))
 
 # Also return the resolution in metres of each grid reference
-igr_to_ig(c("N8090", "D1234588800"), res = "res")
+igr_to_ig(v, res = "res")
 }

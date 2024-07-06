@@ -109,24 +109,37 @@ tm_shape(ie_uk_sf, bbox = s_sf, ext = 1.2) +
 
 ## Converting to Irish grid references
 
-Starting with a list of Irish Grid coordinates:
+Starting with a matrix of Irish Grid coordinates:
 
-```{r example-igc-igr}
-p <- list(
-  x = c(0, 490000),
-  y = c(400000, 0)
+```{r example-m-igr}
+m <- matrix(
+  c(
+    0, 490000,
+    400000, 0,
+    453000, 4000
+  ),
+  ncol = 2, byrow = TRUE
 )
+colnames(m) <- c("x", "y")
 
-p
-ig_to_igr(p)
-ig_to_igr(p, sep = " ")
-ig_to_igr(p, digits = 1)
+m
+ig_to_igr(m)
+ig_to_igr(m, sep = " ")
+ig_to_igr(m, digits = 1)
+```
+Starting with a data.frame:
+
+```{r example-df-igr}
+d <- data.frame(m)
+
+d
+ig_to_igr(d)
 ```
 
-Starting with a simple feature object:
+Starting with an sf object:
 
 ```{r example-sf-igr}
-p_sf <- sf::st_as_sf(data.frame(p),
+p_sf <- sf::st_as_sf(d,
   crs = 29903,
   coords = c("x", "y")
 )
@@ -137,7 +150,7 @@ st_irishgridrefs(p_sf, sep = " ")
 st_irishgridrefs(p_sf, sep = " ", digits = "1")
 ```
 
-Append Irish grid references for simple features in an sf object to itself:
+To generate and append Irish grid references to an sf object in base r:
 
 ```{r example-sf-b-igr}
 p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
@@ -145,9 +158,9 @@ p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
 p_sf
 ```
 
-Equivalent using tidy r, assuming the dplyr package is loaded:
+The equivalent in tidy r:
 
 ```{r example-sf-t-igr, eval = FALSE}
 p_sf <- p_sf |>
-  mutate(igr = st_irishgridrefs(sep = " "))
+  dplyr::mutate(igr = st_irishgridrefs(sep = " "))
 ```

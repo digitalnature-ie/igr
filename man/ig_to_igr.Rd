@@ -7,11 +7,12 @@
 ig_to_igr(x, digits = 3, sep = "")
 }
 \arguments{
-\item{x}{a list of two character vectors containing Irish Grid eastings and
-northings respectively.}
+\item{x}{a matrix containing Irish Grid eastings and northings in the first
+and second columns respectively.}
 
-\item{digits}{an integer, the number of digits for both easting and northing,
-between 0 (100 km resolution) and 5 (1 m resolution).}
+\item{digits}{an integer, the number of digits for both easting and northing
+in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
+10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and
 northing.}
@@ -24,15 +25,17 @@ A character vector of Irish grid references.
 (EPSG:29903) coordinates, otherwise NA.
 }
 \examples{
-# Convert an Irish Grid coordinate to Irish grid reference
-ig_to_igr(list(x = 0, y = 0))
+# A matrix of three Irish Grid coordinates
+m <- matrix(c(0, 412300, 0, 98700, 456000, 0), byrow=TRUE, ncol=2)
 
-# Convert a list of Irish Grid coordinates to Irish grid references
-ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)))
+m
+
+# Convert to Irish grid references
+ig_to_igr(m)
 
 # Insert a space between the 100 km grid letter, easting, and northing
-ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
+ig_to_igr(m, sep = " ")
 
-# Convert into Irish grid references of 1 km resolution
-ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), digits = 2)
+# Convert into Irish grid references with 1 km resolution
+ig_to_igr(m, digits = 2)
 }

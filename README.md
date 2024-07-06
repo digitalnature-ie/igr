@@ -123,91 +123,113 @@ s_sf
 
 ## Converting to Irish grid references
 
-Starting with a list of Irish Grid coordinates:
+Starting with a matrix of Irish Grid coordinates:
 
 ``` r
-p <- list(
-  x = c(0, 490000),
-  y = c(400000, 0)
+m <- matrix(
+  c(
+    0, 490000,
+    400000, 0,
+    453000, 4000
+  ),
+  ncol = 2, byrow = TRUE
 )
+colnames(m) <- c("x", "y")
 
-p
-#> $x
-#> [1]      0 490000
-#> 
-#> $y
-#> [1] 4e+05 0e+00
+m
+#>           x      y
+#> [1,]      0 490000
+#> [2,] 400000      0
+#> [3,] 453000   4000
 ```
 
 ``` r
-ig_to_igr(p)
-#> [1] "A000000" "Z900000"
+ig_to_igr(m)
+#> [1] "A000900" "Z000000" "Z530040"
 ```
 
 ``` r
-ig_to_igr(p, sep = " ")
-#> [1] "A 000 000" "Z 900 000"
+ig_to_igr(m, sep = " ")
+#> [1] "A 000 900" "Z 000 000" "Z 530 040"
 ```
 
 ``` r
-ig_to_igr(p, digits = 1)
-#> [1] "A00" "Z90"
+ig_to_igr(m, digits = 1)
+#> [1] "A09" "Z00" "Z50"
 ```
 
-Starting with a simple feature object:
+Starting with a data.frame:
 
 ``` r
-p_sf <- sf::st_as_sf(data.frame(p),
+d <- data.frame(m)
+
+d
+#>        x      y
+#> 1      0 490000
+#> 2 400000      0
+#> 3 453000   4000
+```
+
+``` r
+ig_to_igr(d)
+#> [1] "A000900" "Z000000" "Z530040"
+```
+
+Starting with an sf object:
+
+``` r
+p_sf <- sf::st_as_sf(d,
   crs = 29903,
   coords = c("x", "y")
 )
 
 p_sf
-#> Simple feature collection with 2 features and 0 fields
+#> Simple feature collection with 3 features and 0 fields
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 0 ymin: 0 xmax: 490000 ymax: 4e+05
+#> Bounding box:  xmin: 0 ymin: 0 xmax: 453000 ymax: 490000
 #> Projected CRS: TM75 / Irish Grid
-#>           geometry
-#> 1  POINT (0 4e+05)
-#> 2 POINT (490000 0)
+#>              geometry
+#> 1    POINT (0 490000)
+#> 2     POINT (4e+05 0)
+#> 3 POINT (453000 4000)
 ```
 
 ``` r
 st_irishgridrefs(p_sf)
-#> [1] "A000000" "Z900000"
+#> [1] "A000900" "Z000000" "Z530040"
 ```
 
 ``` r
 st_irishgridrefs(p_sf, sep = " ")
-#> [1] "A 000 000" "Z 900 000"
+#> [1] "A 000 900" "Z 000 000" "Z 530 040"
 ```
 
 ``` r
 st_irishgridrefs(p_sf, sep = " ", digits = "1")
-#> [1] "A 0 0" "Z 9 0"
+#> [1] "A 0 9" "Z 0 0" "Z 5 0"
 ```
 
-Append Irish grid references for simple features in an sf object to
-itself:
+To generate and append Irish grid references to an sf object in base r:
 
 ``` r
 p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
 
 p_sf
-#> Simple feature collection with 2 features and 1 field
+#> Simple feature collection with 3 features and 1 field
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 0 ymin: 0 xmax: 490000 ymax: 4e+05
+#> Bounding box:  xmin: 0 ymin: 0 xmax: 453000 ymax: 490000
 #> Projected CRS: TM75 / Irish Grid
-#>           geometry       igr
-#> 1  POINT (0 4e+05) A 000 000
-#> 2 POINT (490000 0) Z 900 000
+#>              geometry       igr
+#> 1    POINT (0 490000) A 000 900
+#> 2     POINT (4e+05 0) Z 000 000
+#> 3 POINT (453000 4000) Z 530 040
 ```
 
-Equivalent using tidy r, assuming the dplyr package is loaded:
+The equivalent in tidy r:
 
 ``` r
 p_sf <- p_sf |>
-  mutate(igr = st_irishgridrefs(sep = " "))
+  dplyr::mutate(igr = st_irishgridrefs(sep = " "))
 ```

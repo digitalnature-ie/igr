@@ -9,8 +9,9 @@ st_irishgridrefs(x, digits = 3, sep = "")
 \arguments{
 \item{x}{an sf object containing point data.}
 
-\item{digits}{an integer, the number of digits for both easting and northing,
-between 0 (100 km resolution) and 5 (1 m resolution).}
+\item{digits}{an integer, the number of digits for both easting and northing
+in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
+10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and
 northing.}
