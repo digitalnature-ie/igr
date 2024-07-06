@@ -37,7 +37,7 @@
 #'
 #' # Convert into polygons rather than points
 #' st_igr_as_sf(x, "igr", polygons = TRUE)
-#' 
+#'
 st_igr_as_sf <- function(x, igrefs, crs = 29903, remove = FALSE, add_coords = FALSE, coords = c("x", "y"), res = NULL, polygons = FALSE) {
   # if x includes column names coords then stop
   coords_existing <- intersect(colnames(x), coords)
@@ -48,22 +48,14 @@ st_igr_as_sf <- function(x, igrefs, crs = 29903, remove = FALSE, add_coords = FA
     )
   }
 
-  # Irish grid references column (igrefs) could be supplied as
-  # (A) quoted column name or unquoted column number, or
-  # (B) as unquoted column name.
-  # It appears
-  # (A) is more traditional base r, does not require importing dplyr as dependency, and is approach followed by sf::st_as_sf() arguments coords and wkt.
-  # (B) is more tidyr friendly.
-  # The code below implements (A). If needed, (B) would require code such as
-  #     dplyr::mutate(as.data.frame(igr_to_ig({{ igrefs }})))
-  #     dplyr::select(-{{ igrefs }})
-
-  if(polygons)
-    igr_res <- "res"     # grid reference resolution is required
-  else
+  if (polygons) {
+    igr_res <- "res"
+  } # grid reference resolution is required
+  else {
     igr_res <- res
-  
-  # later sf processing cannot handle missing values so catch warning and 
+  }
+
+  # later sf processing cannot handle missing values so catch warning and
   # raise as error
   tryCatch(
     {
@@ -79,7 +71,7 @@ st_igr_as_sf <- function(x, igrefs, crs = 29903, remove = FALSE, add_coords = FA
       )
     }
   )
-  
+
   if (polygons) {
     # calculate centre of square of each grid reference
     ig[[1]] <- ig[[1]] + (ig[[3]] / 2) # x = x + 1/2 resolution
@@ -100,7 +92,7 @@ st_igr_as_sf <- function(x, igrefs, crs = 29903, remove = FALSE, add_coords = FA
     }
   } else {
     ig <- as.data.frame(ig)
-   
+
     res_sf <- cbind(x, ig) |>
       sf::st_as_sf(coords = coords, crs = 29903, remove = !add_coords) |>
       sf::st_transform(crs = crs)

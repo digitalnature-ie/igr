@@ -6,10 +6,15 @@ igr_100 <- list(
 )
 
 lookup_igr_100 <- function(x, y) {
-  igr_100$letter[
-    (igr_100$x / 100000 == (x %/% 100000)) &
-      (igr_100$y / 100000 == (y %/% 100000))
-  ]
+  if (!is.numeric(x) | x < 0 | x >= 500000 |
+    !is.numeric(y) | y < 0 | y >= 500000) {
+    NA_character_
+  } else {
+    igr_100$letter[
+      (igr_100$x / 100000 == (x %/% 100000)) &
+        (igr_100$y / 100000 == (y %/% 100000))
+    ]
+  }
 }
 
 #' Create custom error subclass

@@ -3,10 +3,11 @@
 #' `ig_to_igr()` returns the Irish grid references for valid Irish Grid
 #' (EPSG:29903) coordinates, otherwise NA.
 #'
-#' @param x a list of two character vectors containing Irish Grid eastings and
-#'   northings respectively.
-#' @param digits an integer, the number of digits for both easting and northing,
-#'   between 0 (100 km resolution) and 5 (1 m resolution).
+#' @param x a matrix containing Irish Grid eastings and northings in the first
+#'   and second columns respectively.
+#' @param digits an integer, the number of digits for both easting and northing
+#'   in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
+#'   10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.
 #' @param sep a character to separate the 100 km grid letter, easting, and
 #'   northing.
 #'
@@ -14,33 +15,71 @@
 #' @export
 #'
 #' @examples
-#' # Convert an Irish Grid coordinate to Irish grid reference
-#' ig_to_igr(list(x = 0, y = 0))
+#' # A matrix of three Irish Grid coordinates
+#' m <- matrix(c(0, 412300, 0, 98700, 456000, 0), byrow=TRUE, ncol=2)
+#' 
+#' m
 #'
-#' # Convert a list of Irish Grid coordinates to Irish grid references
-#' ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)))
+#' # Convert to Irish grid references
+#' ig_to_igr(m)
 #'
 #' # Insert a space between the 100 km grid letter, easting, and northing
-#' ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
+#' ig_to_igr(m, sep = " ")
 #'
-#' # Convert into Irish grid references of 1 km resolution
-#' ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), digits = 2)
+#' # Convert into Irish grid references with 1 km resolution
+#' ig_to_igr(m, digits = 2)
 ig_to_igr <- function(x, digits = 3, sep = "") {
-  x <- matrix(unlist(x), ncol = 2)
+  x <- as.matrix(x)   # in case a data.frame
+  
+  if (ncol(x) < 2) {
+    stop_custom("not_x_y", "Two columns must be supplied")
+  }
+  
+    # later expressions error if non-numeric so catch now
+  tryCatch(
+    {
+      x <- matrix(as.numeric(x[,1:2]), ncol = 2)   # keep first two columns
+    },
+    warning = function(w) {
+      stop_custom("non_numeric_x_y", "Two columns of numbers must be supplied")
+    }
+  )
 
   # look up 100km grid reference
-  letters <- mapply(lookup_igr_100,
+  igr_letters <- mapply(lookup_igr_100,
     x = x[, 1],
     y = x[, 2]
   )
 
+  invalid <- is.na(igr_letters)
+
+  if (any(invalid)) {
+    warning(
+      "Invalid Irish Grid coordinates detected: ",
+      ifelse(
+        length(which(invalid)) > 10,
+        paste0(paste0("(", x[invalid, 1][1:10], ", ", x[invalid, 2][1:10], ")", collapse = ", "), ", ..."),
+        paste0("(", x[invalid, 1], ",", x[invalid, 2], ")", collapse = ", ")
+      )
+    )
+  }
+
   # calculate x and y offsets within 100km square to required resolution
+
   offsets <- x %% 100000 |>
     formatC(width = 5, format = "d", flag = "0") |>
     substr(1, digits)
 
+  # ,
+  # silent = TRUE
+  # )  # invalid x e.g. characters will raise errors.
+
   # concatenate into Irish Grid References
-  res <- paste(letters, offsets[, 1], offsets[, 2], sep = sep)
+  res <- ifelse(
+    invalid,
+    NA_character_,
+    paste(igr_letters, offsets[, 1], offsets[, 2], sep = sep)
+  )
 
   return(res)
 }
