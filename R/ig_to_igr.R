@@ -1,8 +1,14 @@
 #' Convert Irish Grid coordinates to Irish grid references
 #'
-#' @param x a list of two character vectors containing Irish Grid eastings and northings respectively.
-#' @param digits an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).
-#' @param sep a character to separate the 100 km grid letter, easting, and northing.
+#' `ig_to_igr()` returns the Irish grid references for valid Irish Grid
+#' (EPSG:29903) coordinates, otherwise NA.
+#'
+#' @param x a list of two character vectors containing Irish Grid eastings and
+#'   northings respectively.
+#' @param digits an integer, the number of digits for both easting and northing,
+#'   between 0 (100 km resolution) and 5 (1 m resolution).
+#' @param sep a character to separate the 100 km grid letter, easting, and
+#'   northing.
 #'
 #' @return A character vector of Irish grid references.
 #' @export
@@ -10,13 +16,13 @@
 #' @examples
 #' # Convert an Irish Grid coordinate to Irish grid reference
 #' ig_to_igr(list(x = 0, y = 0))
-#' 
+#'
 #' # Convert a list of Irish Grid coordinates to Irish grid references
 #' ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)))
-#' 
+#'
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), sep = " ")
-#' 
+#'
 #' # Convert into Irish grid references of 1 km resolution
 #' ig_to_igr(list(x = c(0, 400000), y = c(0, 40000)), digits = 2)
 ig_to_igr <- function(x, digits = 3, sep = "") {

@@ -12,7 +12,6 @@ lookup_igr_100 <- function(x, y) {
   ]
 }
 
-
 #' Create custom error subclass
 #'
 #' @param .subclass Name of the error subclass.

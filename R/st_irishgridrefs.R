@@ -1,6 +1,8 @@
 #' Generate Irish grid references from sf point data
 #'
-#' Points located outside the Irish Grid extent will be ignored.
+#' `st_irishgridrefs()` returns the Irish grid references for point features in
+#' an sf object that are located within the Irish Grid (EPSG:29903), and NA
+#' otherwise.
 #'
 #' @inheritParams ig_to_igr
 #' @param x an sf object containing point data.
@@ -14,16 +16,16 @@
 #'   crs = 29903,
 #'   coords = c("x", "y")
 #' )
-#' 
+#'
 #' # Convert to Irish grid references
 #' st_irishgridrefs(x_sf)
-#' 
+#'
 #' # Convert to Irish grid references at 100 km resolution
 #' st_irishgridrefs(x_sf, digits = 0)
-#' 
+#'
 #' # Convert to Irish grid references at 1 m resolution
 #' st_irishgridrefs(x_sf, digits = 5)
-#' 
+#'
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' st_irishgridrefs(x_sf, sep = " ")
 st_irishgridrefs <- function(x, digits = 3, sep = "") {

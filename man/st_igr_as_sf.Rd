@@ -16,9 +16,11 @@ st_igr_as_sf(
 )
 }
 \arguments{
-\item{x}{object containing column of Irish grid references. Must not contain columns specified in coords.}
+\item{x}{object containing column of Irish grid references. Must not contain
+columns specified in coords, or invalid Irish grid references.}
 
-\item{igrefs}{name or number of the character column holding Irish grid references.}
+\item{igrefs}{name or number of the character column holding Irish grid
+references.}
 
 \item{crs}{coordinate reference system to be assigned; object of class crs.}
 
@@ -28,18 +30,26 @@ st_igr_as_sf(
 
 \item{coords}{A character vector of column names for easting and northing.}
 
-\item{res}{A character string: the column name for resolution of original grid reference in metres, if required.}
+\item{res}{A character vector: the column name for resolution of original
+grid reference in metres, if required.}
 
-\item{polygons}{return polygon objects spanning the extent of each grid reference, rather than point objects.}
+\item{polygons}{return polygon objects spanning the extent of each grid
+reference, rather than point objects.}
 }
 \value{
-An sf object containing points or polygons for each Irish grid reference in x.
+An sf object containing points or polygons for each Irish grid
+reference in x.
 }
 \description{
-Convert data frame containing Irish grid references to an sf object
+\code{st_igr_as_sf()} transforms Irish grid references into an sf object
+containing point or polygon features. Points are the south west corner of the
+grid references. Polygons are Irish Grid squares covering the full extent of
+the grid references, each square size depending on the resolution of each
+grid reference. The Irish Grid (EPSG:29903) x and y coordinates and grid
+reference resolutions in metres can be appended.
 }
 \examples{
-# A data.frame containing two Irish grid reference
+# A data.frame containing two Irish grid references
 x <- data.frame(igr = c("A00", "N8000"))
 
 # Convert a data.frame of Irish grid references to an sf object
@@ -53,4 +63,5 @@ st_igr_as_sf(x, "igr", add_coords = TRUE, res = "res")
 
 # Convert into polygons rather than points
 st_igr_as_sf(x, "igr", polygons = TRUE)
+
 }

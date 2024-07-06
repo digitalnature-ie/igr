@@ -9,15 +9,19 @@ st_irishgridrefs(x, digits = 3, sep = "")
 \arguments{
 \item{x}{an sf object containing point data.}
 
-\item{digits}{an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).}
+\item{digits}{an integer, the number of digits for both easting and northing,
+between 0 (100 km resolution) and 5 (1 m resolution).}
 
-\item{sep}{a character to separate the 100 km grid letter, easting, and northing.}
+\item{sep}{a character to separate the 100 km grid letter, easting, and
+northing.}
 }
 \value{
 a character vector of Irish grid references.
 }
 \description{
-Points located outside the Irish Grid extent will be ignored.
+\code{st_irishgridrefs()} returns the Irish grid references for point features in
+an sf object that are located within the Irish Grid (EPSG:29903), and NA
+otherwise.
 }
 \examples{
 # An sf object containing point data

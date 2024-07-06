@@ -7,17 +7,21 @@
 ig_to_igr(x, digits = 3, sep = "")
 }
 \arguments{
-\item{x}{a list of two character vectors containing Irish Grid eastings and northings respectively.}
+\item{x}{a list of two character vectors containing Irish Grid eastings and
+northings respectively.}
 
-\item{digits}{an integer, the number of digits for both easting and northing, between 0 (100 km resolution) and 5 (1 m resolution).}
+\item{digits}{an integer, the number of digits for both easting and northing,
+between 0 (100 km resolution) and 5 (1 m resolution).}
 
-\item{sep}{a character to separate the 100 km grid letter, easting, and northing.}
+\item{sep}{a character to separate the 100 km grid letter, easting, and
+northing.}
 }
 \value{
 A character vector of Irish grid references.
 }
 \description{
-Convert Irish Grid coordinates to Irish grid references
+\code{ig_to_igr()} returns the Irish grid references for valid Irish Grid
+(EPSG:29903) coordinates, otherwise NA.
 }
 \examples{
 # Convert an Irish Grid coordinate to Irish grid reference
