@@ -1,7 +1,8 @@
 x1 <- data.frame(igr = c("A"))
 x2 <- data.frame(igr = c("A", "Z90"))
 x3 <- data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"))
-xe <- data.frame(igr = c("A"), x = "1")
+xe <- data.frame(igr = c("A"), x = "1")    # cannot have a column x
+xe1 <- data.frame(igr = c("AX"))           # invalid grid reference
 
 x1_sf <- sf::st_polygon(list(cbind(
   c(0, 100000, 100000, 0, 0),
@@ -68,6 +69,11 @@ test_that("polygons", {
   )
 })
 
-test_that("catch invalid grid references", {
+test_that("catch invalid inputs", {
   expect_error(st_igr_as_sf(xe, "igr"), class = "bad_input")
+})
+
+test_that("catch invalid grid references", {
+  expect_error(st_igr_as_sf(xe1, "igr"), "AX", class = "bad_grid_ref")
+  expect_error(st_igr_as_sf(xe1, "igr", res = "r1"),  "AX", class = "bad_grid_ref")
 })
