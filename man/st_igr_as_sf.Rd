@@ -6,7 +6,7 @@
 \usage{
 st_igr_as_sf(
   x,
-  igrefs,
+  igrefs = "igr",
   crs = 29903,
   remove = FALSE,
   add_coords = FALSE,
@@ -53,15 +53,15 @@ reference resolutions in metres can be appended.
 x <- data.frame(igr = c("A00", "N8000"))
 
 # Convert a data.frame of Irish grid references to an sf object
-st_igr_as_sf(x, "igr")
+st_igr_as_sf(x)
 
 # Convert to an sf object in the WGS 84 coordinate reference system
-st_igr_as_sf(x, "igr", crs = 4326)
+st_igr_as_sf(x, crs = 4326)
 
-# Include the Irish Grid coordinates and resolution in the results
-st_igr_as_sf(x, "igr", add_coords = TRUE, res = "res")
+# Include the Irish Grid coordinates and resolution in the sf object
+st_igr_as_sf(x, add_coords = TRUE, res = "res")
 
 # Convert into polygons rather than points
-st_igr_as_sf(x, "igr", polygons = TRUE)
+st_igr_as_sf(x, polygons = TRUE)
 
 }
