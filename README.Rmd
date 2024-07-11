@@ -27,7 +27,7 @@ Convert Irish grid references to Irish Grid coordinates or a collection of simpl
 
 All resolutions of Irish grid references are supported, from 100 km (e.g. "N") to 1 m (e.g. "N 87685 27487"). 
 
-Irish grid references can be converted into point or polygon [sf](https://r-spatial.github.io/sf/) (simple features) objects of any coordinate reference system.
+Irish grid references can be converted into point or polygon [sf](https://r-spatial.github.io/sf/) (simple features) objects in any coordinate reference system.
 
 When converting to polygons, each polygon is sized to cover the full extent of the individual grid reference. Mixed resolutions are supported.
 
