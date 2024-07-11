@@ -35,10 +35,17 @@ supported.
 
 ## Installation
 
-You can install the development version of igr like so:
+To install the development version of igr :
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# Install devtools package if needed
+install.packages("devtools")
+
+# Load devtools package if needed
+library(devtools)     
+
+# Install development version of igr package from github
+install_github("digitalnature-ie/igr")
 ```
 
 ## Converting from Irish grid references
@@ -76,9 +83,12 @@ Convert a list or data.frame of Irish grid references to an sf object of
 corresponding points:
 
 ``` r
-p_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr")
+igr_df <- data.frame(igr = igrs)
 
-p_sf
+# by default st_igr_as_sf() looks for Irish grid references in a column named "igr"
+igr_sf <- st_igr_as_sf(igr_df)
+
+igr_sf
 #> Simple feature collection with 7 features and 1 field
 #> Geometry type: POINT
 #> Dimension:     XY
@@ -101,9 +111,9 @@ each polygon covering the full extent to which each grid reference
 refers:
 
 ``` r
-s_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr", polygons = TRUE)
+igr_sf <- st_igr_as_sf(igr_df, polygons = TRUE)
 
-s_sf
+igr_sf
 #> Simple feature collection with 7 features and 1 field
 #> Geometry type: POLYGON
 #> Dimension:     XY
@@ -126,7 +136,7 @@ s_sf
 Starting with a matrix of Irish Grid coordinates:
 
 ``` r
-m <- matrix(
+p <- matrix(
   c(
     0, 490000,
     400000, 0,
@@ -134,9 +144,9 @@ m <- matrix(
   ),
   ncol = 2, byrow = TRUE
 )
-colnames(m) <- c("x", "y")
+colnames(p) <- c("x", "y")
 
-m
+p
 #>           x      y
 #> [1,]      0 490000
 #> [2,] 400000      0
@@ -144,26 +154,26 @@ m
 ```
 
 ``` r
-ig_to_igr(m)
+ig_to_igr(p)
 #> [1] "A000900" "Z000000" "Z530040"
 ```
 
 ``` r
-ig_to_igr(m, sep = " ")
+ig_to_igr(p, sep = " ")
 #> [1] "A 000 900" "Z 000 000" "Z 530 040"
 ```
 
 ``` r
-ig_to_igr(m, digits = 1)
+ig_to_igr(p, digits = 1)
 #> [1] "A09" "Z00" "Z50"
 ```
 
 Starting with a data.frame:
 
 ``` r
-d <- data.frame(m)
+p_df <- data.frame(p)
 
-d
+p_df
 #>        x      y
 #> 1      0 490000
 #> 2 400000      0
@@ -171,14 +181,14 @@ d
 ```
 
 ``` r
-ig_to_igr(d)
+ig_to_igr(p_df)
 #> [1] "A000900" "Z000000" "Z530040"
 ```
 
 Starting with an sf object:
 
 ``` r
-p_sf <- sf::st_as_sf(d,
+p_sf <- sf::st_as_sf(p_df,
   crs = 29903,
   coords = c("x", "y")
 )
@@ -210,7 +220,8 @@ st_irishgridrefs(p_sf, sep = " ", digits = "1")
 #> [1] "A 0 9" "Z 0 0" "Z 5 0"
 ```
 
-To generate and append Irish grid references to an sf object in base r:
+To include Irish grid references (with spaces) in the result using base
+r:
 
 ``` r
 p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
@@ -227,7 +238,8 @@ p_sf
 #> 3 POINT (453000 4000) Z 530 040
 ```
 
-The equivalent in tidy r:
+To include Irish grid references (with spaces) in the result using tidy
+r:
 
 ``` r
 p_sf <- p_sf |>

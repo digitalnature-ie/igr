@@ -40,10 +40,18 @@ When converting to polygons, each polygon is sized to cover the full extent of t
 
 ## Installation
 
-You can install the development version of igr like so:
+To install the development version of igr :
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# Install devtools package if needed
+install.packages("devtools")
+
+# Load devtools package if needed
+library(devtools)     
+
+# Install development version of igr package from github
+install_github("digitalnature-ie/igr")
+
 ```
 
 ## Converting from Irish grid references
@@ -67,9 +75,12 @@ igr_to_ig(igrs, res = "res")
 Convert a list or data.frame of Irish grid references to an sf object of corresponding points:
 
 ```{r example-igr-df-p-sf}
-p_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr")
+igr_df <- data.frame(igr = igrs)
 
-p_sf
+# by default st_igr_as_sf() looks for Irish grid references in a column named "igr"
+igr_sf <- st_igr_as_sf(igr_df)
+
+igr_sf
 ```
 
 ```{r example-igr-p-sf-plot, message=FALSE, echo=FALSE}
@@ -84,7 +95,7 @@ ie_uk_sf <- maps::map("world",
   sf::st_as_sf(ie_uk) |>
   sf::st_transform(29903)
 
-tm_shape(p_sf, ext = 1.2) +
+tm_shape(igr_sf, ext = 1.2) +
   tm_dots(size = 1, col = "cornflowerblue") +
   tm_text("igr", ymod = 1) +
   tm_shape(ie_uk_sf) +
@@ -94,15 +105,15 @@ tm_shape(p_sf, ext = 1.2) +
 Or convert Irish grid references to an sf object containing polygons, each polygon covering the full extent to which each grid reference refers:
 
 ```{r example-igr-s-sf}
-s_sf <- st_igr_as_sf(data.frame(igr = igrs), "igr", polygons = TRUE)
+igr_sf <- st_igr_as_sf(igr_df, polygons = TRUE)
 
-s_sf
+igr_sf
 ```
 
 ```{r example-igr-s-sf-plot, message=FALSE, echo=FALSE}
-tm_shape(ie_uk_sf, bbox = s_sf, ext = 1.2) +
+tm_shape(ie_uk_sf, bbox = igr_sf, ext = 1.2) +
   tm_borders() +
-  tm_shape(s_sf, ext = 1.2) +
+  tm_shape(igr_sf, ext = 1.2) +
   tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
   tm_text("igr", ymod = -1)
 ```
@@ -112,7 +123,7 @@ tm_shape(ie_uk_sf, bbox = s_sf, ext = 1.2) +
 Starting with a matrix of Irish Grid coordinates:
 
 ```{r example-m-igr}
-m <- matrix(
+p <- matrix(
   c(
     0, 490000,
     400000, 0,
@@ -120,26 +131,26 @@ m <- matrix(
   ),
   ncol = 2, byrow = TRUE
 )
-colnames(m) <- c("x", "y")
+colnames(p) <- c("x", "y")
 
-m
-ig_to_igr(m)
-ig_to_igr(m, sep = " ")
-ig_to_igr(m, digits = 1)
+p
+ig_to_igr(p)
+ig_to_igr(p, sep = " ")
+ig_to_igr(p, digits = 1)
 ```
 Starting with a data.frame:
 
 ```{r example-df-igr}
-d <- data.frame(m)
+p_df <- data.frame(p)
 
-d
-ig_to_igr(d)
+p_df
+ig_to_igr(p_df)
 ```
 
 Starting with an sf object:
 
 ```{r example-sf-igr}
-p_sf <- sf::st_as_sf(d,
+p_sf <- sf::st_as_sf(p_df,
   crs = 29903,
   coords = c("x", "y")
 )
@@ -150,7 +161,7 @@ st_irishgridrefs(p_sf, sep = " ")
 st_irishgridrefs(p_sf, sep = " ", digits = "1")
 ```
 
-To generate and append Irish grid references to an sf object in base r:
+To include Irish grid references (with spaces) in the result using base r:
 
 ```{r example-sf-b-igr}
 p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
@@ -158,7 +169,7 @@ p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
 p_sf
 ```
 
-The equivalent in tidy r:
+To include Irish grid references (with spaces) in the result using tidy r:
 
 ```{r example-sf-t-igr, eval = FALSE}
 p_sf <- p_sf |>
