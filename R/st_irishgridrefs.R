@@ -1,11 +1,11 @@
 #' Generate Irish grid references from sf point data
 #'
-#' `st_irishgridrefs()` returns the Irish grid references for point features in
-#' an sf object that are located within the Irish Grid (EPSG:29903), and NA
+#' `st_irishgridrefs()` returns the Irish grid references for point geometries
+#' in an sf object that are located within the Irish Grid (EPSG:29903), and NA
 #' otherwise.
 #'
 #' @inheritParams ig_to_igr
-#' @param x an sf object containing point data.
+#' @param x an sf object containing geometries of type POINT.
 #'
 #' @return a character vector of Irish grid references.
 #' @export
@@ -29,6 +29,13 @@
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' st_irishgridrefs(x_sf, sep = " ")
 st_irishgridrefs <- function(x, digits = 3, sep = "") {
+  if (!inherits(x, "sf")) {
+    stop_custom("not_sf", "x must be an sf object")
+  }
+  if (sf::st_geometry_type(x, by_geometry = FALSE) != "POINT") {
+    stop_custom("not_sf_POINT", "x must contain geometry type POINT")
+  }
+
   res <- x |>
     sf::st_transform(crs = 29903) |>
     sf::st_coordinates() |>

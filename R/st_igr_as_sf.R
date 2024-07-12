@@ -53,9 +53,9 @@ st_igr_as_sf <- function(
     stop_custom(
       "bad_input",
       paste(
-        "Existing column(s)",
+        "Column(s)",
         paste(coords_existing, collapse = " "),
-        "present. Remove, or use coords argument to specify alternative(s)."
+        "detected. Remove, or use coords argument to specify alternative(s)."
       )
     )
   }

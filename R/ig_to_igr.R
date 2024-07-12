@@ -32,7 +32,7 @@ ig_to_igr <- function(x, digits = 3, sep = "") {
   x <- as.matrix(x) # in case a data.frame
 
   if (ncol(x) < 2) {
-    stop_custom("not_x_y", "Two columns must be supplied")
+    stop_custom("not_x_y", "x must contain at least two columns")
   }
 
   # if x or y non-numeric then later expressions will error so catch now
@@ -41,7 +41,7 @@ ig_to_igr <- function(x, digits = 3, sep = "") {
       x <- matrix(as.numeric(x[, 1:2]), ncol = 2) # keep first two columns
     },
     warning = function(w) {
-      stop_custom("non_numeric_x_y", "Two columns of numbers must be supplied")
+      stop_custom("non_numeric_x_y", "the first 2 columns of x must be numeric")
     }
   )
 

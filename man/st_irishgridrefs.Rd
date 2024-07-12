@@ -7,7 +7,7 @@
 st_irishgridrefs(x, digits = 3, sep = "")
 }
 \arguments{
-\item{x}{an sf object containing point data.}
+\item{x}{an sf object containing geometries of type POINT.}
 
 \item{digits}{an integer, the number of digits for both easting and northing
 in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
@@ -20,8 +20,8 @@ northing.}
 a character vector of Irish grid references.
 }
 \description{
-\code{st_irishgridrefs()} returns the Irish grid references for point features in
-an sf object that are located within the Irish Grid (EPSG:29903), and NA
+\code{st_irishgridrefs()} returns the Irish grid references for point geometries
+in an sf object that are located within the Irish Grid (EPSG:29903), and NA
 otherwise.
 }
 \examples{
