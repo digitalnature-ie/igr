@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/digitalnature-ie/igr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/digitalnature-ie/igr?branch=main)
 <!-- badges: end -->
 
-Convert Irish grid references to Irish Grid coordinates or a collection of simple features in an sf object, and vice versa.
+Convert Irish grid references to Irish Grid ([EPSG:29903](https://epsg.io/29903)) coordinates or a collection of simple features in an sf object, and vice versa.
 
 All resolutions of Irish grid references are supported, from 100 km (e.g. "N") to 1 m (e.g. "N 87685 27487"). 
 

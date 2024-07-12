@@ -15,14 +15,15 @@ status](https://www.r-pkg.org/badges/version/igr)](https://CRAN.R-project.org/pa
 coverage](https://codecov.io/gh/digitalnature-ie/igr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/digitalnature-ie/igr?branch=main)
 <!-- badges: end -->
 
-Convert Irish grid references to Irish Grid coordinates or a collection
-of simple features in an sf object, and vice versa.
+Convert Irish grid references to Irish Grid
+([EPSG:29903](https://epsg.io/29903)) coordinates or a collection of
+simple features in an sf object, and vice versa.
 
 All resolutions of Irish grid references are supported, from 100 km
 (e.g. “N”) to 1 m (e.g. “N 87685 27487”).
 
 Irish grid references can be converted into point or polygon
-[sf](https://r-spatial.github.io/sf/) (simple features) objects of any
+[sf](https://r-spatial.github.io/sf/) (simple features) objects in any
 coordinate reference system.
 
 When converting to polygons, each polygon is sized to cover the full
