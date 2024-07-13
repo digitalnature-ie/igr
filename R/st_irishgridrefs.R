@@ -1,4 +1,4 @@
-#' Generate Irish grid references from sf point data
+#' Generate Irish grid references from an sf object
 #'
 #' `st_irishgridrefs()` returns the Irish grid references for point geometries
 #' in an sf object that are located within the Irish Grid (EPSG:29903), and NA
