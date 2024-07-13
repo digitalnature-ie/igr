@@ -1,0 +1,187 @@
+---
+title: "Irish Grid References in R"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Irish Grid References in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r init, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+plot_maps <- requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly = TRUE)
+```
+
+## Introduction
+
+The Irish Grid ([EPSG:29903](https://epsg.io/29903)) spans the island of Ireland and was defined by the Ordnance Survey Ireland (now [Tailte Éireann](https://www.tailte.ie)) and [Ordnance Survey of Northern Ireland](https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland). Locations within the Irish Grid are defined by an X and Y coordinate.
+
+Irish grid references are a traditional way of recording locations on the Irish Grid, and were particularly relevant when dealing with paper-based maps. An Irish grid reference consists of a letter, optionally followed by an easting and northing. A letter alone (e.g. "N") refers to a particular 100 km square on the Irish Grid. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a 10 km square. A 5-digit easting and northing (e.g. "N 12345 67890") refers to a 1 m square.
+
+There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/web/views/Spatial.html). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references into Irish Grid coordinates or sf objects that other R packages can work with. The igr package supports all resolutions of Irish grid reference, datasets with mixes of resolutions, and Irish grid references with or without whitespace between letter, easting and northing.
+
+When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
+
+The functions `st_igr_as_sf()` and `st_irishgridrefs()` convert to and from [sf](https://r-spatial.github.io/sf/) (simple feature) objects in any coordinate reference system.
+
+## Installation
+
+The development version of igr can be installed from github as follows:
+
+```{r install, eval=FALSE}
+# Install devtools package if needed
+install.packages("devtools")
+
+# Load devtools package if needed
+library(devtools)
+
+# Install development version of igr package from github
+install_github("digitalnature-ie/igr")
+```
+
+## Loading the package
+
+The igr package is loaded in the normal way:
+
+```{r load}
+library(igr)
+```
+
+## Converting from Irish grid references
+
+To convert a vector of Irish grid references to Irish Grid coordinates use `igr_to_ig()`.
+
+```{r example-igr-1}
+igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "W")
+
+igr_to_ig(igrs)
+```
+
+The Irish grid references may have spaces between the grid letter, easting and northing:
+
+```{r example-igr-2}
+igrs <- c("A", "D 12", "J 5 3", "M 50 90", "N 876 274", "S 12345 50000", "W")
+
+igr_to_ig(igrs)
+```
+
+These sample Irish grid references have a mix of resolutions. The resolutions in metres can be returned by supplying a column name for the resolution data:
+
+```{r example-igr-res}
+igr_to_ig(igrs, res = "res")
+```
+
+A list or data.frame of Irish grid references can be converted to an sf object using `st_igr_as_sf()`. By default the geometries returned are points located at the south west corner of each grid reference, and the coordinate reference system is Irish Grid ([EPSG:29903](https://epsg.io/29903)):
+
+```{r example-igr-poi}
+igr_df <- data.frame(igr = igrs)
+
+points_sf <- st_igr_as_sf(igr_df, "igr")
+
+points_sf
+```
+
+These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) package. First a basic outline of Ireland and the United Kingdom can be retrieved from the [maps](https://cran.r-project.org/package=maps) package.
+
+```{r example-igr-poi-plot, fig.height=4, message=FALSE, eval=plot_maps}
+library(maps)
+library(tmap)
+
+ie_uk_sf <- maps::map("world",
+  regions = c("Ireland", "UK"),
+  plot = FALSE,
+  fill = TRUE
+) |>
+  sf::st_as_sf(ie_uk) |>
+  sf::st_transform(29903)
+
+tm_shape(points_sf, ext = 1.4) +
+  tm_dots(size = 1, col = "cornflowerblue") +
+  tm_text("igr", ymod = 1) +
+  tm_shape(ie_uk_sf) +
+  tm_borders()
+```
+
+The Irish grid references can also be converted to polygon geometries. Each polygon spans the full extent of a grid reference, so if grid references with a mix of resolutions are supplied, the polygons will have a mix of sizes.
+
+```{r example-igr-pol}
+polygons_sf <- st_igr_as_sf(igr_df, "igr", polygons = TRUE)
+
+polygons_sf
+```
+
+Plotting these polygons:
+
+```{r  example-igr-pol-plot, fig.height=4, eval=plot_maps}
+tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+  tm_borders() +
+  tm_shape(polygons_sf, ext = 1.2) +
+  tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
+  tm_text("igr", ymod = -1)
+```
+
+## Converting to Irish grid references
+
+Irish Grid coordinates can be converted to Irish grid references using `ig_to_igr()`. The first two columns in the matrix supplied must be the Irish Grid X coordinate and Y coordinate respectively. Any other columns are ignored.
+
+```{r example-ig-1}
+p <- matrix(c(0, 490000, 400000, 0, 453000, 4000), ncol = 2, byrow = TRUE)
+colnames(p) <- c("x", "y")
+
+p
+ig_to_igr(p)
+```
+
+Spaces or other strings can be inserted between the letter, easting and northing:
+
+```{r example-ig-2}
+ig_to_igr(p, sep = " ")
+```
+
+The Irish grid references can be limited to a particular resolution by specifying a number of digits between 0 and 5:
+
+```{r example-ig-3}
+ig_to_igr(p, digits = 1) # 10 km
+
+ig_to_igr(p, digits = 5) # 1 m
+```
+
+A data.frame of Irish Grid coordinates can be converted:
+
+```{r example-ig-4}
+p_df <- data.frame(p)
+
+p_df
+ig_to_igr(p_df)
+```
+
+An sf object containing geometries of type POINT can be converted to Irish grid references using `st_irishgridrefs()`:
+
+```{r example-ig-5}
+p_sf <- sf::st_as_sf(p_df,
+  crs = 29903,
+  coords = c("x", "y")
+)
+
+p_sf
+st_irishgridrefs(p_sf)
+```
+
+To append Irish grid references (with spaces) to the original sf object using base r:
+
+```{r example-ig-6}
+p_sf$igr <- st_irishgridrefs(p_sf, sep = " ")
+
+p_sf
+```
+
+In tidy r this can be written as:
+
+```{r example-ig-7, eval = FALSE}
+p_sf <- p_sf |>
+  dplyr::mutate(igr = st_irishgridrefs(sep = " "))
+```

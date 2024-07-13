@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_irishgridrefs.R
 \name{st_irishgridrefs}
 \alias{st_irishgridrefs}
-\title{Generate Irish grid references from sf point data}
+\title{Generate Irish grid references from an sf object}
 \usage{
 st_irishgridrefs(x, digits = 3, sep = "")
 }
