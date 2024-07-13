@@ -6,7 +6,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-1128-987X")),
     person("Digital Nature", role = c("fnd")))
 Description: Convert between Irish grid references and Irish Grid coordinates or an sf object.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Imports:
     sf
 Suggests: 
