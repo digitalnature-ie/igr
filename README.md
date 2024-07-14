@@ -25,11 +25,11 @@ with a 1-digit easting and northing (e.g. “N85”) refers to a 10 km
 square. A 5-digit easting and northing (e.g. “N 12345 67890”) refers to
 a 1 m square.
 
-This package supports all resolutions of Irish grid reference, mixes of
-resolutions, and Irish grid references with or without whitespace
-between letter, easting and northing.
+This package supports precisions of Irish grid reference in multiples of
+ten from 1 m to 100 km, mixes of precision, and Irish grid references
+with or without whitespace between letter, easting and northing.
 
-When converting Irish grid refrences to point locations (using
+When converting Irish grid references to point locations (using
 `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`),
 the south west corners of the relevant Irish Grid squares are returned.
 When converting to polygons (using `st_igr_as_sf()` with

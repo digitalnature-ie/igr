@@ -35,7 +35,7 @@ igr_to_ig <- function(x, coords = c("x", "y"), precision = NULL) {
     return(list(x = double(), y = double()))
   }
 
-  invalid <- !grepl("^\\s*[a-h,j-z,A-H,J-Z]\\s*(()|(\\d\\s*\\d)|(\\d{2}\\s*\\d{2})|(\\d{3}\\s*\\d{3})|(\\d{4}\\s*\\d{4})|(\\d{5}\\s*\\d{5}))\\s*$", x)
+  invalid <- !igr_is_valid(x)
 
   if (any(invalid)) {
     warning(
