@@ -10,16 +10,16 @@
 #'   between 1 and 5 digits. There may be whitespace between the letter, easting
 #'   and northing.
 #' @param coords A character vector of column names for easting and northing.
-#' @param res A character vector: the column name for resolution of original
+#' @param precision A character vector: the column name for precision of original
 #'   grid reference in metres, if required.
 #'
 #' @return A list containing Irish Grid x and y coordinates and (optionally)
-#'   the resolution in metres of each Irish grid reference. Invalid Irish grid
+#'   the precision in metres of each Irish grid reference. Invalid Irish grid
 #'   references return NA.
 #' @export
 #'
 #' @examples
-#' # A vector of three Irish grid references of different resolutions
+#' # A vector of three Irish grid references of different precisions
 #' v <- c("N8090", "D1234588800", "W34")
 #' 
 #' # Convert to Irish Grid coordinates
@@ -28,9 +28,9 @@
 #' # Specify column names
 #' igr_to_ig(v, coords = c("e", "n"))
 #'
-#' # Also return the resolution in metres of each grid reference
-#' igr_to_ig(v, res = "res")
-igr_to_ig <- function(x, coords = c("x", "y"), res = NULL) {
+#' # Also return the precision in metres of each grid reference
+#' igr_to_ig(v, precision = "prec")
+igr_to_ig <- function(x, coords = c("x", "y"), precision = NULL) {
   if (is.null(x)) {
     return(list(x = double(), y = double()))
   }
@@ -79,12 +79,12 @@ igr_to_ig <- function(x, coords = c("x", "y"), res = NULL) {
   ig_x <- ifelse(invalid, NA_integer_, igr_100$x[igr_100_index] + offset_x)
   ig_y <- ifelse(invalid, NA_integer_, igr_100$y[igr_100_index] + offset_y)
 
-  if (is.null(res)) {
+  if (is.null(precision)) {
     ig <- list(ig_x, ig_y)
     names(ig) <- coords[1:2]
   } else {
     ig <- list(ig_x, ig_y, igr_res)
-    names(ig) <- c(coords, res)
+    names(ig) <- c(coords, precision)
   }
 
   return(ig)

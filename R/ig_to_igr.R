@@ -6,7 +6,7 @@
 #' @param x a matrix containing Irish Grid eastings and northings in the first
 #'   and second columns respectively.
 #' @param digits an integer, the number of digits for both easting and northing
-#'   in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
+#'   in the Irish grid references. 0 is equivalent to a precision of 100 km, 1:
 #'   10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.
 #' @param sep a character to separate the 100 km grid letter, easting, and
 #'   northing.
@@ -26,7 +26,7 @@
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' ig_to_igr(m, sep = " ")
 #'
-#' # Convert into Irish grid references with 1 km resolution
+#' # Convert into Irish grid references with 1 km precision
 #' ig_to_igr(m, digits = 2)
 ig_to_igr <- function(x, digits = 3, sep = "") {
   x <- as.matrix(x) # in case a data.frame
@@ -68,11 +68,13 @@ ig_to_igr <- function(x, digits = 3, sep = "") {
     )
   }
 
-  # calculate x and y offsets within 100km square to required resolution
+  # calculate x and y offsets within 100km square to required precision
   offsets <- x %% 100000 |>
     formatC(width = 5, format = "d", flag = "0") |>
     substr(1, digits)
 
+  # TODO: Convert digits to precision to allow tetrads in the future
+  
   # concatenate into Irish Grid References
   res <- ifelse(
     invalid,

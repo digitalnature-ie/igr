@@ -10,7 +10,7 @@ st_irishgridrefs(x, digits = 3, sep = "")
 \item{x}{an sf object containing geometries of type POINT.}
 
 \item{digits}{an integer, the number of digits for both easting and northing
-in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
+in the Irish grid references. 0 is equivalent to a precision of 100 km, 1:
 10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and
@@ -34,10 +34,10 @@ x_sf <- sf::st_as_sf(data.frame(x = c(0, 490000), y = c(400000, 0)),
 # Convert to Irish grid references
 st_irishgridrefs(x_sf)
 
-# Convert to Irish grid references at 100 km resolution
+# Convert to Irish grid references at 100 km precision
 st_irishgridrefs(x_sf, digits = 0)
 
-# Convert to Irish grid references at 1 m resolution
+# Convert to Irish grid references at 1 m precision
 st_irishgridrefs(x_sf, digits = 5)
 
 # Insert a space between the 100 km grid letter, easting, and northing

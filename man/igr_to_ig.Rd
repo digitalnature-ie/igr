@@ -4,7 +4,7 @@
 \alias{igr_to_ig}
 \title{Convert Irish grid references to Irish Grid coordinates}
 \usage{
-igr_to_ig(x, coords = c("x", "y"), res = NULL)
+igr_to_ig(x, coords = c("x", "y"), precision = NULL)
 }
 \arguments{
 \item{x}{A character vector of Irish grid references. Irish grid references
@@ -15,12 +15,12 @@ and northing.}
 
 \item{coords}{A character vector of column names for easting and northing.}
 
-\item{res}{A character vector: the column name for resolution of original
+\item{precision}{A character vector: the column name for precision of original
 grid reference in metres, if required.}
 }
 \value{
 A list containing Irish Grid x and y coordinates and (optionally)
-the resolution in metres of each Irish grid reference. Invalid Irish grid
+the precision in metres of each Irish grid reference. Invalid Irish grid
 references return NA.
 }
 \description{
@@ -29,7 +29,7 @@ references return NA.
 in metres.
 }
 \examples{
-# A vector of three Irish grid references of different resolutions
+# A vector of three Irish grid references of different precisions
 v <- c("N8090", "D1234588800", "W34")
 
 # Convert to Irish Grid coordinates
@@ -38,6 +38,6 @@ igr_to_ig(v)
 # Specify column names
 igr_to_ig(v, coords = c("e", "n"))
 
-# Also return the resolution in metres of each grid reference
-igr_to_ig(v, res = "res")
+# Also return the precision in metres of each grid reference
+igr_to_ig(v, precision = "prec")
 }

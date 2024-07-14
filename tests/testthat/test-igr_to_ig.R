@@ -19,7 +19,7 @@ test_that("white space", {
   expect_equal(igr_to_ig("A12 34"), list(x = 12000, y = 434000))
 })
 
-test_that("all resolutions 100km > 1m", {
+test_that("all precisions 100km > 1m", {
   expect_equal(igr_to_ig("A"), list(x = 000000, y = 400000))
   expect_equal(igr_to_ig("A11"), list(x = 010000, y = 410000))
   expect_equal(igr_to_ig("A1212"), list(x = 012000, y = 412000))
@@ -41,11 +41,11 @@ test_that("rename coordinates", {
   expect_equal(igr_to_ig(c("A00", "Z90"), coords = c("e", "n")), list(e = c(0, 490000), n = c(400000, 0)))
 })
 
-test_that("resolution", {
-  expect_equal(igr_to_ig("A", coords = c("x", "y"), res = "res"), list(x = 0, y = 400000, res = 100000))
-  expect_equal(igr_to_ig("A00", coords = c("e", "n"), res = "r"), list(e = 0, n = 400000, r = 10000))
-  expect_equal(igr_to_ig("A 00001 00002", coords = c("e", "n"), res = "r"), list(e = 1, n = 400002, r = 1))
-  expect_equal(igr_to_ig(c("A00", "Z"), coords = c("e", "n"), res = "rr"), list(e = c(0, 400000), n = c(400000, 0), rr = c(10000, 100000)))
+test_that("precision", {
+  expect_equal(igr_to_ig("A", coords = c("x", "y"), precision = "prec"), list(x = 0, y = 400000, prec = 100000))
+  expect_equal(igr_to_ig("A00", coords = c("e", "n"), precision = "p"), list(e = 0, n = 400000, p = 10000))
+  expect_equal(igr_to_ig("A 00001 00002", coords = c("e", "n"), precision = "p"), list(e = 1, n = 400002, p = 1))
+  expect_equal(igr_to_ig(c("A00", "Z"), coords = c("e", "n"), precision = "pr"), list(e = c(0, 400000), n = c(400000, 0), pr = c(10000, 100000)))
 })
 
 test_that("Warning for invalid grid references", {

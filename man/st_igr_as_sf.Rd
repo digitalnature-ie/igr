@@ -11,7 +11,7 @@ st_igr_as_sf(
   remove = FALSE,
   add_coords = FALSE,
   coords = c("x", "y"),
-  res = NULL,
+  precision = NULL,
   polygons = FALSE
 )
 }
@@ -30,7 +30,7 @@ references.}
 
 \item{coords}{A character vector of column names for easting and northing.}
 
-\item{res}{A character vector: the column name for resolution of original
+\item{precision}{A character vector: the column name for precision of original
 grid reference in metres, if required.}
 
 \item{polygons}{return polygon objects spanning the extent of each grid
@@ -44,9 +44,9 @@ reference in x.
 \code{st_igr_as_sf()} transforms Irish grid references into an sf object
 containing point or polygon features. Points are the south west corner of the
 grid references. Polygons are Irish Grid squares covering the full extent of
-the grid references, each square size depending on the resolution of each
+the grid references, each square size depending on the precision of each
 grid reference. The Irish Grid (EPSG:29903) x and y coordinates and grid
-reference resolutions in metres can be appended.
+reference precision in metres can be appended.
 }
 \examples{
 # A data.frame containing two Irish grid references
@@ -58,8 +58,8 @@ st_igr_as_sf(x, "igr")
 # Convert to an sf object in the WGS 84 coordinate reference system
 st_igr_as_sf(x, "igr", crs = 4326)
 
-# Include the Irish Grid coordinates and resolution in the sf object
-st_igr_as_sf(x, "igr", add_coords = TRUE, res = "res")
+# Include the Irish Grid coordinates and precision in the sf object
+st_igr_as_sf(x, "igr", add_coords = TRUE, precision = "prec")
 
 # Convert into polygons rather than points
 st_igr_as_sf(x, "igr", polygons = TRUE)

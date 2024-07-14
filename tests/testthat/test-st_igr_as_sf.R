@@ -3,6 +3,9 @@ x2 <- data.frame(igr = c("A", "Z90"))
 x3 <- data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"))
 xe <- data.frame(igr = c("A"), x = "1") # cannot have a column x
 xe1 <- data.frame(igr = c("AX")) # invalid grid reference
+xe2 <- data.frame(igr = c("")) # invalid grid reference
+xe3 <- data.frame(igr = c(NA_character_)) # invalid grid reference
+xe4 <- data.frame(igr = c("A", "")) # valid and invalid grid reference
 
 x1_sf <- sf::st_polygon(list(cbind(
   c(0, 100000, 100000, 0, 0),
@@ -12,9 +15,9 @@ x1_sf <- sf::st_polygon(list(cbind(
   sf::st_as_sf(crs = 29903)
 x1_sf$igr[1] <- "A"
 
-# with resolution
-x1_res_sf <- x1_sf
-x1_res_sf$r123[1] <- 100000
+# with precision
+x1_prec_sf <- x1_sf
+x1_prec_sf$p123[1] <- 100000
 
 
 test_that("basic conversions", {
@@ -65,8 +68,8 @@ test_that("res", {
     sf::st_as_sf(data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0)), crs = 29903, coords = c("x", "y"))
   )
   expect_equal(
-    st_igr_as_sf(x3, res = "r"),
-    sf::st_as_sf(data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0), r = c(100000,10000)), crs = 29903, coords = c("x", "y"))
+    st_igr_as_sf(x3, precision = "p"),
+    sf::st_as_sf(data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0), p = c(100000,10000)), crs = 29903, coords = c("x", "y"))
   )
 })
 
@@ -86,8 +89,8 @@ test_that("polygons", {
   )
   # check resolution column named as expected
   expect_equal(
-    sf::st_drop_geometry(st_igr_as_sf(x1, polygons = TRUE, res = "r123")),
-    sf::st_drop_geometry(x1_res_sf)
+    sf::st_drop_geometry(st_igr_as_sf(x1, polygons = TRUE, precision = "p123")),
+    sf::st_drop_geometry(x1_prec_sf)
   )
 })
 
@@ -97,5 +100,8 @@ test_that("catch invalid inputs", {
 
 test_that("catch invalid grid references", {
   expect_error(st_igr_as_sf(xe1), "AX", class = "bad_grid_ref")
-  expect_error(st_igr_as_sf(xe1, res = "r1"), "AX", class = "bad_grid_ref")
+  expect_error(st_igr_as_sf(xe2), class = "bad_grid_ref")
+  expect_error(st_igr_as_sf(xe3), class = "bad_grid_ref")
+  expect_error(st_igr_as_sf(xe4), class = "bad_grid_ref")
+  expect_error(st_igr_as_sf(xe1, precision = "p1"), "AX", class = "bad_grid_ref")
 })

@@ -11,7 +11,7 @@ ig_to_igr(x, digits = 3, sep = "")
 and second columns respectively.}
 
 \item{digits}{an integer, the number of digits for both easting and northing
-in the Irish grid references. 0 is equivalent to a resolution of 100 km, 1:
+in the Irish grid references. 0 is equivalent to a precision of 100 km, 1:
 10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and
@@ -36,6 +36,6 @@ ig_to_igr(m)
 # Insert a space between the 100 km grid letter, easting, and northing
 ig_to_igr(m, sep = " ")
 
-# Convert into Irish grid references with 1 km resolution
+# Convert into Irish grid references with 1 km precision
 ig_to_igr(m, digits = 2)
 }
