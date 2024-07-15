@@ -4,14 +4,24 @@
 \alias{st_irishgridrefs}
 \title{Generate Irish grid references from an sf object}
 \usage{
-st_irishgridrefs(x, digits = 3, sep = "")
+st_irishgridrefs(x, digits = 3, precision = NA_integer_, sep = "")
 }
 \arguments{
 \item{x}{an sf object containing geometries of type POINT.}
 
 \item{digits}{an integer, the number of digits for both easting and northing
-in the Irish grid references. 0 is equivalent to a precision of 100 km, 1:
-10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.}
+in the Irish grid references.
+\itemize{
+\item \code{0}: equivalent to a precision of 100 km.
+\item \code{1}: equivalent to a precision of 10 km.
+\item \code{2}: equivalent to a precision of 1 km.
+\item \code{3} (the default): equivalent to a precision of 100 m.
+\item \code{4}: equivalent to a precision of 10 m.
+\item \code{5}: equivalent to a precision of 1 m.#'
+}}
+
+\item{precision}{an integer, the precision of the Irish grid reference in
+metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and
 northing.}
@@ -35,10 +45,10 @@ x_sf <- sf::st_as_sf(data.frame(x = c(0, 490000), y = c(400000, 0)),
 st_irishgridrefs(x_sf)
 
 # Convert to Irish grid references at 100 km precision
-st_irishgridrefs(x_sf, digits = 0)
+st_irishgridrefs(x_sf, precision = 100000)
 
 # Convert to Irish grid references at 1 m precision
-st_irishgridrefs(x_sf, digits = 5)
+st_irishgridrefs(x_sf, precision = 1)
 
 # Insert a space between the 100 km grid letter, easting, and northing
 st_irishgridrefs(x_sf, sep = " ")

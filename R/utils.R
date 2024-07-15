@@ -5,6 +5,19 @@ igr_100 <- list(
   y = rep(c(4:0), each = 5) * 100000 # SW corner northing in metres
 )
 
+# Supported precisions of Irish grid references in metres
+valid_precisions <- c(1, 10, 100, 1000, 10000, 100000)
+
+
+#' Lookup 100 km Irish Grid sqaure reference for Irish Grid coordinates
+#'
+#' @param x Irish Grid easting
+#' @param y Irish Grid northing
+#'
+#' @return Irish Grid 100 km square references containing the coordinates, or
+#'   NA_character_ if not a valid Irish Grid coordinate
+#'
+#' @noRd
 lookup_igr_100 <- function(x, y) {
   if (!is.numeric(x) | x < 0 | x >= 500000 |
     !is.numeric(y) | y < 0 | y >= 500000) {

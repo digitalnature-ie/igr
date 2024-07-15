@@ -1,13 +1,23 @@
 #' Convert Irish Grid coordinates to Irish grid references
 #'
-#' `ig_to_igr()` returns the Irish grid references for valid Irish Grid
-#' (EPSG:29903) coordinates, otherwise NA.
+#' `ig_to_igr()` returns the Irish grid references at the specified precision
+#' for valid Irish Grid (EPSG:29903) coordinates, otherwise NA.
+#'
+#' Either `digits` or `precision` must be specified. `precision` overrides
+#' `digits`.
 #'
 #' @param x a matrix containing Irish Grid eastings and northings in the first
 #'   and second columns respectively.
 #' @param digits an integer, the number of digits for both easting and northing
-#'   in the Irish grid references. 0 is equivalent to a precision of 100 km, 1:
-#'   10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.
+#'   in the Irish grid references.
+#'   * `0`: equivalent to a precision of 100 km.
+#'   * `1`: equivalent to a precision of 10 km.
+#'   * `2`: equivalent to a precision of 1 km.
+#'   * `3` (the default): equivalent to a precision of 100 m.
+#'   * `4`: equivalent to a precision of 10 m.
+#'   * `5`: equivalent to a precision of 1 m.#'
+#' @param precision an integer, the precision of the Irish grid reference in
+#'   metres: `1`, `10`, `100`, `1000`, `10000`, or `100000`. Overrides `digits`.
 #' @param sep a character to separate the 100 km grid letter, easting, and
 #'   northing.
 #'
@@ -26,9 +36,24 @@
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' ig_to_igr(m, sep = " ")
 #'
-#' # Convert into Irish grid references with 1 km precision
-#' ig_to_igr(m, digits = 2)
-ig_to_igr <- function(x, digits = 3, sep = "") {
+#' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
+#' ig_to_igr(m, precision = 1000)
+#'
+#' # Convert into Irish grid references with 4 digit easting and northing (10 m precision)
+#' ig_to_igr(m, digits = 4)
+ig_to_igr <- function(x, digits = 3, precision = NA_integer_, sep = "") {
+  if (is.na(digits) & is.na(precision)) {
+    stop_custom("no_precision", "precision or digits must be specified")
+  }
+  if (!is.na(precision)) {
+    if(!precision %in% valid_precisions) {
+      stop_custom(
+        "unsupported_precision", 
+        paste("precision must be one of: ", valid_precisions, ".")  
+      )
+    }
+  }
+  
   x <- as.matrix(x) # in case a data.frame
 
   if (ncol(x) < 2) {
@@ -71,9 +96,7 @@ ig_to_igr <- function(x, digits = 3, sep = "") {
   # calculate x and y offsets within 100km square to required precision
   offsets <- x %% 100000 |>
     formatC(width = 5, format = "d", flag = "0") |>
-    substr(1, digits)
-
-  # TODO: Convert digits to precision to allow tetrads in the future
+    strtrim(ifelse(is.na(precision), digits, 5 - log10(precision)))
   
   # concatenate into Irish Grid References
   res <- ifelse(

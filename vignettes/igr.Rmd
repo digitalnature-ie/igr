@@ -142,12 +142,12 @@ Spaces or other strings can be inserted between the letter, easting and northing
 ig_to_igr(p, sep = " ")
 ```
 
-The Irish grid references can be limited to a particular precision by specifying a number of digits between 0 and 5:
+The Irish grid references can be limited to a particular precision by specifying the required precision in metres. Multiples of 10 from 1 m to 100,000 m (100 km) are supported:
 
 ```{r example-ig-3}
-ig_to_igr(p, digits = 1) # 10 km precision
+ig_to_igr(p, precision = 10000) # 10 km precision
 
-ig_to_igr(p, digits = 5) # 1 m precision
+ig_to_igr(p, precision = 1) # 1 m precision
 ```
 
 A data.frame of Irish Grid coordinates can be converted:

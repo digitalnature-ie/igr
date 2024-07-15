@@ -4,15 +4,25 @@
 \alias{ig_to_igr}
 \title{Convert Irish Grid coordinates to Irish grid references}
 \usage{
-ig_to_igr(x, digits = 3, sep = "")
+ig_to_igr(x, digits = 3, precision = NA_integer_, sep = "")
 }
 \arguments{
 \item{x}{a matrix containing Irish Grid eastings and northings in the first
 and second columns respectively.}
 
 \item{digits}{an integer, the number of digits for both easting and northing
-in the Irish grid references. 0 is equivalent to a precision of 100 km, 1:
-10 km, 2: 1 km, 3: 100 m, 4: 10 m, and 5: 1 m.}
+in the Irish grid references.
+\itemize{
+\item \code{0}: equivalent to a precision of 100 km.
+\item \code{1}: equivalent to a precision of 10 km.
+\item \code{2}: equivalent to a precision of 1 km.
+\item \code{3} (the default): equivalent to a precision of 100 m.
+\item \code{4}: equivalent to a precision of 10 m.
+\item \code{5}: equivalent to a precision of 1 m.#'
+}}
+
+\item{precision}{an integer, the precision of the Irish grid reference in
+metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and
 northing.}
@@ -21,8 +31,12 @@ northing.}
 A character vector of Irish grid references.
 }
 \description{
-\code{ig_to_igr()} returns the Irish grid references for valid Irish Grid
-(EPSG:29903) coordinates, otherwise NA.
+\code{ig_to_igr()} returns the Irish grid references at the specified precision
+for valid Irish Grid (EPSG:29903) coordinates, otherwise NA.
+}
+\details{
+Either \code{digits} or \code{precision} must be specified. \code{precision} overrides
+\code{digits}.
 }
 \examples{
 # A matrix of three Irish Grid coordinates
@@ -36,6 +50,9 @@ ig_to_igr(m)
 # Insert a space between the 100 km grid letter, easting, and northing
 ig_to_igr(m, sep = " ")
 
-# Convert into Irish grid references with 1 km precision
-ig_to_igr(m, digits = 2)
+# Convert into Irish grid references with 1 km precision (2 digit easting and northing)
+ig_to_igr(m, precision = 1000)
+
+# Convert into Irish grid references with 4 digit easting and northing (10 m precision)
+ig_to_igr(m, digits = 4)
 }
