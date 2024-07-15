@@ -15,8 +15,8 @@
 #'   * `2`: equivalent to a precision of 1 km.
 #'   * `3` (the default): equivalent to a precision of 100 m.
 #'   * `4`: equivalent to a precision of 10 m.
-#'   * `5`: equivalent to a precision of 1 m.#'
-#' @param precision an integer, the precision of the Irish grid reference in
+#'   * `5`: equivalent to a precision of 1 m.
+#' @param precision an integer, the precision of the Irish grid references in
 #'   metres: `1`, `10`, `100`, `1000`, `10000`, or `100000`. Overrides `digits`.
 #' @param sep a character to separate the 100 km grid letter, easting, and
 #'   northing.
@@ -41,11 +41,11 @@
 #'
 #' # Convert into Irish grid references with 4 digit easting and northing (10 m precision)
 #' ig_to_igr(m, digits = 4)
-ig_to_igr <- function(x, digits = 3, precision = NA_integer_, sep = "") {
-  if (is.na(digits) & is.na(precision)) {
+ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
+  if (is.na(digits) & is.null(precision)) {
     stop_custom("no_precision", "precision or digits must be specified")
   }
-  if (!is.na(precision)) {
+  if (!is.null(precision)) {
     if(!precision %in% valid_precisions) {
       stop_custom(
         "unsupported_precision", 
@@ -96,7 +96,7 @@ ig_to_igr <- function(x, digits = 3, precision = NA_integer_, sep = "") {
   # calculate x and y offsets within 100km square to required precision
   offsets <- x %% 100000 |>
     formatC(width = 5, format = "d", flag = "0") |>
-    strtrim(ifelse(is.na(precision), digits, 5 - log10(precision)))
+    strtrim(ifelse(is.null(precision), digits, 5 - log10(precision)))
   
   # concatenate into Irish Grid References
   res <- ifelse(
