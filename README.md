@@ -57,6 +57,11 @@ install_github("digitalnature-ie/igr")
 
 ## Usage
 
+To check Irish grid references:
+
+- `igr_is_valid()` indicates which elements in a character vector are
+  valid Irish grid references
+
 To convert from Irish grid references:
 
 - `igr_to_ig()` converts from a vector of Irish grid references to a
@@ -71,11 +76,21 @@ To convert to Irish grid references:
 - `st_irishgridrefs()` converts from an sf object to Irish grid
   references
 
-### Convert from Irish grid references
+### Check Irish grid references
 
 ``` r
 library(igr)
 
+# Sample grid references
+igrs <- c("A", "A16", "A123678", "BAD", "I12", "", "B125", "Z")
+
+igr_is_valid(igrs)
+#> [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE
+```
+
+### Convert from Irish grid references
+
+``` r
 # Sample grid references
 igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "W")
 

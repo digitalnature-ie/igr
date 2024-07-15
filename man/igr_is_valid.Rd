@@ -2,7 +2,7 @@
 % Please edit documentation in R/igr_is_valid.R
 \name{igr_is_valid}
 \alias{igr_is_valid}
-\title{Check if Irish grid reference is valid}
+\title{Check if Irish grid references are valid}
 \usage{
 igr_is_valid(x)
 }
