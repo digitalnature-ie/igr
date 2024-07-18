@@ -50,9 +50,9 @@ ig_to_igr(m)
 # Insert a space between the 100 km grid letter, easting, and northing
 ig_to_igr(m, sep = " ")
 
-# Convert into Irish grid references with 1 km precision (2 digit easting and northing)
-ig_to_igr(m, precision = 1000)
-
 # Convert into Irish grid references with 4 digit easting and northing (10 m precision)
 ig_to_igr(m, digits = 4)
+
+# Convert into Irish grid references with 1 km precision (2 digit easting and northing)
+ig_to_igr(m, precision = 1000)
 }
