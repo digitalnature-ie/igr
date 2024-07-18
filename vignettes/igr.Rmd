@@ -97,7 +97,7 @@ points_sf
 
 These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) package. A basic outline of Ireland and the United Kingdom can be retrieved from the [maps](https://cran.r-project.org/package=maps) package.
 
-```{r example-igr-poi-plot, fig.height=4, message=FALSE, eval=plot_maps, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference"}
+```{r example-igr-poi-plot, fig.height=4, message=FALSE, eval=plot_maps, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
 library(maps)
 library(tmap)
 
@@ -126,7 +126,7 @@ polygons_sf
 
 Plotting these polygons:
 
-```{r  example-igr-pol-plot, fig.height=4, eval=plot_maps, fig.alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square"}
+```{r  example-igr-pol-plot, fig.height=4, eval=plot_maps, fig.alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square."}
 tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
   tm_borders() +
   tm_shape(polygons_sf, ext = 1.2) +

@@ -125,7 +125,7 @@ st_igr_as_sf(igrs_df, "igr")
 #> 7           W       POINT (1e+05 0)
 ```
 
-<img src="man/figures/README-example-igr-points-1.png" width="100%" />
+<img src="man/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south-west corner of each sample grid reference." width="100%" />
 
 ``` r
 # Converting to an sf object of POLYGON features
@@ -145,7 +145,7 @@ st_igr_as_sf(igrs_df, "igr", polygon = TRUE)
 #> 7           W POLYGON ((2e+05 1e+05, 2e+0...
 ```
 
-<img src="man/figures/README-example-igr-polygons-1.png" width="100%" />
+<img src="man/figures/README-example-igr-polygons-1.png" alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square." width="100%" />
 
 ### Convert to Irish grid references
 
