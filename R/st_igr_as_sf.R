@@ -9,7 +9,7 @@
 #'
 #' @inheritParams igr_to_ig
 #' @param x object containing column of Irish grid references. Must not contain
-#'   columns specified in [coords], or invalid Irish grid references.
+#'   columns specified in `coords`, or invalid Irish grid references.
 #' @param igrefs string (column name) or number (column index) of the character
 #'   column holding Irish grid references.
 #' @param crs object of class crs containing the coordinate reference system to
@@ -41,7 +41,7 @@
 #'
 #' # Convert into polygons rather than points
 #' st_igr_as_sf(x, "igr", polygons = TRUE)
-#' 
+#'
 st_igr_as_sf <- function(
     x,
     igrefs = "igr",

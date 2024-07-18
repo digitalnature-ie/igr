@@ -7,26 +7,26 @@
 igr_to_ig(x, coords = c("x", "y"), precision = NULL)
 }
 \arguments{
-\item{x}{A character vector of Irish grid references. Irish grid references
-consist of a letter (other than I) optionally followed by both an easting
-and northing. The easting and northing must be of the same length of
-between 1 and 5 digits. There may be whitespace between the letter, easting
-and northing.}
+\item{x}{A character vector of Irish grid references. Valid Irish grid
+references consist of a letter (other than I) optionally followed by both
+an easting and northing. The easting and northing must be of the same
+length of between 1 and 5 digits. There may be whitespace between the
+letter, easting and northing.}
 
 \item{coords}{A character vector of column names for easting and northing.}
 
-\item{precision}{A character vector: the column name for precision of original
-grid reference in metres, if required.}
+\item{precision}{A single character vector: the column name for precision of
+original grid reference in metres, if required.}
 }
 \value{
-A list containing Irish Grid x and y coordinates and (optionally)
-the precision in metres of each Irish grid reference. Invalid Irish grid
+A list containing Irish Grid x and y coordinates and (optionally) the
+precision in metres of each Irish grid reference. Invalid Irish grid
 references return NA.
 }
 \description{
 \code{igr_to_ig()} converts Irish grid references into a list of Irish Grid
-(EPSG:29903) x and y coordinates and (optionally) grid reference resolutions
-in metres.
+(EPSG:29903) x and y coordinates. The precision of each Irish grid reference
+in metres can be returned.
 }
 \examples{
 # A vector of three Irish grid references of different precisions

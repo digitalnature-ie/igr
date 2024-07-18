@@ -7,24 +7,23 @@
 igr_is_valid(x)
 }
 \arguments{
-\item{x}{A character vector of Irish grid references. Irish grid references
-consist of a letter (other than I) optionally followed by both an easting
-and northing. The easting and northing must be of the same length of
-between 1 and 5 digits. There may be whitespace between the letter, easting
-and northing.}
+\item{x}{A character vector of Irish grid references.}
 }
 \value{
 A logical vector indicating for each Irish grid reference whether it
 is valid.
 }
 \description{
-\code{igr_is_valid()} returns a logical vector indicating for each Irish grid
-reference whether it is valid.
+\code{igr_is_valid()} identifies valid Irish grid references. Valid Irish grid
+references consist of a letter (other than I) optionally followed by both an
+easting and northing. The easting and northing must be of the same length of
+between 1 and 5 digits. There may be whitespace between the letter, easting
+and northing.
 }
 \examples{
 # A vector of alternating valid and invalid Irish grid references
 v <- c("N8090", "D 12 345 88800", "W34", "I30", "W", "A123", "B1234", "")
 
-# Convert to Irish Grid coordinates
+# Check validity of Irish Grid coordinates
 igr_is_valid(v)
 }

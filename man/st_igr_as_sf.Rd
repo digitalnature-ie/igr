@@ -17,42 +17,46 @@ st_igr_as_sf(
 }
 \arguments{
 \item{x}{object containing column of Irish grid references. Must not contain
-columns specified in coords, or invalid Irish grid references.}
+columns specified in \code{coords}, or invalid Irish grid references.}
 
-\item{igrefs}{name or number of the character column holding Irish grid
-references.}
+\item{igrefs}{string (column name) or number (column index) of the character
+column holding Irish grid references.}
 
-\item{crs}{coordinate reference system to be assigned; object of class crs.}
+\item{crs}{object of class crs containing the coordinate reference system to
+be assigned. See \code{\link[sf:st_crs]{sf::st_crs()}}.}
 
-\item{remove}{logical; remove Irish grid references column?}
+\item{remove}{a logical indicating if the column containing the Irish grid
+references should be removed.}
 
-\item{add_coords}{logical; add Irish Grid coordinate columns?}
+\item{add_coords}{a logical indicating if Irish Grid coordinate columns
+should be added.}
 
 \item{coords}{A character vector of column names for easting and northing.}
 
-\item{precision}{A character vector: the column name for precision of original
-grid reference in metres, if required.}
+\item{precision}{A single character vector: the column name for precision of
+original grid reference in metres, if required.}
 
-\item{polygons}{return polygon objects spanning the extent of each grid
-reference, rather than point objects.}
+\item{polygons}{a logical indicating if polygon features spanning the extent
+of each grid reference should be returned, rather than point features.}
 }
 \value{
-An sf object containing points or polygons for each Irish grid
+An sf object containing point or polygon features for each Irish grid
 reference in x.
 }
 \description{
 \code{st_igr_as_sf()} transforms Irish grid references into an sf object
 containing point or polygon features. Points are the south west corner of the
 grid references. Polygons are Irish Grid squares covering the full extent of
-the grid references, each square size depending on the precision of each
-grid reference. The Irish Grid (EPSG:29903) x and y coordinates and grid
-reference precision in metres can be appended.
+the grid references, each square size depending on the precision of each grid
+reference. The Irish Grid (EPSG:29903) x and y coordinates and grid reference
+precision in metres can be appended.
 }
 \examples{
 # A data.frame containing two Irish grid references
 x <- data.frame(igr = c("A00", "N8000"))
 
-# Convert a data.frame of Irish grid references to an sf object
+# Convert a data.frame of Irish grid references to an sf object in the
+# Irish Grid coordinate reference system
 st_igr_as_sf(x, "igr")
 
 # Convert to an sf object in the WGS 84 coordinate reference system
