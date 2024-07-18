@@ -25,9 +25,10 @@ with a 1-digit easting and northing (e.g. “N85”) refers to a 10 km
 square. A 5-digit easting and northing (e.g. “N 12345 67890”) refers to
 a 1 m square.
 
-This package supports precisions of Irish grid reference in multiples of
-ten from 1 m to 100 km, mixes of precision, and Irish grid references
-with or without whitespace between letter, easting and northing.
+This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km,
+10 km and 100 km precision. Irish grid references can be of mixed
+precision, and whitespace between letter, easting and northing is
+optional.
 
 When converting Irish grid references to point locations (using
 `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`),
@@ -57,7 +58,7 @@ install_github("digitalnature-ie/igr")
 
 ## Usage
 
-To check Irish grid references:
+To check validity of Irish grid references:
 
 - `igr_is_valid()` indicates which elements in a character vector are
   valid Irish grid references
@@ -183,3 +184,17 @@ p_sf$igr <- st_irishgridrefs(p_sf)
 p_sf <- p_sf |>
   dplyr::mutate(igr = st_irishgridrefs(p_sf))
 ```
+
+# Design and Implementation
+
+This package is designed to work seamlessly in tidy R. Function names,
+parameter names, and function behaviour attempt to follow conventions in
+related R packages such as [sf](https://r-spatial.github.io/sf/). The
+package is implemented using base R where possible to minimise package
+dependencies, and the [tidyverse coding
+style](https://style.tidyverse.org/) has been adopted.
+
+# Feedback
+
+Please log any unexpected behaviour or suggestions via GitHub
+[Issues](https://github.com/digitalnature-ie/igr/issues).

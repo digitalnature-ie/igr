@@ -1,27 +1,27 @@
 #' Convert Irish grid references to Irish Grid coordinates
 #'
 #' `igr_to_ig()` converts Irish grid references into a list of Irish Grid
-#' (EPSG:29903) x and y coordinates and (optionally) grid reference resolutions
-#' in metres.
+#' (EPSG:29903) x and y coordinates. The precision of each Irish grid reference
+#' in metres can be returned.
 #'
-#' @param x A character vector of Irish grid references. Irish grid references
-#'   consist of a letter (other than I) optionally followed by both an easting
-#'   and northing. The easting and northing must be of the same length of
-#'   between 1 and 5 digits. There may be whitespace between the letter, easting
-#'   and northing.
+#' @param x A character vector of Irish grid references. Valid Irish grid
+#'   references consist of a letter (other than I) optionally followed by both
+#'   an easting and northing. The easting and northing must be of the same
+#'   length of between 1 and 5 digits. There may be whitespace between the
+#'   letter, easting and northing.
 #' @param coords A character vector of column names for easting and northing.
-#' @param precision A character vector: the column name for precision of original
-#'   grid reference in metres, if required.
+#' @param precision A single character vector: the column name for precision of
+#'   original grid reference in metres, if required.
 #'
-#' @return A list containing Irish Grid x and y coordinates and (optionally)
-#'   the precision in metres of each Irish grid reference. Invalid Irish grid
+#' @return A list containing Irish Grid x and y coordinates and (optionally) the
+#'   precision in metres of each Irish grid reference. Invalid Irish grid
 #'   references return NA.
 #' @export
 #'
 #' @examples
 #' # A vector of three Irish grid references of different precisions
 #' v <- c("N8090", "D1234588800", "W34")
-#' 
+#'
 #' # Convert to Irish Grid coordinates
 #' igr_to_ig(v)
 #'
@@ -46,19 +46,6 @@ igr_to_ig <- function(x, coords = c("x", "y"), precision = NULL) {
         paste(x[invalid], collapse = ", ")
       )
     )
-    # stop_custom(
-    #   "bad_input",
-    #   paste(
-    #     "igr must be a valid Irish Grid Reference: a letter (other than I) optionally followed by an easting and northing, both the same length, of between 1 and 5 digits.",
-    #     ifelse(
-    #       length(which(invalid)) > 10,
-    #       paste0(paste(x[invalid][1:10], collapse = ", "), ", ..."),
-    #       paste(x[invalid], collapse = ", ")
-    #     ),
-    #     ifelse(length(which(invalid)) == 1, "is", "are"),
-    #     "invalid."
-    #   )
-    # )
   }
 
   igr <- gsub(" ", "", x, fixed = TRUE)

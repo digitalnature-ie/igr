@@ -4,7 +4,7 @@
 \alias{st_irishgridrefs}
 \title{Generate Irish grid references from an sf object}
 \usage{
-st_irishgridrefs(x, digits = 3, precision = NA_integer_, sep = "")
+st_irishgridrefs(x, digits = 3, precision = NULL, sep = "")
 }
 \arguments{
 \item{x}{an sf object containing geometries of type POINT.}
@@ -17,10 +17,10 @@ in the Irish grid references.
 \item \code{2}: equivalent to a precision of 1 km.
 \item \code{3} (the default): equivalent to a precision of 100 m.
 \item \code{4}: equivalent to a precision of 10 m.
-\item \code{5}: equivalent to a precision of 1 m.#'
+\item \code{5}: equivalent to a precision of 1 m.
 }}
 
-\item{precision}{an integer, the precision of the Irish grid reference in
+\item{precision}{an integer, the precision of the Irish grid references in
 metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
 
 \item{sep}{a character to separate the 100 km grid letter, easting, and

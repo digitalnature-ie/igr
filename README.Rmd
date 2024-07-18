@@ -29,7 +29,7 @@ Convert between Irish grid references and Irish Grid coordinates or an sf object
 
 An Irish grid reference consists of a letter, optionally followed by an easting and northing. Each Irish grid reference refers to a square on the Irish Grid ([EPSG:29903](https://epsg.io/29903)). A letter alone (e.g. "N") refers to a particular 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a 10 km square. A 5-digit easting and northing (e.g. "N 12345 67890") refers to a 1 m square.
 
-This package supports precisions of Irish grid reference in multiples of ten from 1 m to 100 km, mixes of precision, and Irish grid references with or without whitespace between letter, easting and northing.
+This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 10 km and 100 km precision. Irish grid references can be of mixed precision, and whitespace between letter, easting and northing is optional.
 
 When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
 
@@ -52,7 +52,7 @@ install_github("digitalnature-ie/igr")
 ```
 ## Usage
 
-To check Irish grid references:
+To check validity of Irish grid references:
 
 * `igr_is_valid()` indicates which elements in a character vector are valid Irish grid references
 
@@ -122,11 +122,22 @@ st_igr_as_sf(igrs_df, "igr", polygon = TRUE)
 ```{r example-igr-polygons, message=FALSE, echo=FALSE, eval=plot_maps}
 polygons_sf <- st_igr_as_sf(igrs_df, "igr", polygons = TRUE)
 
+polygons_sf$area <- sf::st_area(polygons_sf)
+
+small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(1000000, m^2),]
+
+
 tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
   tm_borders() +
-  tm_shape(polygons_sf, ext = 1.2) +
+  tm_shape(polygons_sf) +
   tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
-  tm_text("igr", ymod = -1)
+  tm_text("igr", ymod = -1) +
+  tm_shape(small_polygons_sf) +
+  tm_bubbles(
+      alpha = 0, border.col = "orangered", border.lwd = 2,
+      size = 0.8
+    ) 
+  
 ```
 
 ### Convert to Irish grid references
@@ -154,3 +165,11 @@ p_sf$igr <- st_irishgridrefs(p_sf)
 p_sf <- p_sf |>
   dplyr::mutate(igr = st_irishgridrefs(p_sf))
 ```
+
+# Design and Implementation
+
+This package is designed to work seamlessly in tidy R. Function names, parameter names, and function behaviour attempt to follow conventions in related R packages such as [sf](https://r-spatial.github.io/sf/). The package is implemented using base R where possible to minimise package dependencies, and the [tidyverse coding style](https://style.tidyverse.org/) has been adopted.
+
+# Feedback 
+
+Please log any unexpected behaviour or suggestions via GitHub [Issues](https://github.com/digitalnature-ie/igr/issues).
