@@ -23,7 +23,7 @@ test_that("all resolutions 100km > 1m", {
 test_that("only sf", {
   expect_error(st_irishgridrefs(x1_df), class = "not_sf")
 })
-  
+
 test_that("only POINT geometry", {
   expect_error(st_irishgridrefs(xe_sf), class = "not_sf_POINT")
 })
