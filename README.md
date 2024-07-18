@@ -189,10 +189,13 @@ p_sf <- p_sf |>
 
 This package is designed to work seamlessly in tidy R. Function names,
 parameter names, and function behaviour attempt to follow conventions in
-related R packages such as [sf](https://r-spatial.github.io/sf/). The
-package is implemented using base R where possible to minimise package
-dependencies, and the [tidyverse coding
-style](https://style.tidyverse.org/) has been adopted.
+related R packages such as [sf](https://r-spatial.github.io/sf/).
+
+The very helpful 2nd edition of [“R Packages” by Hadley Wickham and
+Jennifer Bryan](https://r-pkgs.org/) was consulted extensively during
+development. The code is implemented using base R where possible to
+minimise package dependencies, and adopts the [tidyverse coding
+style](https://style.tidyverse.org/).
 
 # Feedback
 
