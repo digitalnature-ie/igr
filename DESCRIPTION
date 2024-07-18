@@ -7,7 +7,7 @@ Authors@R: c(
     person("Digital Nature", role = "fnd")
   )
 Description: Convert between Irish grid references and Irish Grid
-    coordinates or an sf object.
+    coordinates or an 'sf' object.
 License: GPL (>= 3)
 URL: https://github.com/digitalnature-ie/igr,
     https://digitalnature-ie.github.io/igr/

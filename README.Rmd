@@ -37,6 +37,11 @@ The functions `st_igr_as_sf()` and `st_irishgridrefs()` convert to and from [sf]
 
 ## Installation
 
+To install the production version of igr from CRAN:
+
+``` r
+install.packages("igr")
+```
 To install the development version of igr:
 
 ``` r
