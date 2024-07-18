@@ -39,14 +39,14 @@ st_irishgridrefs <- function(x, digits = 3, precision = NULL, sep = "") {
     stop_custom("no_precision", "precision or digits must be specified")
   }
   if (!is.null(precision)) {
-    if(!precision %in% valid_precisions) {
+    if (!precision %in% valid_precisions) {
       stop_custom(
-        "unsupported_precision", 
-        paste("precision must be one of: ", valid_precisions, ".")  
+        "unsupported_precision",
+        paste("precision must be one of: ", valid_precisions, ".")
       )
     }
   }
-  
+
   res <- x |>
     sf::st_transform(crs = 29903) |>
     sf::st_coordinates() |>
