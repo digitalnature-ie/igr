@@ -34,3 +34,7 @@ test_that("invalid precision detected", {
   expect_error(st_irishgridrefs(x1_sf, precision = 2000), class = "unsupported_precision")
   expect_error(st_irishgridrefs(x1_sf, precision = "A"), class = "unsupported_precision")
 })
+
+test_that("no precision detected", {
+  expect_error(st_irishgridrefs(x1_sf, digits = NA, precision = NULL), class = "no_precision")
+})

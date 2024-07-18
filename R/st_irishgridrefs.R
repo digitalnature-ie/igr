@@ -20,12 +20,12 @@
 #' # Convert to Irish grid references
 #' st_irishgridrefs(x_sf)
 #'
-#' # Convert to Irish grid references at 100 km precision
-#' st_irishgridrefs(x_sf, precision = 100000)
-#'
-#' # Convert to Irish grid references at 1 m precision
-#' st_irishgridrefs(x_sf, precision = 1)
-#'
+#' # Convert into Irish grid references with 4 digit easting and northing (10 m precision)
+#' st_irishgridrefs(x_sf, digits = 4)
+#' 
+#' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
+#' st_irishgridrefs(x_sf, precision = 1000)
+#' 
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' st_irishgridrefs(x_sf, sep = " ")
 st_irishgridrefs <- function(x, digits = 3, precision = NULL, sep = "") {

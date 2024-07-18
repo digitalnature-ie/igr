@@ -44,3 +44,7 @@ test_that("invalid precision detected", {
   expect_error(ig_to_igr(matrix(c(0, 1), ncol = 2), precision = 2000), class = "unsupported_precision")
   expect_error(ig_to_igr(matrix(c(0, 1), ncol = 2), precision = "A"), class = "unsupported_precision")
 })
+
+test_that("no precision detected", {
+  expect_error(ig_to_igr(x1, digits = NA, precision = NULL), class = "no_precision")
+})

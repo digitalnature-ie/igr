@@ -36,11 +36,11 @@
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' ig_to_igr(m, sep = " ")
 #'
-#' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
-#' ig_to_igr(m, precision = 1000)
-#'
 #' # Convert into Irish grid references with 4 digit easting and northing (10 m precision)
 #' ig_to_igr(m, digits = 4)
+#' 
+#' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
+#' ig_to_igr(m, precision = 1000)
 ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
   if (is.na(digits) & is.null(precision)) {
     stop_custom("no_precision", "precision or digits must be specified")
