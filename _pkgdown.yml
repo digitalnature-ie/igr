@@ -6,3 +6,18 @@ authors:
   Digital Nature:
     href: "https://digitalnature.ie"
     html: "<img src='https://digitalnature.ie/wp-content/uploads/2024/07/dn_narrow_CO.png' width=80 alt=''>"
+
+reference:
+ - title: Check Irish grid references
+   contents:
+   - igr_is_valid
+   
+ - title: Convert from Irish grid references
+   contents:
+   - igr_to_ig
+   - st_igr_as_sf
+   
+ - title: Convert to Irish grid references
+   contents:
+   - ig_to_igr
+   - st_irishgridrefs
