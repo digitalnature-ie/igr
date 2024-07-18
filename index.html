@@ -146,7 +146,7 @@
 <span><span class="co">#&gt; 5     N876274 POINT (287600 227400)</span></span>
 <span><span class="co">#&gt; 6 S1234550000 POINT (212345 150000)</span></span>
 <span><span class="co">#&gt; 7           W       POINT (1e+05 0)</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-igr-points-1.png" width="100%"></p>
+<p><img src="reference/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south-west corner of each sample grid reference." width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Converting to an sf object of POLYGON features</span></span>
 <span><span class="fu"><a href="reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">igrs_df</span>, <span class="st">"igr"</span>, polygon <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -163,7 +163,7 @@
 <span><span class="co">#&gt; 5     N876274 POLYGON ((287700 227500, 28...</span></span>
 <span><span class="co">#&gt; 6 S1234550000 POLYGON ((212346 150001, 21...</span></span>
 <span><span class="co">#&gt; 7           W POLYGON ((2e+05 1e+05, 2e+0...</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-igr-polygons-1.png" width="100%"></p>
+<p><img src="reference/figures/README-example-igr-polygons-1.png" alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square." width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="convert-to-irish-grid-references">Convert to Irish grid references<a class="anchor" aria-label="anchor" href="#convert-to-irish-grid-references"></a>
@@ -203,7 +203,7 @@
 <h1 id="design-and-implementation">Design and Implementation<a class="anchor" aria-label="anchor" href="#design-and-implementation"></a>
 </h1>
 <p>This package is designed to work seamlessly in tidy R. Function names, parameter names, and function behaviour attempt to follow conventions in related R packages such as <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a>.</p>
-<p>The very helpful 2nd edition of <a href="https://r-pkgs.org/" class="external-link">“R Packages”</a> by Hadley Wickham and Jennifer Bryan was consulted extensively during development. The code is implemented using base R where possible to minimise package dependencies, and adopts the <a href="https://style.tidyverse.org/" class="external-link">tidyverse coding style</a>.</p>
+<p>The very helpful 2nd edition of <a href="https://r-pkgs.org/" class="external-link">R Packages</a> by Hadley Wickham and Jennifer Bryan was consulted extensively during development. The code is implemented using base R where possible to minimise package dependencies, and adopts the <a href="https://style.tidyverse.org/" class="external-link">tidyverse coding style</a>.</p>
 </div>
 <div class="section level1">
 <h1 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>

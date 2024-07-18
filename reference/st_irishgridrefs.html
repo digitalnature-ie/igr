@@ -93,13 +93,13 @@ northing.</p></dd>
 <span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A000000" "Z900000"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Convert to Irish grid references at 100 km precision</span></span></span>
-<span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, precision <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A" "Z"</span>
+<span class="r-in"><span><span class="co"># Convert into Irish grid references with 4 digit easting and northing (10 m precision)</span></span></span>
+<span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A00000000" "Z90000000"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Convert to Irish grid references at 1 m precision</span></span></span>
-<span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, precision <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A0000000000" "Z9000000000"</span>
+<span class="r-in"><span><span class="co"># Convert into Irish grid references with 1 km precision (2 digit easting and northing)</span></span></span>
+<span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, precision <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A0000" "Z9000"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Insert a space between the 100 km grid letter, easting, and northing</span></span></span>
 <span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span></span>

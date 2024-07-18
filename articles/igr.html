@@ -215,7 +215,7 @@ of Ireland and the United Kingdom can be retrieved from the <a href="https://cra
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="igr_files/figure-html/example-igr-poi-plot-1.png" width="700"></p>
+<p><img src="igr_files/figure-html/example-igr-poi-plot-1.png" alt="A map of Ireland with a dot at the south-west corner of each sample grid reference." width="700"></p>
 <p>The Irish grid references can also be converted to polygon
 geometries. Each polygon spans the full extent of a grid reference, so a
 set of grid references of varying precision will result in a set of
@@ -244,7 +244,7 @@ polygons with different sizes.</p>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">polygons_sf</span>, ext <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"cornflowerblue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="igr_files/figure-html/example-igr-pol-plot-1.png" width="700"></p>
+<p><img src="igr_files/figure-html/example-igr-pol-plot-1.png" alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square." width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="ignoring-invalid-irish-grid-references">Ignoring invalid Irish grid references<a class="anchor" aria-label="anchor" href="#ignoring-invalid-irish-grid-references"></a>
