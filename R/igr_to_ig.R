@@ -4,14 +4,12 @@
 #' (EPSG:29903) x and y coordinates. The precision of each Irish grid reference
 #' in metres can be returned.
 #'
-#' @param x A character vector of Irish grid references. Valid Irish grid
-#'   references consist of a letter (other than I) optionally followed by both
-#'   an easting and northing. The easting and northing must be of the same
-#'   length of between 1 and 5 digits. There may be whitespace between the
-#'   letter, easting and northing.
-#' @param coords A character vector of column names for easting and northing.
-#' @param precision A single character vector: the column name for precision of
-#'   original grid reference in metres, if required.
+#' @param x A character vector of Irish grid references. See [igr_is_valid()]
+#'   for a definition of valid Irish grid references.
+#' @param coords A character vector of the names of the columns to contain the
+#'   Irish Grid X and Y coordinates respectively.
+#' @param precision The name of the column to contain the precision of each grid
+#'   reference in metres, if required.
 #'
 #' @return A list containing Irish Grid x and y coordinates and (optionally) the
 #'   precision in metres of each Irish grid reference. Invalid Irish grid

@@ -5,9 +5,9 @@
 #' otherwise.
 #'
 #' @inheritParams ig_to_igr
-#' @param x an sf object containing geometries of type POINT.
+#' @param x An sf object containing geometries of type POINT.
 #'
-#' @return a character vector of Irish grid references.
+#' @return A character vector of Irish grid references.
 #' @export
 #'
 #' @examples

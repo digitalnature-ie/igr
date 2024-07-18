@@ -18,9 +18,9 @@ plot_maps <- requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap",
 
 ## Introduction
 
-The Irish Grid ([EPSG:29903](https://epsg.io/29903)) spans the island of Ireland and was defined by the Ordnance Survey Ireland (now [Tailte Éireann](https://www.tailte.ie)) and [Ordnance Survey of Northern Ireland](https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland). Locations within the Irish Grid are defined by an X and Y coordinate.
+The Irish Grid ([EPSG:29903](https://epsg.io/29903)) is a coordinate reference system spanning the island of Ireland. Created by the Ordnance Survey Ireland (now [Tailte Éireann](https://www.tailte.ie)) and [Ordnance Survey of Northern Ireland](https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland), locations within the Irish Grid are defined by an X and Y coordinate.
 
-Irish grid references are a way of recording locations on the Irish Grid, and were particularly relevant when dealing with paper-based maps. An Irish grid reference consists of a letter, optionally followed by an easting and northing. A letter alone (e.g. "N") refers to a particular 100 km square on the Irish Grid. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a 10 km square. A 5-digit easting and northing (e.g. "N 12345 67890") refers to a 1 m square.
+Irish grid references are an alternative way of recording locations on the Irish Grid. An Irish grid reference consists of a letter, optionally followed by an easting and northing. The letter (e.g. "N") refers to a particular 100 km square on the Irish Grid. There are 25 such 100 km squares - the letter "I" is skipped. The easting and northing refer to a square within the 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a particular 10 km square wtihin the 100 km square "N". A 5-digit easting and northing (e.g. "N 12345 67890") refers to a particular 1 m square.
 
 There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/web/views/Spatial.html). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references into Irish Grid coordinates or sf objects that other R packages can work with. The igr package supports precisions of Irish grid reference in multiples of ten from 1 m to 100 km, mixes of precision, and Irish grid references with or without whitespace between letter, easting and northing.
 
@@ -51,6 +51,16 @@ The igr package is loaded in the normal way:
 library(igr)
 ```
 
+## Checking Irish grid references
+
+The validity of Irish grid references can be checked with the function `igr_is_valid()`.
+
+```{r example-igr-valid}
+# Sample of valid and invalid Irish grid references
+igrs <- c("A", "A16", "A123678", "BAD", "I12", "", "B125", "Z")
+
+igr_is_valid(igrs)
+```
 ## Converting from Irish grid references
 
 To convert a vector of Irish grid references to Irish Grid coordinates use `igr_to_ig()`.
@@ -85,7 +95,7 @@ points_sf <- st_igr_as_sf(igr_df, "igr")
 points_sf
 ```
 
-These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) package. First a basic outline of Ireland and the United Kingdom can be retrieved from the [maps](https://cran.r-project.org/package=maps) package.
+These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) package. A basic outline of Ireland and the United Kingdom can be retrieved from the [maps](https://cran.r-project.org/package=maps) package.
 
 ```{r example-igr-poi-plot, fig.height=4, message=FALSE, eval=plot_maps}
 library(maps)
@@ -106,7 +116,7 @@ tm_shape(points_sf, ext = 1.4) +
   tm_borders()
 ```
 
-The Irish grid references can also be converted to polygon geometries. Each polygon spans the full extent of a grid reference, so if grid references with a mix of precisions are supplied, the polygons will have a mix of sizes.
+The Irish grid references can also be converted to polygon geometries. Each polygon spans the full extent of a grid reference, so a set of grid references of varying precision will result in a set of polygons with different sizes.
 
 ```{r example-igr-pol}
 polygons_sf <- st_igr_as_sf(igr_df, "igr", polygons = TRUE)
@@ -122,6 +132,27 @@ tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
   tm_shape(polygons_sf, ext = 1.2) +
   tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
   tm_text("igr", ymod = -1)
+```
+
+## Ignoring invalid Irish grid references
+
+To be consistent with the behaviour of `sf::st_as_sf()`, an error is returned if any of the Irish grid references supplied to `st_igr_as_sf()` are invalid. To avoid this scenario, any invalid Irish grid references can be filtered out using `igr_is_valid()`:
+
+```{r example-igr-avoid-baser}
+some_invalid_df <- data.frame(igr = c(igrs, "BAD", "I", "", "123", "N1"))
+
+some_invalid_df
+valid_sf <- st_igr_as_sf(some_invalid_df[igr_is_valid(some_invalid_df$igr), , drop = FALSE])
+
+valid_sf
+```
+
+In tidy r this can be written as:
+
+```{r example-igr-avoid-tidyr, eval=FALSE}
+valid_df <- some_invalid_df |>
+  dplyr::filter(igr_is_valid(igr)) |>
+  st_igr_as_sf()
 ```
 
 ## Converting to Irish grid references
@@ -142,9 +173,17 @@ Spaces or other strings can be inserted between the letter, easting and northing
 ig_to_igr(p, sep = " ")
 ```
 
-The Irish grid references can be limited to a particular precision by specifying the required precision in metres. Multiples of 10 from 1 m to 100,000 m (100 km) are supported:
+The generated Irish grid references can be limited to a particular precision by specifying the number of digits for both easting and northing. Between 0 (for 100 km precision) and 5 (for 1 m precision) digits are supported.
 
-```{r example-ig-3}
+```{r example-ig-3-digits}
+ig_to_igr(p, digits = 1) # 10 km precision
+
+ig_to_igr(p, digits = 5) # 1 m precision
+```
+
+Precision can also be specified number of metres. Multiples of 10 from 1 m to 100,000 m (100 km) are supported. Any value supplied for `precision` overrides any values for `digits`.
+
+```{r example-ig-3-prevision}
 ig_to_igr(p, precision = 10000) # 10 km precision
 
 ig_to_igr(p, precision = 1) # 1 m precision

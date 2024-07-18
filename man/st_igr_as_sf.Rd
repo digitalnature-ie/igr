@@ -16,28 +16,32 @@ st_igr_as_sf(
 )
 }
 \arguments{
-\item{x}{object containing column of Irish grid references. Must not contain
-columns specified in \code{coords}, or invalid Irish grid references.}
+\item{x}{An object containing a column of Irish grid references. It must not
+have column names specified in \code{coords}, nor invalid Irish grid references.}
 
-\item{igrefs}{string (column name) or number (column index) of the character
-column holding Irish grid references.}
+\item{igrefs}{The name or index of the character column holding Irish grid
+references.}
 
-\item{crs}{object of class crs containing the coordinate reference system to
-be assigned. See \code{\link[sf:st_crs]{sf::st_crs()}}.}
+\item{crs}{A valid EPSG value (numeric), a string accepted by GDAL, or an
+object of class crs containing the coordinate reference system to be
+assigned. See \code{\link[sf:st_crs]{sf::st_crs()}}.}
 
-\item{remove}{a logical indicating if the column containing the Irish grid
-references should be removed.}
+\item{remove}{Should the column containing the Irish grid references be
+removed from the result?}
 
-\item{add_coords}{a logical indicating if Irish Grid coordinate columns
-should be added.}
+\item{add_coords}{Should the Irish Grid coordinate columns with names
+specified by \code{coords} be included in the result?}
 
-\item{coords}{A character vector of column names for easting and northing.}
+\item{coords}{A character vector of the names of the columns to contain the
+Irish Grid X and Y coordinates respectively.}
 
-\item{precision}{A single character vector: the column name for precision of
-original grid reference in metres, if required.}
+\item{precision}{The name of the column to contain the precision of each grid
+reference in metres, if required.}
 
-\item{polygons}{a logical indicating if polygon features spanning the extent
-of each grid reference should be returned, rather than point features.}
+\item{polygons}{If \code{FALSE} (the default) the result will contain point
+features located at the south-west corner of each grid reference. If \code{TRUE}
+the result will contain polygon features spanning the extent of each grid
+reference.}
 }
 \value{
 An sf object containing point or polygon features for each Irish grid
@@ -45,11 +49,11 @@ reference in x.
 }
 \description{
 \code{st_igr_as_sf()} transforms Irish grid references into an sf object
-containing point or polygon features. Points are the south west corner of the
-grid references. Polygons are Irish Grid squares covering the full extent of
-the grid references, each square size depending on the precision of each grid
-reference. The Irish Grid (EPSG:29903) x and y coordinates and grid reference
-precision in metres can be appended.
+containing point or polygon features. If points, the south west corners of
+the grid references are returned. If polygons, squares spanning the full
+extent of each grid reference are returned, with each square's size depending
+on the precision of each grid reference. The Irish Grid (EPSG:29903) x and y
+coordinates and grid reference precision in metres can also be returned.
 }
 \examples{
 # A data.frame containing two Irish grid references

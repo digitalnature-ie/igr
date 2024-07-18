@@ -10,15 +10,17 @@ igr_is_valid(x)
 \item{x}{A character vector of Irish grid references.}
 }
 \value{
-A logical vector indicating for each Irish grid reference whether it
-is valid.
+A logical vector indicating whether for each Irish grid reference
+whether it is valid.
 }
 \description{
-\code{igr_is_valid()} identifies valid Irish grid references. Valid Irish grid
-references consist of a letter (other than I) optionally followed by both an
-easting and northing. The easting and northing must be of the same length of
-between 1 and 5 digits. There may be whitespace between the letter, easting
-and northing.
+\code{igr_is_valid()} identifies valid Irish grid references.
+}
+\details{
+Valid Irish grid references consist of a letter (other than I) optionally
+followed by both an easting and northing. The easting and northing must be of
+the same length of between 1 and 5 digits. There may be whitespace between
+the letter, easting and northing.
 }
 \examples{
 # A vector of alternating valid and invalid Irish grid references

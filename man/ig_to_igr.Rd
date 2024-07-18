@@ -7,10 +7,10 @@
 ig_to_igr(x, digits = 3, precision = NULL, sep = "")
 }
 \arguments{
-\item{x}{a matrix containing Irish Grid eastings and northings in the first
+\item{x}{A matrix containing Irish Grid eastings and northings in the first
 and second columns respectively.}
 
-\item{digits}{an integer, the number of digits for both easting and northing
+\item{digits}{An integer, the number of digits for both easting and northing
 in the Irish grid references.
 \itemize{
 \item \code{0}: equivalent to a precision of 100 km.
@@ -21,10 +21,10 @@ in the Irish grid references.
 \item \code{5}: equivalent to a precision of 1 m.
 }}
 
-\item{precision}{an integer, the precision of the Irish grid references in
+\item{precision}{An integer, the precision of the Irish grid references in
 metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
 
-\item{sep}{a character to separate the 100 km grid letter, easting, and
+\item{sep}{A character string to separate the 100 km grid letter, easting, and
 northing.}
 }
 \value{
@@ -32,7 +32,7 @@ A character vector of Irish grid references.
 }
 \description{
 \code{ig_to_igr()} returns the Irish grid references at the specified precision
-for valid Irish Grid (EPSG:29903) coordinates, otherwise NA.
+for valid Irish Grid (EPSG:29903) coordinates, otherwise \code{NA}.
 }
 \details{
 Either \code{digits} or \code{precision} must be specified. \code{precision} overrides

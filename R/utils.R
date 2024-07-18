@@ -8,13 +8,13 @@ igr_100 <- list(
 # Supported precisions of Irish grid references in metres
 valid_precisions <- c(1, 10, 100, 1000, 10000, 100000)
 
-#' Lookup 100 km Irish Grid sqaure reference for Irish Grid coordinates
+#' Lookup 100 km Irish grid reference for Irish Grid coordinate
 #'
-#' @param x Irish Grid easting
-#' @param y Irish Grid northing
+#' @param x Irish Grid easting.
+#' @param y Irish Grid northing.
 #'
-#' @return Irish Grid 100 km square references containing the coordinates, or
-#'   NA_character_ if not a valid Irish Grid coordinate
+#' @return Letter indicating the 100 km Irish Grid squares containing the
+#'   coordinate, or NA_character_ for an invalid Irish Grid coordinate.
 #'
 #' @noRd
 lookup_igr_100 <- function(x, y) {

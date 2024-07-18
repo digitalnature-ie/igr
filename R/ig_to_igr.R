@@ -1,14 +1,14 @@
 #' Convert Irish Grid coordinates to Irish grid references
 #'
 #' `ig_to_igr()` returns the Irish grid references at the specified precision
-#' for valid Irish Grid (EPSG:29903) coordinates, otherwise NA.
+#' for valid Irish Grid (EPSG:29903) coordinates, otherwise `NA`.
 #'
 #' Either `digits` or `precision` must be specified. `precision` overrides
 #' `digits`.
 #'
-#' @param x a matrix containing Irish Grid eastings and northings in the first
+#' @param x A matrix containing Irish Grid eastings and northings in the first
 #'   and second columns respectively.
-#' @param digits an integer, the number of digits for both easting and northing
+#' @param digits An integer, the number of digits for both easting and northing
 #'   in the Irish grid references.
 #'   * `0`: equivalent to a precision of 100 km.
 #'   * `1`: equivalent to a precision of 10 km.
@@ -16,9 +16,9 @@
 #'   * `3` (the default): equivalent to a precision of 100 m.
 #'   * `4`: equivalent to a precision of 10 m.
 #'   * `5`: equivalent to a precision of 1 m.
-#' @param precision an integer, the precision of the Irish grid references in
+#' @param precision An integer, the precision of the Irish grid references in
 #'   metres: `1`, `10`, `100`, `1000`, `10000`, or `100000`. Overrides `digits`.
-#' @param sep a character to separate the 100 km grid letter, easting, and
+#' @param sep A character string to separate the 100 km grid letter, easting, and
 #'   northing.
 #'
 #' @return A character vector of Irish grid references.
