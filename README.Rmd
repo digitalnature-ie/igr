@@ -92,7 +92,7 @@ igrs_df <- data.frame(igr = igrs)
 st_igr_as_sf(igrs_df, "igr")
 ```
 
-```{r example-igr-points, message=FALSE, echo=FALSE, eval=plot_maps}
+```{r example-igr-points, message=FALSE, echo=FALSE, eval=plot_maps, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
 library(maps)
 library(tmap)
 
@@ -119,7 +119,7 @@ tm_shape(points_sf, ext = 1.4) +
 st_igr_as_sf(igrs_df, "igr", polygon = TRUE)
 ```
 
-```{r example-igr-polygons, message=FALSE, echo=FALSE, eval=plot_maps}
+```{r example-igr-polygons, message=FALSE, echo=FALSE, eval=plot_maps, fig.alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square."}
 polygons_sf <- st_igr_as_sf(igrs_df, "igr", polygons = TRUE)
 
 polygons_sf$area <- sf::st_area(polygons_sf)
