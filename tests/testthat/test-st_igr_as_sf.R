@@ -69,7 +69,7 @@ test_that("res", {
   )
   expect_equal(
     st_igr_as_sf(x3, precision = "p"),
-    sf::st_as_sf(data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0), p = c(100000,10000)), crs = 29903, coords = c("x", "y"))
+    sf::st_as_sf(data.frame(igr = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0), p = c(100000, 10000)), crs = 29903, coords = c("x", "y"))
   )
 })
 
