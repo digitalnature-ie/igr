@@ -74,11 +74,11 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"igr"</span><span class="op">)</span></span></code></pre></div>
 <p>To install the development version of igr from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install devtools package if needed</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Install remotes package if needed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Install development version of igr package from GitHub</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"digitalnature-ie/igr"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"digitalnature-ie/igr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -201,7 +201,8 @@
 <h1 id="design-and-implementation">Design and Implementation<a class="anchor" aria-label="anchor" href="#design-and-implementation"></a>
 </h1>
 <p>This package is designed to work seamlessly in tidy R. Function names, parameter names, and function behaviour attempt to follow conventions in related R packages such as <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a>.</p>
-<p>The very helpful 2nd edition of <a href="https://r-pkgs.org/" class="external-link">R Packages</a> by Hadley Wickham and Jennifer Bryan was consulted extensively during development. The code is implemented using base R where possible to minimise package dependencies, and adopts the <a href="https://style.tidyverse.org/" class="external-link">tidyverse coding style</a>.</p>
+<p>igr is written using base R where possible to minimise package dependencies, and adopts the <a href="https://style.tidyverse.org/" class="external-link">tidyverse coding style</a>.</p>
+<p><a href="https://r-pkgs.org/" class="external-link">R Packages</a>, 2nd edition, by Hadley Wickham and Jennifer Bryan was of great assistance during package development.</p>
 </div>
 <div class="section level1">
 <h1 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
