@@ -1,12 +1,12 @@
 #' Convert Irish Grid coordinates to Irish grid references
 #'
-#' `ig_to_igr()` returns the Irish grid references at the specified precision
-#' for valid Irish Grid (EPSG:29903) coordinates, otherwise `NA`.
+#' `ig_to_igr()` converts valid Irish Grid(EPSG:29903) coordinates to Irish grid
+#' references at the specified precision.
 #'
 #' Either `digits` or `precision` must be specified. `precision` overrides
 #' `digits`.
 #'
-#' @param x A matrix containing Irish Grid eastings and northings in the first
+#' @param x A matrix containing Irish Grid X and Y coordinates in the first
 #'   and second columns respectively.
 #' @param digits An integer, the number of digits for both easting and northing
 #'   in the Irish grid references.
@@ -18,8 +18,8 @@
 #'   * `5`: equivalent to a precision of 1 m.
 #' @param precision An integer, the precision of the Irish grid references in
 #'   metres: `1`, `10`, `100`, `1000`, `10000`, or `100000`. Overrides `digits`.
-#' @param sep A character string to separate the 100 km grid letter, easting, and
-#'   northing.
+#' @param sep A character string to separate the 100 km grid letter, easting,
+#'   and northing.
 #'
 #' @return A character vector of Irish grid references.
 #' @export
@@ -38,7 +38,7 @@
 #'
 #' # Convert into Irish grid references with 4 digit easting and northing (10 m precision)
 #' ig_to_igr(m, digits = 4)
-#' 
+#'
 #' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
 #' ig_to_igr(m, precision = 1000)
 ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {

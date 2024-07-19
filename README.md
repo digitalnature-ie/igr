@@ -52,11 +52,11 @@ install.packages("igr")
 To install the development version of igr from GitHub:
 
 ``` r
-# Install devtools package if needed
-install.packages("devtools")
+# Install remotes package if needed
+install.packages("remotes")
 
 # Install development version of igr package from GitHub
-devtools::install_github("digitalnature-ie/igr")
+remotes::install_github("digitalnature-ie/igr")
 ```
 
 ## Usage
@@ -185,11 +185,12 @@ This package is designed to work seamlessly in tidy R. Function names,
 parameter names, and function behaviour attempt to follow conventions in
 related R packages such as [sf](https://r-spatial.github.io/sf/).
 
-The very helpful 2nd edition of [R Packages](https://r-pkgs.org/) by
-Hadley Wickham and Jennifer Bryan was consulted extensively during
-development. The code is implemented using base R where possible to
-minimise package dependencies, and adopts the [tidyverse coding
+igr is written using base R where possible to minimise package
+dependencies, and adopts the [tidyverse coding
 style](https://style.tidyverse.org/).
+
+[R Packages](https://r-pkgs.org/), 2nd edition, by Hadley Wickham and
+Jennifer Bryan was of great assistance during package development.
 
 # Feedback
 

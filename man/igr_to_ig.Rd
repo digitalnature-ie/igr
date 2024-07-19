@@ -13,22 +13,22 @@ for a definition of valid Irish grid references.}
 \item{coords}{A character vector of the names of the columns to contain the
 Irish Grid X and Y coordinates respectively.}
 
-\item{precision}{The name of the column to contain the precision of each grid
-reference in metres, if required.}
+\item{precision}{The name of the column to contain the precision of each
+Irish grid reference in metres, if required.}
 }
 \value{
-A list containing Irish Grid x and y coordinates and (optionally) the
-precision in metres of each Irish grid reference. Invalid Irish grid
-references return NA.
+A list containing Irish Grid X and Y coordinates and, optionally, the
+precision in metres of each Irish grid reference. Invalid or missing Irish
+grid references return NA.
 }
 \description{
 \code{igr_to_ig()} converts Irish grid references into a list of Irish Grid
-(EPSG:29903) x and y coordinates. The precision of each Irish grid reference
+(EPSG:29903) X and Y coordinates. The precision of each Irish grid reference
 in metres can be returned.
 }
 \examples{
-# A vector of three Irish grid references of different precisions
-v <- c("N8090", "D1234588800", "W34")
+# A vector of Irish grid references of different precisions
+v <- c("N8090", "D1234588800", "W34", "")
 
 # Convert to Irish Grid coordinates
 igr_to_ig(v)
@@ -36,6 +36,6 @@ igr_to_ig(v)
 # Specify column names
 igr_to_ig(v, coords = c("e", "n"))
 
-# Also return the precision in metres of each grid reference
+# Also return the precision in metres of each Irish grid reference
 igr_to_ig(v, precision = "prec")
 }

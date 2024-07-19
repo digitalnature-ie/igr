@@ -23,16 +23,16 @@ in the Irish grid references.
 \item{precision}{An integer, the precision of the Irish grid references in
 metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
 
-\item{sep}{A character string to separate the 100 km grid letter, easting, and
-northing.}
+\item{sep}{A character string to separate the 100 km grid letter, easting,
+and northing.}
 }
 \value{
 A character vector of Irish grid references.
 }
 \description{
-\code{st_irishgridrefs()} returns the Irish grid references for point geometries
-in an sf object that are located within the Irish Grid (EPSG:29903), and NA
-otherwise.
+\code{st_irishgridrefs()} returns the Irish grid references for all features in an
+sf object of point geometries. Features located outside the Irish Grid
+(EPSG:29903) extent are returned as NA.
 }
 \examples{
 # An sf object containing point data

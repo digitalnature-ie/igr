@@ -9,8 +9,8 @@
 #'
 #' @param x A character vector of Irish grid references.
 #'
-#' @return A logical vector indicating whether for each Irish grid reference
-#'   whether it is valid.
+#' @return A logical vector indicating the validity of each Irish grid
+#'   reference.
 #' @export
 #'
 #' @examples
@@ -26,11 +26,13 @@ igr_is_valid <- function(x) {
 
   valid <- grepl(
     paste0(
-      "^\\s*",   # ignore whitespace at start
-      "[a-h,j-z,A-H,J-Z]\\s*(()|(\\d\\s*\\d)|(\\d{2}\\s*\\d{2})|(\\d{3}\\s*\\d{3})|(\\d{4}\\s*\\d{4})|(\\d{5}\\s*\\d{5}))",
-      "\\s*$"    # ignore whitespace at end
+      "^\\s*", # ignore whitespace at start
+      "[A-H,J-Z]\\s*(()|(\\d\\s*\\d)|(\\d{2}\\s*\\d{2})|(\\d{3}\\s*\\d{3})|(\\d{4}\\s*\\d{4})|(\\d{5}\\s*\\d{5}))",
+      "\\s*$" # ignore whitespace at end
     ),
-    x)
+    x,
+    ignore.case = TRUE
+  )
 
   return(valid)
 }

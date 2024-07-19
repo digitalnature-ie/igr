@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_igr_as_sf.R
 \name{st_igr_as_sf}
 \alias{st_igr_as_sf}
-\title{Convert data frame containing Irish grid references to an sf object}
+\title{Convert a data frame containing Irish grid references into an sf object}
 \usage{
 st_igr_as_sf(
   x,
@@ -16,8 +16,8 @@ st_igr_as_sf(
 )
 }
 \arguments{
-\item{x}{An object containing a column of Irish grid references. It must not
-have column names specified in \code{coords}, nor invalid Irish grid references.}
+\item{x}{A data.frame containing a column of valid Irish grid references. It
+must not have column names specified in \code{coords}.}
 
 \item{igrefs}{The name or index of the character column holding Irish grid
 references.}
@@ -29,31 +29,32 @@ assigned. See \code{\link[sf:st_crs]{sf::st_crs()}}.}
 \item{remove}{Should the column containing the Irish grid references be
 removed from the result?}
 
-\item{add_coords}{Should the Irish Grid coordinate columns with names
+\item{add_coords}{Should the Irish Grid coordinates with column names
 specified by \code{coords} be included in the result?}
 
 \item{coords}{A character vector of the names of the columns to contain the
 Irish Grid X and Y coordinates respectively.}
 
-\item{precision}{The name of the column to contain the precision of each grid
-reference in metres, if required.}
+\item{precision}{The name of the column to contain the precision of each
+Irish grid reference in metres, if required.}
 
 \item{polygons}{If \code{FALSE} (the default) the result will contain point
-features located at the south-west corner of each grid reference. If \code{TRUE}
-the result will contain polygon features spanning the extent of each grid
-reference.}
+features located at the south-west corner of each Irish grid reference. If
+\code{TRUE} the result will contain polygon features spanning the extent of each
+Irish grid reference.}
 }
 \value{
 An sf object containing point or polygon features for each Irish grid
 reference in x.
 }
 \description{
-\code{st_igr_as_sf()} transforms Irish grid references into an sf object
-containing point or polygon features. If points, the south west corners of
-the grid references are returned. If polygons, squares spanning the full
-extent of each grid reference are returned, with each square's size depending
-on the precision of each grid reference. The Irish Grid (EPSG:29903) x and y
-coordinates and grid reference precision in metres can also be returned.
+\code{st_igr_as_sf()} converts a data frame containing Irish grid references into
+an sf object containing point or polygon features. If points, the south west
+corners of the grid references are returned. If polygons, squares spanning
+the full extent of each grid reference are returned, with each square's size
+depending on the precision of each grid reference. The Irish Grid
+(EPSG:29903) X and Y coordinates and grid reference precision in metres can
+also be returned.
 }
 \examples{
 # A data.frame containing two Irish grid references
@@ -69,7 +70,7 @@ st_igr_as_sf(x, "igr", crs = 4326)
 # Include the Irish Grid coordinates and precision in the sf object
 st_igr_as_sf(x, "igr", add_coords = TRUE, precision = "prec")
 
-# Convert into polygons rather than points
+# Convert into polygon features rather than point features
 st_igr_as_sf(x, "igr", polygons = TRUE)
 
 }
