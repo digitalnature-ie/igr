@@ -38,11 +38,11 @@ install.packages("igr")
 To install the development version of igr from GitHub:
 
 ``` r
-# Install devtools package if needed
-install.packages("devtools")
+# Install remotes package if needed
+install.packages("remotes")
 
 # Install development version of igr package from GitHub
-devtools::install_github("digitalnature-ie/igr")
+remotes::install_github("digitalnature-ie/igr")
 ```
 
 ## Loading the package
