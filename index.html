@@ -40,6 +40,7 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/igr.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -68,16 +69,16 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>To install the development version of igr:</p>
+<p>To install the production version of igr from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"igr"</span><span class="op">)</span></span></code></pre></div>
+<p>To install the development version of igr from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install devtools package if needed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Load devtools package if needed</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>     </span>
-<span></span>
-<span><span class="co"># Install development version of igr package from github</span></span>
-<span><span class="fu">install_github</span><span class="op">(</span><span class="st">"digitalnature-ie/igr"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Install development version of igr package from GitHub</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"digitalnature-ie/igr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -104,7 +105,7 @@
 <div class="section level3">
 <h3 id="check-irish-grid-references">Check Irish grid references<a class="anchor" aria-label="anchor" href="#check-irish-grid-references"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/digitalnature-ie/igr" class="external-link">igr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Sample grid references</span></span>
@@ -116,7 +117,7 @@
 <div class="section level3">
 <h3 id="convert-from-irish-grid-references">Convert from Irish grid references<a class="anchor" aria-label="anchor" href="#convert-from-irish-grid-references"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Sample grid references</span></span>
 <span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D12"</span>, <span class="st">"J53"</span>, <span class="st">"M5090"</span>, <span class="st">"N876274"</span>, <span class="st">"S1234550000"</span>, <span class="st">"W"</span><span class="op">)</span></span>
 <span></span>
@@ -126,9 +127,8 @@
 <span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 100000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000      0</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Sample grid references in a data.frame</span></span>
+<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000      0</span></span>
+<span><span class="co"># Sample grid references in a data.frame</span></span>
 <span><span class="va">igrs_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>igr <span class="op">=</span> <span class="va">igrs</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Converting to an sf object of POINT features</span></span>
@@ -177,19 +177,17 @@
 <span><span class="co">#&gt;           x      y</span></span>
 <span><span class="co">#&gt; [1,]      0 490000</span></span>
 <span><span class="co">#&gt; [2,] 400000      0</span></span>
-<span><span class="co">#&gt; [3,] 453000   4000</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Convert to Irish grid references</span></span>
+<span><span class="co">#&gt; [3,] 453000   4000</span></span>
+<span><span class="co"># Convert to Irish grid references</span></span>
 <span><span class="fu"><a href="reference/ig_to_igr.html">ig_to_igr</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "A000900" "Z000000" "Z530040"</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Sample Irish Grid coordinates in an sf object</span></span>
+<span><span class="co">#&gt; [1] "A000900" "Z000000" "Z530040"</span></span>
+<span><span class="co"># Sample Irish Grid coordinates in an sf object</span></span>
 <span><span class="va">p_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">29903</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Convert sf object to Irish grid references</span></span>
 <span><span class="fu"><a href="reference/st_irishgridrefs.html">st_irishgridrefs</a></span><span class="op">(</span><span class="va">p_sf</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "A 000 900" "Z 000 000" "Z 530 040"</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Append Irish grid references to original sf object (using base R)</span></span>
 <span><span class="va">p_sf</span><span class="op">$</span><span class="va">igr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/st_irishgridrefs.html">st_irishgridrefs</a></span><span class="op">(</span><span class="va">p_sf</span><span class="op">)</span></span>
 <span></span>
