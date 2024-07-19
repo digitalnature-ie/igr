@@ -42,18 +42,14 @@ To install the production version of igr from CRAN:
 ``` r
 install.packages("igr")
 ```
-To install the development version of igr:
+To install the development version of igr from GitHub:
 
 ``` r
 # Install devtools package if needed
 install.packages("devtools")
 
-# Load devtools package if needed
-library(devtools)     
-
-# Install development version of igr package from github
-install_github("digitalnature-ie/igr")
-
+# Install development version of igr package from GitHub
+devtools::install_github("digitalnature-ie/igr")
 ```
 ## Usage
 
@@ -129,7 +125,7 @@ polygons_sf <- st_igr_as_sf(igrs_df, "igr", polygons = TRUE)
 
 polygons_sf$area <- sf::st_area(polygons_sf)
 
-small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(1000000, m^2),]
+small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(1000000, m^2), ]
 
 
 tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
@@ -139,10 +135,9 @@ tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
   tm_text("igr", ymod = -1) +
   tm_shape(small_polygons_sf) +
   tm_bubbles(
-      alpha = 0, border.col = "orangered", border.lwd = 2,
-      size = 0.8
-    ) 
-  
+    alpha = 0, border.col = "orangered", border.lwd = 2,
+    size = 0.8
+  )
 ```
 
 ### Convert to Irish grid references

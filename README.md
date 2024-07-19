@@ -43,17 +43,20 @@ any coordinate reference system.
 
 ## Installation
 
-To install the development version of igr:
+To install the production version of igr from CRAN:
+
+``` r
+install.packages("igr")
+```
+
+To install the development version of igr from GitHub:
 
 ``` r
 # Install devtools package if needed
 install.packages("devtools")
 
-# Load devtools package if needed
-library(devtools)     
-
-# Install development version of igr package from github
-install_github("digitalnature-ie/igr")
+# Install development version of igr package from GitHub
+devtools::install_github("digitalnature-ie/igr")
 ```
 
 ## Usage
@@ -102,9 +105,6 @@ igr_to_ig(igrs)
 #> 
 #> $y
 #> [1] 400000 420000 330000 290000 227400 150000      0
-```
-
-``` r
 # Sample grid references in a data.frame
 igrs_df <- data.frame(igr = igrs)
 
@@ -159,15 +159,9 @@ p
 #> [1,]      0 490000
 #> [2,] 400000      0
 #> [3,] 453000   4000
-```
-
-``` r
 # Convert to Irish grid references
 ig_to_igr(p)
 #> [1] "A000900" "Z000000" "Z530040"
-```
-
-``` r
 # Sample Irish Grid coordinates in an sf object
 p_sf <- sf::st_as_sf(data.frame(p), crs = 29903, coords = c("x", "y"))
 

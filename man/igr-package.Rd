@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Convert between Irish grid references and Irish Grid coordinates or an sf object.
+Convert between Irish grid references and Irish Grid coordinates or an 'sf' object.
 }
 \seealso{
 Useful links:
