@@ -12,8 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-plot_maps <- requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly = TRUE)
 ```
 
 ## Introduction
@@ -99,23 +97,26 @@ points_sf
 
 These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) package. A basic outline of Ireland and the United Kingdom can be retrieved from the [maps](https://cran.r-project.org/package=maps) package.
 
-```{r example-igr-poi-plot, fig.height=4, message=FALSE, eval=plot_maps, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
-library(maps)
-library(tmap)
+```{r example-igr-poi-plot, fig.height=4, message=FALSE, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
+# cannot include in chunk attributes for CRAN testing so test here
+if (requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly = TRUE)) {
+  library(maps)
+  library(tmap)
 
-ie_uk_sf <- maps::map("world",
-  regions = c("Ireland", "UK"),
-  plot = FALSE,
-  fill = TRUE
-) |>
-  sf::st_as_sf(ie_uk) |>
-  sf::st_transform(29903)
+  ie_uk_sf <- maps::map("world",
+    regions = c("Ireland", "UK"),
+    plot = FALSE,
+    fill = TRUE
+  ) |>
+    sf::st_as_sf(ie_uk) |>
+    sf::st_transform(29903)
 
-tm_shape(points_sf, ext = 1.4) +
-  tm_dots(size = 1, col = "cornflowerblue") +
-  tm_text("igr", ymod = 1) +
-  tm_shape(ie_uk_sf) +
-  tm_borders()
+  tm_shape(points_sf, ext = 1.4) +
+    tm_dots(size = 1, col = "cornflowerblue") +
+    tm_text("igr", ymod = 1) +
+    tm_shape(ie_uk_sf) +
+    tm_borders()
+}
 ```
 
 The Irish grid references can also be converted to polygon geometries. Each polygon spans the full extent of a grid reference, so a set of grid references of varying precision will result in a set of polygons with different sizes.
@@ -128,12 +129,15 @@ polygons_sf
 
 Plotting these polygons:
 
-```{r  example-igr-pol-plot, fig.height=4, eval=plot_maps, fig.alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square."}
-tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
-  tm_borders() +
-  tm_shape(polygons_sf, ext = 1.2) +
-  tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
-  tm_text("igr", ymod = -1)
+```{r  example-igr-pol-plot, fig.height=4, fig.alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square."}
+# cannot include in chunk attributes for CRAN testing so re-test here
+if (requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly = TRUE)) {
+  tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+    tm_borders() +
+    tm_shape(polygons_sf, ext = 1.2) +
+    tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
+    tm_text("igr", ymod = -1)
+}
 ```
 
 ## Ignoring invalid Irish grid references
