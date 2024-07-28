@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 The Irish Grid ([EPSG:29903](https://epsg.io/29903)) is a coordinate reference system spanning the island of Ireland. Created by the Ordnance Survey Ireland (now [Tailte Éireann](https://www.tailte.ie)) and [Ordnance Survey of Northern Ireland](https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland), locations within the Irish Grid are defined by an X and Y coordinate.
 
-Irish grid references are an alternative way of recording locations on the Irish Grid. An Irish grid reference consists of a letter, optionally followed by an easting and northing. The letter (e.g. "N") refers to a particular 100 km square on the Irish Grid. There are 25 such 100 km squares - the letter "I" is skipped. The easting and northing refer to a square within the 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a particular 10 km square wtihin the 100 km square "N". A 5-digit easting and northing (e.g. "N 12345 67890") refers to a particular 1 m square.
+Irish grid references are an alternative way of recording locations on the Irish Grid. An Irish grid reference consists of a letter, optionally followed by an easting and northing. The letter (e.g. "N") refers to a particular 100 km square on the Irish Grid. There are 25 such 100 km squares - the letter "I" is skipped. The easting and northing refer to a square within the 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a particular 10 km square wtihin the 100 km square "N". A 5-digit easting and northing (e.g. "N 12345 67890") refers to a particular 1 m square. The tetrad form of Irish grid reference consists of a 10 km square reference followed by a letter (e.g. "N85R"). This refers to a particular 2 km square.
 
-There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/view=Spatial). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references to and from Irish Grid coordinates or sf objects that other R packages can work with. The igr package supports precisions of Irish grid reference in multiples of ten from 1 m to 100 km, mixes of precision, and Irish grid references with or without whitespace between letter, easting and northing.
+There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/view=Spatial). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references to and from Irish Grid coordinates or sf objects that other R packages can work with. The igr package supports precisions of Irish grid reference from 1 m to 100 km including tetrads, mixes of precision, and Irish grid references with or without whitespace between the grid reference components.
 
 When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
 
@@ -57,7 +57,7 @@ The validity of Irish grid references can be checked with the function `igr_is_v
 
 ```{r example-igr-valid}
 # Sample of valid and invalid Irish grid references
-igrs <- c("A", "A16", "A123678", "BAD", "I12", "", "B125", "Z")
+igrs <- c("A", "A16", "A123678", "BAD", "I12", "", "B125", "Z", "N12D")
 
 igr_is_valid(igrs)
 ```
@@ -66,15 +66,15 @@ igr_is_valid(igrs)
 To convert a vector of Irish grid references to Irish Grid coordinates use `igr_to_ig()`.
 
 ```{r example-igr-1}
-igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "W")
+igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "R10H", "X")
 
 igr_to_ig(igrs)
 ```
 
-The Irish grid references may have spaces between the grid letter, easting and northing:
+The Irish grid references may have spaces between the grid reference components:
 
 ```{r example-igr-2}
-igrs <- c("A", "D 12", "J 5 3", "M 50 90", "N 876 274", "S 12345 50000", "W")
+igrs <- c("A", "D 12", "J 5 3", "M 50 90", "N 876 274", "S 12345 50000", "R10 H", "X")
 
 igr_to_ig(igrs)
 ```
@@ -190,6 +190,8 @@ Precision can also be specified number of metres. Multiples of 10 from 1 m to 10
 
 ```{r example-ig-3-prevision}
 ig_to_igr(p, precision = 10000) # 10 km precision
+
+ig_to_igr(p, precision = 2000) # 2 km precision - tetrad form
 
 ig_to_igr(p, precision = 1) # 1 m precision
 ```

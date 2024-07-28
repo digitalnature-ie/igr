@@ -1,5 +1,6 @@
 x1 <- data.frame(igr = c("A"))
 x2 <- data.frame(igr = c("A", "Z90"))
+x2t <- data.frame(igr = c("A", "Z90Z"))
 x3 <- data.frame(igrefs = c("A", "Z90"), foo = c("foo_A", "foo_Z90"))
 xe <- data.frame(igr = c("A"), x = "1") # cannot have a column x
 xe1 <- data.frame(igr = c("AX")) # invalid grid reference
@@ -30,6 +31,11 @@ test_that("basic conversions", {
     st_igr_as_sf(x2),
     sf::st_as_sf(data.frame(igr = c("A", "Z90"), x = c(0, 490000), y = c(400000, 0)), crs = 29903, coords = c("x", "y"))
   )
+
+  expect_equal(
+    st_igr_as_sf(x2t),
+    sf::st_as_sf(data.frame(igr = c("A", "Z90Z"), x = c(0, 498000), y = c(400000, 8000)), crs = 29903, coords = c("x", "y"))
+  )
 })
 
 test_that("igrefs", {
@@ -45,7 +51,7 @@ test_that("multiple columns", {
     st_igr_as_sf(x3, "igrefs"),
     sf::st_as_sf(data.frame(igrefs = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0)), crs = 29903, coords = c("x", "y"))
   )
-  
+
   expect_equal(
     st_igr_as_sf(x3, 1),
     sf::st_as_sf(data.frame(igrefs = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0)), crs = 29903, coords = c("x", "y"))
@@ -116,4 +122,5 @@ test_that("catch invalid grid references", {
   expect_error(st_igr_as_sf(xe3), class = "bad_grid_ref")
   expect_error(st_igr_as_sf(xe4), class = "bad_grid_ref")
   expect_error(st_igr_as_sf(xe1, precision = "p1"), "AX", class = "bad_grid_ref")
+  expect_error(st_igr_as_sf(x2t, tetrad = FALSE), "Z90Z", class = "bad_grid_ref")
 })

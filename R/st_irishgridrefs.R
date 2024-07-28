@@ -25,6 +25,9 @@
 #'
 #' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
 #' st_irishgridrefs(x_sf, precision = 1000)
+#' 
+#' # Convert into Irish grid references with 2 km precision (tetrad form)
+#' st_irishgridrefs(x_sf, precision = 2000)
 #'
 #' # Insert a space between the 100 km grid letter, easting, and northing
 #' st_irishgridrefs(x_sf, sep = " ")
