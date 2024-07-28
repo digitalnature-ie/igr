@@ -21,7 +21,9 @@ Suggests:
     maps,
     rmarkdown,
     testthat (>= 3.0.0),
-    tmap
+    tmap,
+    tmaptools,
+    units
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

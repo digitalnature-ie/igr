@@ -25,8 +25,7 @@ to a particular 100 km square. An Irish grid reference with a 1-digit
 easting and northing (e.g. “N85”) refers to a 10 km square. A 5-digit
 easting and northing (e.g. “N 12345 67890”) refers to a 1 m square. The
 tetrad form of Irish grid reference consists of a 10 km square reference
-followed by a letter (e.g. “N85R”). This refers to a 2 km square within
-the 10 km square referenced.
+followed by a letter (e.g. “N85R”). This refers to a 2 km square.
 
 This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2
 km, 10 km and 100 km precision. Irish grid references can be of mixed
