@@ -4,10 +4,12 @@
 \alias{igr_is_valid}
 \title{Check if Irish grid references are valid}
 \usage{
-igr_is_valid(x)
+igr_is_valid(x, tetrad = TRUE)
 }
 \arguments{
 \item{x}{A character vector of Irish grid references.}
+
+\item{tetrad}{Permit tetrad form of Irish grid reference?}
 }
 \value{
 A logical vector indicating the validity of each Irish grid
@@ -21,11 +23,19 @@ Valid Irish grid references consist of a letter (other than I) optionally
 followed by both an easting and northing. The easting and northing must be of
 the same length of between 1 and 5 digits. There may be whitespace between
 the letter, easting and northing.
+
+The tetrad form of Irish grid reference consists of a valid 10 km precision
+Irish grid reference (one letter, one digit easting and one digit northing)
+followed by a letter (other than O). This refers to a 2 km square within the
+10 km square referenced.
 }
 \examples{
 # A vector of alternating valid and invalid Irish grid references
-v <- c("N8090", "D 12 345 88800", "W34", "I30", "W", "A123", "B1234", "")
+v <- c("N8090", "D 12 345 88800", "W34", "I30", "W", "A123", "B1234", "", "A12Z", "A12O")
 
 # Check validity of Irish Grid coordinates
 igr_is_valid(v)
+
+# Check validity of Irish Grid coordinates, dissallowing tetrad form
+igr_is_valid(v, tetrad = FALSE) 
 }

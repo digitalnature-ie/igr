@@ -35,6 +35,12 @@ test_that("all precisions 100km > 1m", {
   expect_equal(igr_to_ig(c("A1234512345", "B11")), list(x = c(012345, 110000), y = c(412345, 410000)))
 })
 
+test_that("tetrads valid", {
+  expect_equal(igr_to_ig("A00A"), list(x = 000000, y = 400000))
+  expect_equal(igr_to_ig("A00Z"), list(x = 008000, y = 408000))
+  expect_equal(igr_to_ig("Z00Y"), list(x = 408000, y = 006000))
+})
+
 test_that("rename coordinates", {
   expect_equal(igr_to_ig("A00", coords = c("x", "y")), list(x = 0, y = 400000))
   expect_equal(igr_to_ig("A00", coords = c("e", "n")), list(e = 0, n = 400000))
@@ -64,4 +70,10 @@ test_that("Warning for invalid grid references", {
   expect_warning(igr_to_ig("A 0 0 00"), "A 0 0 00")
   expect_warning(igr_to_ig(c("A", "B", "A0")), "A0")
   expect_warning(igr_to_ig(c("A", "B", "A0", "B1234", "C0")), "A0.*C0")
+})
+
+test_that("Warning for invalid tetrad grid references", {
+  expect_warning(igr_to_ig("A99A", tetrad=FALSE))
+  expect_warning(igr_to_ig("A99O", tetrad=TRUE))
+  expect_warning(igr_to_ig("A99O", tetrad=FALSE))
 })

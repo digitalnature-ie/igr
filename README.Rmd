@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-<!-- [![CRAN status](https://www.r-pkg.org/badges/version/igr)](https://CRAN.R-project.org/package=igr) -->
+[![CRAN status](https://www.r-pkg.org/badges/version/igr)](https://CRAN.R-project.org/package=igr)
 [![R-CMD-check](https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://codecov.io/gh/digitalnature-ie/igr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/digitalnature-ie/igr?branch=main)
@@ -25,9 +25,9 @@ knitr::opts_chunk$set(
 
 Convert between Irish grid references and Irish Grid coordinates or an sf object.
 
-An Irish grid reference consists of a letter, optionally followed by an easting and northing. Each Irish grid reference refers to a square on the Irish Grid ([EPSG:29903](https://epsg.io/29903)). A letter alone (e.g. "N") refers to a particular 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a 10 km square. A 5-digit easting and northing (e.g. "N 12345 67890") refers to a 1 m square.
+An Irish grid reference consists of a letter, optionally followed by an easting and northing, and possibly a final letter. Each Irish grid reference refers to a square on the Irish Grid ([EPSG:29903](https://epsg.io/29903)). A letter alone (e.g. "N") refers to a particular 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N85") refers to a 10 km square. A 5-digit easting and northing (e.g. "N 12345 67890") refers to a 1 m square. The tetrad form of Irish grid reference consists of a 10 km square reference followed by a letter (e.g. "N85R"). This refers to a 2 km square.
 
-This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 10 km and 100 km precision. Irish grid references can be of mixed precision, and whitespace between letter, easting and northing is optional.
+This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2 km, 10 km and 100 km precision. Irish grid references can be of mixed precision, and whitespace between the components of the Irish grid reference is optional.
 
 When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
 
@@ -71,7 +71,7 @@ To convert to Irish grid references:
 library(igr)
 
 # Sample grid references
-igrs <- c("A", "A16", "A123678", "BAD", "I12", "", "B125", "Z")
+igrs <- c("A", "A16", "A123678", "BAD", "I12", "", "B125", "Z", "N12D")
 
 igr_is_valid(igrs)
 ```
@@ -80,10 +80,11 @@ igr_is_valid(igrs)
 
 ```{r example-igr-as-sf}
 # Sample grid references
-igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "W")
+igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "R10H", "X")
 
 # Converting to Irish Grid coordinates
 igr_to_ig(igrs)
+
 # Sample grid references in a data.frame
 igrs_df <- data.frame(igr = igrs)
 
@@ -92,9 +93,12 @@ st_igr_as_sf(igrs_df, "igr")
 ```
 
 ```{r example-igr-points, message=FALSE, echo=FALSE, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
-if (requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly = TRUE)) {
+if (requireNamespace("maps", quietly = TRUE) &
+  requireNamespace("tmap", quietly = TRUE) &
+  requireNamespace("units", quietly = TRUE)) {
   library(maps)
   library(tmap)
+  library(units)
 
   points_sf <- st_igr_as_sf(igrs_df, "igr")
 
@@ -106,11 +110,19 @@ if (requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly 
     sf::st_as_sf(ie_uk) |>
     sf::st_transform(29903)
 
-  tm_shape(points_sf, ext = 1.4) +
-    tm_dots(size = 1, col = "cornflowerblue") +
-    tm_text("igr", ymod = 1) +
-    tm_shape(ie_uk_sf) +
-    tm_borders()
+  if (packageVersion("tmap") > "3.99") {
+    tm_shape(points_sf, ext = 1.4) +
+      tm_dots(size = 1, fill = "cornflowerblue") +
+      tm_text("igr", ymod = 1) +
+      tm_shape(ie_uk_sf) +
+      tm_borders()
+  } else {
+    tm_shape(points_sf, ext = 1.4) +
+      tm_dots(size = 1, col = "cornflowerblue") +
+      tm_text("igr", ymod = 1) +
+      tm_shape(ie_uk_sf) +
+      tm_borders()
+  }
 }
 ```
 
@@ -124,21 +136,33 @@ st_igr_as_sf(igrs_df, "igr", polygon = TRUE)
 if (requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly = TRUE)) {
   polygons_sf <- st_igr_as_sf(igrs_df, "igr", polygons = TRUE)
 
+  # identify small polygons requiring highlighting
   polygons_sf$area <- sf::st_area(polygons_sf)
+  small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(5000000, m^2), ]
 
-  small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(1000000, m^2), ]
-
-
-  tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
-    tm_borders() +
-    tm_shape(polygons_sf) +
-    tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
-    tm_text("igr", ymod = -1) +
-    tm_shape(small_polygons_sf) +
-    tm_bubbles(
-      alpha = 0, border.col = "orangered", border.lwd = 2,
-      size = 0.8
-    )
+  if (packageVersion("tmap") > "3.99") {
+    tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+      tm_borders() +
+      tm_shape(polygons_sf) +
+      tm_polygons(size = 1, fill = "cornflowerblue", fill_alpha = 0.5) +
+      tm_text("igr", ymod = -1) +
+      tm_shape(small_polygons_sf) +
+      tm_bubbles(
+        fill_alpha = 0, col = "orangered", lwd = 2,
+        size = 0.8
+      )
+  } else {
+    tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+      tm_borders() +
+      tm_shape(polygons_sf) +
+      tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
+      tm_text("igr", ymod = -1) +
+      tm_shape(small_polygons_sf) +
+      tm_bubbles(
+        alpha = 0, border.col = "orangered", border.lwd = 2,
+        size = 0.8
+      )
+  }
 }
 ```
 
@@ -150,8 +174,10 @@ p <- matrix(c(0, 490000, 400000, 0, 453000, 4000), ncol = 2, byrow = TRUE)
 colnames(p) <- c("x", "y")
 
 p
+
 # Convert to Irish grid references
 ig_to_igr(p)
+
 # Sample Irish Grid coordinates in an sf object
 p_sf <- sf::st_as_sf(data.frame(p), crs = 29903, coords = c("x", "y"))
 

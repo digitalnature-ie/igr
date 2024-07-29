@@ -6,8 +6,8 @@
 #' Either `digits` or `precision` must be specified. `precision` overrides
 #' `digits`.
 #'
-#' @param x A matrix containing Irish Grid X and Y coordinates in the first
-#'   and second columns respectively.
+#' @param x A matrix containing Irish Grid X and Y coordinates in the first and
+#'   second columns respectively.
 #' @param digits An integer, the number of digits for both easting and northing
 #'   in the Irish grid references.
 #'   * `0`: equivalent to a precision of 100 km.
@@ -17,9 +17,10 @@
 #'   * `4`: equivalent to a precision of 10 m.
 #'   * `5`: equivalent to a precision of 1 m.
 #' @param precision An integer, the precision of the Irish grid references in
-#'   metres: `1`, `10`, `100`, `1000`, `10000`, or `100000`. Overrides `digits`.
-#' @param sep A character string to separate the 100 km grid letter, easting,
-#'   and northing.
+#'   metres: `1`, `10`, `100`, `1000`, `2000`, `10000`, or `100000`. Overrides
+#'   `digits`. Use `2000` to produce the tetrad form of Irish grid reference.
+#' @param sep A character string to place between the 100 km grid letter,
+#'   easting, northing, and tetrad.
 #'
 #' @return A character vector of Irish grid references.
 #' @export
@@ -41,6 +42,9 @@
 #'
 #' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
 #' ig_to_igr(m, precision = 1000)
+#' 
+#' # Convert into Irish grid references with 2 km precision (tetrad form)
+#' ig_to_igr(m, precision = 2000)
 ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
   if (is.na(digits) & is.null(precision)) {
     stop_custom("no_precision", "precision or digits must be specified")
@@ -93,16 +97,29 @@ ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
     )
   }
 
-  # calculate x and y offsets within 100km square to required precision
-  offsets <- x %% 100000 |>
-    formatC(width = 5, format = "d", flag = "0") |>
-    strtrim(ifelse(is.null(precision), digits, 5 - log10(precision)))
+  # for tetrads the base grid reference is the 10000 m grid reference
+  base_precision <- ifelse(precision == 2000, 10000, precision)
+
+  # calculate x and y offsets within 100km square to 1m  precision
+  offsets_1m <- x %% 100000 |>
+    formatC(width = 5, format = "d", flag = "0")
+
+  offsets_base <- offsets_1m |>
+    strtrim(ifelse(is.null(precision), digits, 5 - log10(base_precision)))
+
+  tetrads <- ""
+  
+  if(!is.null(precision)) {
+    if(precision == 2000) {
+      tetrads <- mapply(lookup_tetrad, x = x[, 1], y = x[, 2])
+    }
+  }
 
   # concatenate into Irish Grid References
   res <- ifelse(
     invalid,
     NA_character_,
-    paste(igr_letters, offsets[, 1], offsets[, 2], sep = sep)
+    trimws(paste(igr_letters, offsets_base[, 1], offsets_base[, 2], tetrads, sep = sep))
   )
 
   return(res)

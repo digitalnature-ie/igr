@@ -21,10 +21,11 @@ in the Irish grid references.
 }}
 
 \item{precision}{An integer, the precision of the Irish grid references in
-metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
+metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{2000}, \code{10000}, or \code{100000}. Overrides
+\code{digits}. Use \code{2000} to produce the tetrad form of Irish grid reference.}
 
-\item{sep}{A character string to separate the 100 km grid letter, easting,
-and northing.}
+\item{sep}{A character string to place between the 100 km grid letter,
+easting, northing, and tetrad.}
 }
 \value{
 A character vector of Irish grid references.
@@ -49,6 +50,9 @@ st_irishgridrefs(x_sf, digits = 4)
 
 # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
 st_irishgridrefs(x_sf, precision = 1000)
+
+# Convert into Irish grid references with 2 km precision (tetrad form)
+st_irishgridrefs(x_sf, precision = 2000)
 
 # Insert a space between the 100 km grid letter, easting, and northing
 st_irishgridrefs(x_sf, sep = " ")

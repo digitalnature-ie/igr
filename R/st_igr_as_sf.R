@@ -31,7 +31,7 @@
 #'
 #' @examples
 #' # A data.frame containing two Irish grid references
-#' x <- data.frame(igr = c("A00", "N8000"))
+#' x <- data.frame(igr = c("A00", "N8000", "D12T"))
 #'
 #' # Convert a data.frame of Irish grid references to an sf object in the
 #' # Irish Grid coordinate reference system
@@ -54,7 +54,8 @@ st_igr_as_sf <- function(
     add_coords = FALSE,
     coords = c("x", "y"),
     precision = NULL,
-    polygons = FALSE) {
+    polygons = FALSE,
+    tetrad = TRUE) {
   # if x includes column names in coords then stop
   coords_existing <- intersect(colnames(x), coords)
   if (length(coords_existing) > 0) {
@@ -82,7 +83,7 @@ st_igr_as_sf <- function(
   # raise as error
   tryCatch(
     {
-      ig <- igr_to_ig(x[[igrefs]], coords = coords, precision = igr_precision)
+      ig <- igr_to_ig(x[[igrefs]], coords = coords, precision = igr_precision, tetrad = tetrad)
     },
     warning = function(w) {
       stop_custom(
@@ -110,7 +111,7 @@ st_igr_as_sf <- function(
       # remove precision column
       res_sf <- res_sf[, !names(res_sf) == "prec"]
     } else {
-      # rename res column
+      # rename precision column
       names(res_sf)[names(res_sf) == "prec"] <- precision
     }
   } else {

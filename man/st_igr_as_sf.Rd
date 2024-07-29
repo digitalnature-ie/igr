@@ -12,7 +12,8 @@ st_igr_as_sf(
   add_coords = FALSE,
   coords = c("x", "y"),
   precision = NULL,
-  polygons = FALSE
+  polygons = FALSE,
+  tetrad = TRUE
 )
 }
 \arguments{
@@ -42,6 +43,8 @@ Irish grid reference in metres, if required.}
 features located at the south-west corner of each Irish grid reference. If
 \code{TRUE} the result will contain polygon features spanning the extent of each
 Irish grid reference.}
+
+\item{tetrad}{Permit tetrad form of Irish grid reference?}
 }
 \value{
 An sf object containing point or polygon features for each Irish grid
@@ -58,7 +61,7 @@ also be returned.
 }
 \examples{
 # A data.frame containing two Irish grid references
-x <- data.frame(igr = c("A00", "N8000"))
+x <- data.frame(igr = c("A00", "N8000", "D12T"))
 
 # Convert a data.frame of Irish grid references to an sf object in the
 # Irish Grid coordinate reference system

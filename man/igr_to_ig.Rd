@@ -4,7 +4,7 @@
 \alias{igr_to_ig}
 \title{Convert Irish grid references to Irish Grid coordinates}
 \usage{
-igr_to_ig(x, coords = c("x", "y"), precision = NULL)
+igr_to_ig(x, coords = c("x", "y"), precision = NULL, tetrad = TRUE)
 }
 \arguments{
 \item{x}{A character vector of Irish grid references. See \code{\link[=igr_is_valid]{igr_is_valid()}}
@@ -15,6 +15,8 @@ Irish Grid X and Y coordinates respectively.}
 
 \item{precision}{The name of the column to contain the precision of each
 Irish grid reference in metres, if required.}
+
+\item{tetrad}{Permit tetrad form of Irish grid reference?}
 }
 \value{
 A list containing Irish Grid X and Y coordinates and, optionally, the
@@ -28,7 +30,7 @@ in metres can be returned.
 }
 \examples{
 # A vector of Irish grid references of different precisions
-v <- c("N8090", "D1234588800", "W34", "")
+v <- c("N8090", "D1234588800", "W34", "", "D12T")
 
 # Convert to Irish Grid coordinates
 igr_to_ig(v)

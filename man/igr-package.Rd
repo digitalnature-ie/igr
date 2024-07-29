@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Convert between Irish grid references and Irish Grid coordinates. Irish grid references can also be converted to or from an 'sf' object in any coordinate reference system. Precisions from 1 m to 100 km are supported, as are datasets with mixed precision. Conversion to 'sf' polygons is precision-aware.
+Convert between Irish grid references and Irish Grid coordinates. Irish grid references can also be converted to or from an 'sf' object in any coordinate reference system. Precisions from 1 m to 100 km including 2 km tetrads are supported, as are datasets with mixed precision. Conversion to 'sf' polygons is precision-aware.
 }
 \seealso{
 Useful links:

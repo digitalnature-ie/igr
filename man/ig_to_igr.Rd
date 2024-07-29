@@ -7,8 +7,8 @@
 ig_to_igr(x, digits = 3, precision = NULL, sep = "")
 }
 \arguments{
-\item{x}{A matrix containing Irish Grid X and Y coordinates in the first
-and second columns respectively.}
+\item{x}{A matrix containing Irish Grid X and Y coordinates in the first and
+second columns respectively.}
 
 \item{digits}{An integer, the number of digits for both easting and northing
 in the Irish grid references.
@@ -22,10 +22,11 @@ in the Irish grid references.
 }}
 
 \item{precision}{An integer, the precision of the Irish grid references in
-metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{10000}, or \code{100000}. Overrides \code{digits}.}
+metres: \code{1}, \code{10}, \code{100}, \code{1000}, \code{2000}, \code{10000}, or \code{100000}. Overrides
+\code{digits}. Use \code{2000} to produce the tetrad form of Irish grid reference.}
 
-\item{sep}{A character string to separate the 100 km grid letter, easting,
-and northing.}
+\item{sep}{A character string to place between the 100 km grid letter,
+easting, northing, and tetrad.}
 }
 \value{
 A character vector of Irish grid references.
@@ -55,4 +56,7 @@ ig_to_igr(m, digits = 4)
 
 # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
 ig_to_igr(m, precision = 1000)
+
+# Convert into Irish grid references with 2 km precision (tetrad form)
+ig_to_igr(m, precision = 2000)
 }
