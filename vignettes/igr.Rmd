@@ -100,11 +100,9 @@ These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) packag
 ```{r example-igr-poi-plot, fig.height=4, message=FALSE, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
 if (requireNamespace("maps", quietly = TRUE) &
   requireNamespace("tmap", quietly = TRUE) &
-  requireNamespace("tmaptools", quietly = TRUE) &
   requireNamespace("units", quietly = TRUE)) {
   library(maps)
   library(tmap)
-  library(tmaptools)
   library(units)
 
   ie_uk_sf <- maps::map("world",
@@ -115,13 +113,19 @@ if (requireNamespace("maps", quietly = TRUE) &
     sf::st_as_sf(ie_uk) |>
     sf::st_transform(29903)
 
-  bb_sf <- tmaptools::bb(points_sf, ext = 1.4)
-
-  tm_shape(points_sf, bbox = bb_sf, is.main = TRUE) +
-    tm_dots(size = 1, fill = "cornflowerblue") +
-    tm_text("igr", ymod = 1) +
-    tm_shape(ie_uk_sf) +
-    tm_borders()
+  if (packageVersion("tmap") > "3.99") {
+    tm_shape(points_sf, ext = 1.4) +
+      tm_dots(size = 1, fill = "cornflowerblue") +
+      tm_text("igr", ymod = 1) +
+      tm_shape(ie_uk_sf) +
+      tm_borders()
+  } else {
+    tm_shape(points_sf, ext = 1.4) +
+      tm_dots(size = 1, col = "cornflowerblue") +
+      tm_text("igr", ymod = 1) +
+      tm_shape(ie_uk_sf) +
+      tm_borders()
+  }
 }
 ```
 
@@ -141,16 +145,29 @@ if (exists("ie_uk_sf")) {
   polygons_sf$area <- sf::st_area(polygons_sf)
   small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(5000000, m^2), ]
 
-  tm_shape(ie_uk_sf, bbox = bb_sf, is.main = TRUE) +
-    tm_borders() +
-    tm_shape(polygons_sf) +
-    tm_polygons(size = 1, fill = "cornflowerblue", fill_alpha = 0.5) +
-    tm_text("igr", ymod = -1) +
-    tm_shape(small_polygons_sf) +
-    tm_bubbles(
-      fill_alpha = 0, col = "orangered", lwd = 2,
-      size = 0.8
-    )
+  if (packageVersion("tmap") > "3.99") {
+    tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+      tm_borders() +
+      tm_shape(polygons_sf) +
+      tm_polygons(size = 1, fill = "cornflowerblue", fill_alpha = 0.5) +
+      tm_text("igr", ymod = -1) +
+      tm_shape(small_polygons_sf) +
+      tm_bubbles(
+        fill_alpha = 0, col = "orangered", lwd = 2,
+        size = 0.8
+      )
+  } else {
+    tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+      tm_borders() +
+      tm_shape(polygons_sf) +
+      tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
+      tm_text("igr", ymod = -1) +
+      tm_shape(small_polygons_sf) +
+      tm_bubbles(
+        alpha = 0, border.col = "orangered", border.lwd = 2,
+        size = 0.8
+      )
+  }
 }
 ```
 
