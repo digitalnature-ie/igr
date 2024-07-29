@@ -90,16 +90,18 @@ such 100 km squares - the letter “I” is skipped. The easting and
 northing refer to a square within the 100 km square. An Irish grid
 reference with a 1-digit easting and northing (e.g. “N85”) refers to a
 particular 10 km square wtihin the 100 km square “N”. A 5-digit easting
-and northing (e.g. “N 12345 67890”) refers to a particular 1 m
-square.</p>
+and northing (e.g. “N 12345 67890”) refers to a particular 1 m square.
+The tetrad form of Irish grid reference consists of a 10 km square
+reference followed by a letter (e.g. “N85R”). This refers to a
+particular 2 km square.</p>
 <p>There are many R packages facilitating <a href="https://cran.r-project.org/view=Spatial" class="external-link">spatial data analysis and
 visualisation</a>. The igr package is designed to simplify using
 datasets containing Irish grid references in R. It translates Irish grid
 references to and from Irish Grid coordinates or sf objects that other R
 packages can work with. The igr package supports precisions of Irish
-grid reference in multiples of ten from 1 m to 100 km, mixes of
-precision, and Irish grid references with or without whitespace between
-letter, easting and northing.</p>
+grid reference from 1 m to 100 km including tetrads, mixes of precision,
+and Irish grid references with or without whitespace between the grid
+reference components.</p>
 <p>When converting Irish grid references to point locations (using
 <code><a href="../reference/igr_to_ig.html">igr_to_ig()</a></code>, or <code><a href="../reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with the
 default <code>polygons=FALSE</code>), the south west corners of the
@@ -138,10 +140,10 @@ in any coordinate reference system.</p>
 function <code><a href="../reference/igr_is_valid.html">igr_is_valid()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Sample of valid and invalid Irish grid references</span></span>
-<span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A16"</span>, <span class="st">"A123678"</span>, <span class="st">"BAD"</span>, <span class="st">"I12"</span>, <span class="st">""</span>, <span class="st">"B125"</span>, <span class="st">"Z"</span><span class="op">)</span></span>
+<span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A16"</span>, <span class="st">"A123678"</span>, <span class="st">"BAD"</span>, <span class="st">"I12"</span>, <span class="st">""</span>, <span class="st">"B125"</span>, <span class="st">"Z"</span>, <span class="st">"N12D"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/igr_is_valid.html">igr_is_valid</a></span><span class="op">(</span><span class="va">igrs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="converting-from-irish-grid-references">Converting from Irish grid references<a class="anchor" aria-label="anchor" href="#converting-from-irish-grid-references"></a>
@@ -149,38 +151,38 @@ function <code><a href="../reference/igr_is_valid.html">igr_is_valid()</a></code
 <p>To convert a vector of Irish grid references to Irish Grid
 coordinates use <code><a href="../reference/igr_to_ig.html">igr_to_ig()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D12"</span>, <span class="st">"J53"</span>, <span class="st">"M5090"</span>, <span class="st">"N876274"</span>, <span class="st">"S1234550000"</span>, <span class="st">"W"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D12"</span>, <span class="st">"J53"</span>, <span class="st">"M5090"</span>, <span class="st">"N876274"</span>, <span class="st">"S1234550000"</span>, <span class="st">"R10H"</span>, <span class="st">"X"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">igrs</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 100000</span></span>
+<span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 112000 200000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000      0</span></span></code></pre></div>
-<p>The Irish grid references may have spaces between the grid letter,
-easting and northing:</p>
+<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000 104000      0</span></span></code></pre></div>
+<p>The Irish grid references may have spaces between the grid reference
+components:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D 12"</span>, <span class="st">"J 5 3"</span>, <span class="st">"M 50 90"</span>, <span class="st">"N 876 274"</span>, <span class="st">"S 12345 50000"</span>, <span class="st">"W"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D 12"</span>, <span class="st">"J 5 3"</span>, <span class="st">"M 50 90"</span>, <span class="st">"N 876 274"</span>, <span class="st">"S 12345 50000"</span>, <span class="st">"R10 H"</span>, <span class="st">"X"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">igrs</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 100000</span></span>
+<span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 112000 200000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000      0</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000 104000      0</span></span></code></pre></div>
 <p>These sample Irish grid references have a mix of precisions. The
 precisions in metres can be returned by supplying a column name for the
 precision data:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">igrs</span>, precision <span class="op">=</span> <span class="st">"prec"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $x</span></span>
-<span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 100000</span></span>
+<span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 112000 200000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $y</span></span>
-<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000      0</span></span>
+<span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000 104000      0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $prec</span></span>
-<span><span class="co">#&gt; [1] 1e+05 1e+04 1e+04 1e+03 1e+02 1e+00 1e+05</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 1e+05 1e+04 1e+04 1e+03 1e+02 1e+00 2e+03 1e+05</span></span></code></pre></div>
 <p>A list or data.frame of Irish grid references can be converted to an
 sf object using <code><a href="../reference/st_igr_as_sf.html">st_igr_as_sf()</a></code>. By default the geometries
 returned are points located at the south west corner of each grid
@@ -191,7 +193,7 @@ reference, and the coordinate reference system is Irish Grid (<a href="https://e
 <span><span class="va">points_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">igr_df</span>, <span class="st">"igr"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">points_sf</span></span>
-<span><span class="co">#&gt; Simple feature collection with 7 features and 1 field</span></span>
+<span><span class="co">#&gt; Simple feature collection with 8 features and 1 field</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 350000 ymax: 420000</span></span>
@@ -203,14 +205,17 @@ reference, and the coordinate reference system is Irish Grid (<a href="https://e
 <span><span class="co">#&gt; 4       M 50 90 POINT (150000 290000)</span></span>
 <span><span class="co">#&gt; 5     N 876 274 POINT (287600 227400)</span></span>
 <span><span class="co">#&gt; 6 S 12345 50000 POINT (212345 150000)</span></span>
-<span><span class="co">#&gt; 7             W       POINT (1e+05 0)</span></span></code></pre></div>
+<span><span class="co">#&gt; 7         R10 H POINT (112000 104000)</span></span>
+<span><span class="co">#&gt; 8             X       POINT (2e+05 0)</span></span></code></pre></div>
 <p>These points can be plotted by the <a href="https://r-tmap.github.io/tmap/" class="external-link">tmap</a> package. A basic outline
 of Ireland and the United Kingdom can be retrieved from the <a href="https://cran.r-project.org/package=maps" class="external-link">maps</a> package.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"maps"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"units"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">maps</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-tmap.github.io/tmap/" class="external-link">tmap</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-quantities.github.io/units/" class="external-link">units</a></span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">ie_uk_sf</span> <span class="op">&lt;-</span> <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>,</span>
 <span>    regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ireland"</span>, <span class="st">"UK"</span><span class="op">)</span>,</span>
@@ -220,11 +225,19 @@ of Ireland and the United Kingdom can be retrieved from the <a href="https://cra
 <span>    <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ie_uk</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="fl">29903</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">points_sf</span>, ext <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_symbols.html" class="external-link">tm_dots</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"cornflowerblue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"tmap"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="st">"3.99"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">points_sf</span>, ext <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_symbols.html" class="external-link">tm_dots</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, fill <span class="op">=</span> <span class="st">"cornflowerblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">points_sf</span>, ext <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_symbols.html" class="external-link">tm_dots</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"cornflowerblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="igr_files/figure-html/example-igr-poi-plot-1.png" alt="A map of Ireland with a dot at the south-west corner of each sample grid reference." width="700"></p>
 <p>The Irish grid references can also be converted to polygon
@@ -235,7 +248,7 @@ polygons with different sizes.</p>
 <code class="sourceCode R"><span><span class="va">polygons_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">igr_df</span>, <span class="st">"igr"</span>, polygons <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">polygons_sf</span></span>
-<span><span class="co">#&gt; Simple feature collection with 7 features and 1 field</span></span>
+<span><span class="co">#&gt; Simple feature collection with 8 features and 1 field</span></span>
 <span><span class="co">#&gt; Geometry type: POLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 360000 ymax: 5e+05</span></span>
@@ -247,15 +260,38 @@ polygons with different sizes.</p>
 <span><span class="co">#&gt; 4       M 50 90 POLYGON ((151000 291000, 15...</span></span>
 <span><span class="co">#&gt; 5     N 876 274 POLYGON ((287700 227500, 28...</span></span>
 <span><span class="co">#&gt; 6 S 12345 50000 POLYGON ((212346 150001, 21...</span></span>
-<span><span class="co">#&gt; 7             W POLYGON ((2e+05 1e+05, 2e+0...</span></span></code></pre></div>
+<span><span class="co">#&gt; 7         R10 H POLYGON ((114000 106000, 11...</span></span>
+<span><span class="co">#&gt; 8             X POLYGON ((3e+05 1e+05, 3e+0...</span></span></code></pre></div>
 <p>Plotting these polygons:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"ie_uk_sf"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span>, bbox <span class="op">=</span> <span class="va">points_sf</span>, ext <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">polygons_sf</span>, ext <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"cornflowerblue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="co"># identify small polygons requiring highlighting</span></span>
+<span>  <span class="va">polygons_sf</span><span class="op">$</span><span class="va">area</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html" class="external-link">st_area</a></span><span class="op">(</span><span class="va">polygons_sf</span><span class="op">)</span></span>
+<span>  <span class="va">small_polygons_sf</span> <span class="op">&lt;-</span> <span class="va">polygons_sf</span><span class="op">[</span><span class="va">polygons_sf</span><span class="op">$</span><span class="va">area</span> <span class="op">&lt;=</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">5000000</span>, <span class="va">m</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"tmap"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="st">"3.99"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span>, bbox <span class="op">=</span> <span class="va">points_sf</span>, ext <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">polygons_sf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, fill <span class="op">=</span> <span class="st">"cornflowerblue"</span>, fill_alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">small_polygons_sf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_symbols.html" class="external-link">tm_bubbles</a></span><span class="op">(</span></span>
+<span>        fill_alpha <span class="op">=</span> <span class="fl">0</span>, col <span class="op">=</span> <span class="st">"orangered"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        size <span class="op">=</span> <span class="fl">0.8</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">ie_uk_sf</span>, bbox <span class="op">=</span> <span class="va">points_sf</span>, ext <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_borders</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">polygons_sf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_polygons.html" class="external-link">tm_polygons</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"cornflowerblue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_text.html" class="external-link">tm_text</a></span><span class="op">(</span><span class="st">"igr"</span>, ymod <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_shape.html" class="external-link">tm_shape</a></span><span class="op">(</span><span class="va">small_polygons_sf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://r-tmap.github.io/tmap/reference/tm_symbols.html" class="external-link">tm_bubbles</a></span><span class="op">(</span></span>
+<span>        alpha <span class="op">=</span> <span class="fl">0</span>, border.col <span class="op">=</span> <span class="st">"orangered"</span>, border.lwd <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        size <span class="op">=</span> <span class="fl">0.8</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="igr_files/figure-html/example-igr-pol-plot-1.png" alt="A map of Ireland with polygons spanning each sample grid reference. The polygons range in size from 100 km square to 1 m square." width="700"></p>
 </div>
@@ -278,16 +314,17 @@ invalid Irish grid references can be filtered out using
 <span><span class="co">#&gt; 4        M 50 90</span></span>
 <span><span class="co">#&gt; 5      N 876 274</span></span>
 <span><span class="co">#&gt; 6  S 12345 50000</span></span>
-<span><span class="co">#&gt; 7              W</span></span>
-<span><span class="co">#&gt; 8            BAD</span></span>
-<span><span class="co">#&gt; 9              I</span></span>
-<span><span class="co">#&gt; 10              </span></span>
-<span><span class="co">#&gt; 11           123</span></span>
-<span><span class="co">#&gt; 12            N1</span></span>
+<span><span class="co">#&gt; 7          R10 H</span></span>
+<span><span class="co">#&gt; 8              X</span></span>
+<span><span class="co">#&gt; 9            BAD</span></span>
+<span><span class="co">#&gt; 10             I</span></span>
+<span><span class="co">#&gt; 11              </span></span>
+<span><span class="co">#&gt; 12           123</span></span>
+<span><span class="co">#&gt; 13            N1</span></span>
 <span><span class="va">valid_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">some_invalid_df</span><span class="op">[</span><span class="fu"><a href="../reference/igr_is_valid.html">igr_is_valid</a></span><span class="op">(</span><span class="va">some_invalid_df</span><span class="op">$</span><span class="va">igr</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">valid_sf</span></span>
-<span><span class="co">#&gt; Simple feature collection with 7 features and 1 field</span></span>
+<span><span class="co">#&gt; Simple feature collection with 8 features and 1 field</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 350000 ymax: 420000</span></span>
@@ -299,7 +336,8 @@ invalid Irish grid references can be filtered out using
 <span><span class="co">#&gt; 4       M 50 90 POINT (150000 290000)</span></span>
 <span><span class="co">#&gt; 5     N 876 274 POINT (287600 227400)</span></span>
 <span><span class="co">#&gt; 6 S 12345 50000 POINT (212345 150000)</span></span>
-<span><span class="co">#&gt; 7             W       POINT (1e+05 0)</span></span></code></pre></div>
+<span><span class="co">#&gt; 7         R10 H POINT (112000 104000)</span></span>
+<span><span class="co">#&gt; 8             X       POINT (2e+05 0)</span></span></code></pre></div>
 <p>In tidy r this can be written as:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valid_df</span> <span class="op">&lt;-</span> <span class="va">some_invalid_df</span> <span class="op">|&gt;</span></span>
@@ -345,6 +383,9 @@ from 1 m to 100,000 m (100 km) are supported. Any value supplied for
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ig_to_igr.html">ig_to_igr</a></span><span class="op">(</span><span class="va">p</span>, precision <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span> <span class="co"># 10 km precision</span></span>
 <span><span class="co">#&gt; [1] "A09" "Z00" "Z50"</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/ig_to_igr.html">ig_to_igr</a></span><span class="op">(</span><span class="va">p</span>, precision <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span> <span class="co"># 2 km precision - tetrad form</span></span>
+<span><span class="co">#&gt; [1] "A09A" "Z00A" "Z50H"</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/ig_to_igr.html">ig_to_igr</a></span><span class="op">(</span><span class="va">p</span>, precision <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># 1 m precision</span></span>
 <span><span class="co">#&gt; [1] "A0000090000" "Z0000000000" "Z5300004000"</span></span></code></pre></div>

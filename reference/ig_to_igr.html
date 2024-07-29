@@ -56,8 +56,8 @@ references at the specified precision.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A matrix containing Irish Grid X and Y coordinates in the first
-and second columns respectively.</p></dd>
+<dd><p>A matrix containing Irish Grid X and Y coordinates in the first and
+second columns respectively.</p></dd>
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
@@ -73,12 +73,13 @@ in the Irish grid references.</p><ul><li><p><code>0</code>: equivalent to a prec
 
 <dt id="arg-precision">precision<a class="anchor" aria-label="anchor" href="#arg-precision"></a></dt>
 <dd><p>An integer, the precision of the Irish grid references in
-metres: <code>1</code>, <code>10</code>, <code>100</code>, <code>1000</code>, <code>10000</code>, or <code>100000</code>. Overrides <code>digits</code>.</p></dd>
+metres: <code>1</code>, <code>10</code>, <code>100</code>, <code>1000</code>, <code>2000</code>, <code>10000</code>, or <code>100000</code>. Overrides
+<code>digits</code>. Use <code>2000</code> to produce the tetrad form of Irish grid reference.</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>A character string to separate the 100 km grid letter, easting,
-and northing.</p></dd>
+<dd><p>A character string to place between the 100 km grid letter,
+easting, northing, and tetrad.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -117,6 +118,10 @@ and northing.</p></dd>
 <span class="r-in"><span><span class="co"># Convert into Irish grid references with 1 km precision (2 digit easting and northing)</span></span></span>
 <span class="r-in"><span><span class="fu">ig_to_igr</span><span class="op">(</span><span class="va">m</span>, precision <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A0012" "V0098" "Z5600"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convert into Irish grid references with 2 km precision (tetrad form)</span></span></span>
+<span class="r-in"><span><span class="fu">ig_to_igr</span><span class="op">(</span><span class="va">m</span>, precision <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A01B" "V09E" "Z50Q"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

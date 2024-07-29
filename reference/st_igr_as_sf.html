@@ -71,7 +71,8 @@ also be returned.</p>
 <span>  add_coords <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>,</span>
 <span>  precision <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  polygons <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  polygons <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tetrad <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,6 +122,10 @@ features located at the south-west corner of each Irish grid reference. If
 <code>TRUE</code> the result will contain polygon features spanning the extent of each
 Irish grid reference.</p></dd>
 
+
+<dt id="arg-tetrad">tetrad<a class="anchor" aria-label="anchor" href="#arg-tetrad"></a></dt>
+<dd><p>Permit tetrad form of Irish grid reference?</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -131,52 +136,56 @@ reference in x.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># A data.frame containing two Irish grid references</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>igr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A00"</span>, <span class="st">"N8000"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>igr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A00"</span>, <span class="st">"N8000"</span>, <span class="st">"D12T"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert a data.frame of Irish grid references to an sf object in the</span></span></span>
 <span class="r-in"><span><span class="co"># Irish Grid coordinate reference system</span></span></span>
 <span class="r-in"><span><span class="fu">st_igr_as_sf</span><span class="op">(</span><span class="va">x</span>, <span class="st">"igr"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 3 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 0 ymin: 2e+05 xmax: 280000 ymax: 4e+05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 0 ymin: 2e+05 xmax: 316000 ymax: 426000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: TM75 / Irish Grid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     igr             geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   A00      POINT (0 4e+05)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 N8000 POINT (280000 2e+05)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     igr              geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   A00       POINT (0 4e+05)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 N8000  POINT (280000 2e+05)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  D12T POINT (316000 426000)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert to an sf object in the WGS 84 coordinate reference system</span></span></span>
 <span class="r-in"><span><span class="fu">st_igr_as_sf</span><span class="op">(</span><span class="va">x</span>, <span class="st">"igr"</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 3 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -11.1116 ymin: 53.04498 xmax: -6.807924 ymax: 54.80789</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -11.1116 ymin: 53.04498 xmax: -6.184984 ymax: 55.06779</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     igr                   geometry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   A00  POINT (-11.1116 54.80789)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 N8000 POINT (-6.807924 53.04498)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  D12T POINT (-6.184984 55.06779)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Include the Irish Grid coordinates and precision in the sf object</span></span></span>
 <span class="r-in"><span><span class="fu">st_igr_as_sf</span><span class="op">(</span><span class="va">x</span>, <span class="st">"igr"</span>, add_coords <span class="op">=</span> <span class="cn">TRUE</span>, precision <span class="op">=</span> <span class="st">"prec"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 4 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 3 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 0 ymin: 2e+05 xmax: 280000 ymax: 4e+05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 0 ymin: 2e+05 xmax: 316000 ymax: 426000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: TM75 / Irish Grid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     igr      x     y  prec             geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   A00      0 4e+05 10000      POINT (0 4e+05)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 N8000 280000 2e+05  1000 POINT (280000 2e+05)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     igr      x      y  prec              geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   A00      0 400000 10000       POINT (0 4e+05)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 N8000 280000 200000  1000  POINT (280000 2e+05)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  D12T 316000 426000  2000 POINT (316000 426000)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert into polygon features rather than point features</span></span></span>
 <span class="r-in"><span><span class="fu">st_igr_as_sf</span><span class="op">(</span><span class="va">x</span>, <span class="st">"igr"</span>, polygons <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 3 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 0 ymin: 2e+05 xmax: 281000 ymax: 410000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 0 ymin: 2e+05 xmax: 318000 ymax: 428000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: TM75 / Irish Grid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     igr                       geometry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   A00 POLYGON ((10000 410000, 100...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 N8000 POLYGON ((281000 201000, 28...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  D12T POLYGON ((318000 428000, 31...</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -75,12 +75,13 @@ in the Irish grid references.</p><ul><li><p><code>0</code>: equivalent to a prec
 
 <dt id="arg-precision">precision<a class="anchor" aria-label="anchor" href="#arg-precision"></a></dt>
 <dd><p>An integer, the precision of the Irish grid references in
-metres: <code>1</code>, <code>10</code>, <code>100</code>, <code>1000</code>, <code>10000</code>, or <code>100000</code>. Overrides <code>digits</code>.</p></dd>
+metres: <code>1</code>, <code>10</code>, <code>100</code>, <code>1000</code>, <code>2000</code>, <code>10000</code>, or <code>100000</code>. Overrides
+<code>digits</code>. Use <code>2000</code> to produce the tetrad form of Irish grid reference.</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>A character string to separate the 100 km grid letter, easting,
-and northing.</p></dd>
+<dd><p>A character string to place between the 100 km grid letter,
+easting, northing, and tetrad.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -107,6 +108,10 @@ and northing.</p></dd>
 <span class="r-in"><span><span class="co"># Convert into Irish grid references with 1 km precision (2 digit easting and northing)</span></span></span>
 <span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, precision <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A0000" "Z9000"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convert into Irish grid references with 2 km precision (tetrad form)</span></span></span>
+<span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, precision <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A00A" "Z90A"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Insert a space between the 100 km grid letter, easting, and northing</span></span></span>
 <span class="r-in"><span><span class="fu">st_irishgridrefs</span><span class="op">(</span><span class="va">x_sf</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span></span>
