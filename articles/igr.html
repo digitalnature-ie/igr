@@ -340,7 +340,7 @@ invalid Irish grid references can be filtered out using
 <span><span class="co">#&gt; 8             X       POINT (2e+05 0)</span></span></code></pre></div>
 <p>In tidy r this can be written as:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">valid_df</span> <span class="op">&lt;-</span> <span class="va">some_invalid_df</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">valid_sf</span> <span class="op">&lt;-</span> <span class="va">some_invalid_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">filter</span><span class="op">(</span><span class="fu"><a href="../reference/igr_is_valid.html">igr_is_valid</a></span><span class="op">(</span><span class="va">igr</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
