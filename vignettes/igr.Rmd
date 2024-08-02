@@ -187,7 +187,7 @@ valid_sf
 In tidy r this can be written as:
 
 ```{r example-igr-avoid-tidyr, eval=FALSE}
-valid_df <- some_invalid_df |>
+valid_sf <- some_invalid_df |>
   dplyr::filter(igr_is_valid(igr)) |>
   st_igr_as_sf()
 ```

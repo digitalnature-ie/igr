@@ -124,3 +124,8 @@ test_that("catch invalid grid references", {
   expect_error(st_igr_as_sf(xe1, precision = "p1"), "AX", class = "bad_grid_ref")
   expect_error(st_igr_as_sf(x2t, tetrad = FALSE), "Z90Z", class = "bad_grid_ref")
 })
+
+test_that("catch invalid coords", {
+  expect_error(st_igr_as_sf(x1, coords = "q"), class = "invalid_coord_names")
+  expect_error(st_igr_as_sf(x1, coords = c("q", "r", "s")), class = "invalid_coord_names")
+})
