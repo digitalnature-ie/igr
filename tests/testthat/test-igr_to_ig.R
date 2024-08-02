@@ -45,6 +45,8 @@ test_that("rename coordinates", {
   expect_equal(igr_to_ig("A00", coords = c("x", "y")), list(x = 0, y = 400000))
   expect_equal(igr_to_ig("A00", coords = c("e", "n")), list(e = 0, n = 400000))
   expect_equal(igr_to_ig(c("A00", "Z90"), coords = c("e", "n")), list(e = c(0, 490000), n = c(400000, 0)))
+  expect_error(igr_to_ig("A00", coords = "q"), class = "invalid_coord_names")
+  expect_error(igr_to_ig("A00", coords = c("q", "r", "s")), class = "invalid_coord_names")
 })
 
 test_that("precision", {
@@ -58,7 +60,7 @@ test_that("Warning for invalid grid references", {
   expect_warning(igr_to_ig(""))
   expect_warning(igr_to_ig(NA_character_))
   expect_warning(igr_to_ig(2), "2")
-  expect_warning(igr_to_ig(c("A", 3), "3"))
+  expect_warning(igr_to_ig(c("A", 3)), "3")
   expect_warning(igr_to_ig("A0"), "A0")
   expect_warning(igr_to_ig("A123456123456"), "A123456123456")
   expect_warning(igr_to_ig(c("A00", "B0")), "B0")

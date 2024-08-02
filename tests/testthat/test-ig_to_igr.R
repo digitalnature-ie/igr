@@ -28,6 +28,12 @@ test_that("x and y Irish Grid coordinates", {
   expect_error(ig_to_igr(matrix(1)), class = "not_x_y")
 })
 
+test_that("sep", {
+  expect_equal(ig_to_igr(x1, sep = " "), c("A 000 000"))
+  expect_equal(ig_to_igr(x2, sep = "---"), c("A---000---000", "Z---900---000", "R---234---234"))
+  expect_equal(ig_to_igr(x2, precision = 2000, sep = "-"), c("A-0-0-A", "Z-9-0-A", "R-2-2-G"))
+})
+
 test_that("numeric x and y", {
   expect_error(ig_to_igr(matrix(c("a", 0), ncol = 2), class = "non_numeric_x_y"))
   expect_error(ig_to_igr(matrix(c(0, "qqq"), ncol = 2), class = "non_numeric_x_y"))
@@ -38,6 +44,13 @@ test_that("Warning for invalid Irish Grid coordinates", {
   expect_warning(ig_to_igr(matrix(c(0, 500001), ncol = 2)), "500001")
   expect_warning(ig_to_igr(matrix(c(-1, 400000), ncol = 2)), "-1")
   expect_warning(ig_to_igr(matrix(unlist(c(x = c(0, 0, 0), y = c(1, -1, 699999))), ncol = 2)), "-1.*699999")
+})
+
+test_that("invalid digits detected", {
+  expect_error(ig_to_igr(matrix(c(0, 1), ncol = 2), digits = -1), class = "unsupported_digits")
+  expect_error(ig_to_igr(matrix(c(0, 1), ncol = 2), digits = 1.1), class = "unsupported_digits")
+  expect_error(ig_to_igr(matrix(c(0, 1), ncol = 2), digits = 6), class = "unsupported_digits")
+  expect_error(ig_to_igr(matrix(c(0, 1), ncol = 2), digits = "A"), class = "unsupported_digits")
 })
 
 test_that("invalid precision detected", {

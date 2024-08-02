@@ -42,7 +42,7 @@
 #'
 #' # Convert into Irish grid references with 1 km precision (2 digit easting and northing)
 #' ig_to_igr(m, precision = 1000)
-#' 
+#'
 #' # Convert into Irish grid references with 2 km precision (tetrad form)
 #' ig_to_igr(m, precision = 2000)
 ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
@@ -56,6 +56,12 @@ ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
         paste("precision must be one of: ", valid_precisions, ".")
       )
     }
+  }
+  if (!digits %in% c(0:5)) {
+    stop_custom(
+      "unsupported_digits",
+      paste("digits must be one of: ", c(0:5), ".")
+    )
   }
 
   x <- as.matrix(x) # in case a data.frame
@@ -107,11 +113,11 @@ ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
   offsets_base <- offsets_1m |>
     strtrim(ifelse(is.null(precision), digits, 5 - log10(base_precision)))
 
-  tetrads <- ""
-  
-  if(!is.null(precision)) {
-    if(precision == 2000) {
-      tetrads <- mapply(lookup_tetrad, x = x[, 1], y = x[, 2])
+  sep_tetrads <- ""
+
+  if (!is.null(precision)) {
+    if (precision == 2000) {
+      sep_tetrads <- paste0(sep, mapply(lookup_tetrad, x = x[, 1], y = x[, 2]))
     }
   }
 
@@ -119,7 +125,7 @@ ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
   res <- ifelse(
     invalid,
     NA_character_,
-    trimws(paste(igr_letters, offsets_base[, 1], offsets_base[, 2], tetrads, sep = sep))
+    paste0(igr_letters, sep, offsets_base[, 1], sep, offsets_base[, 2], sep_tetrads)
   )
 
   return(res)

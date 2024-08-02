@@ -22,12 +22,25 @@ test_that("all resolutions 100km > 1m", {
   expect_equal(st_irishgridrefs(x2_sf, precision = 1), c("A0000000000", "Z9000000000"))
 })
 
+test_that("sep", {
+  expect_equal(st_irishgridrefs(x1_sf, sep = " "), c("A 000 000"))
+  expect_equal(st_irishgridrefs(x1_sf, sep = "---"), c("A---000---000"))
+  expect_equal(st_irishgridrefs(x1_sf, precision = 2000, sep = "-"), "A-0-0-A")
+})
+
 test_that("only sf", {
   expect_error(st_irishgridrefs(x1_df), class = "not_sf")
 })
 
 test_that("only POINT geometry", {
   expect_error(st_irishgridrefs(xe_sf), class = "not_sf_POINT")
+})
+
+test_that("invalid digits detected", {
+  expect_error(st_irishgridrefs(x1_sf, digits = -1), class = "unsupported_digits")
+  expect_error(st_irishgridrefs(x1_sf, digits = 1.1), class = "unsupported_digits")
+  expect_error(st_irishgridrefs(x1_sf, digits = 6), class = "unsupported_digits")
+  expect_error(st_irishgridrefs(x1_sf, digits = "A"), class = "unsupported_digits")
 })
 
 test_that("invalid precision detected", {
