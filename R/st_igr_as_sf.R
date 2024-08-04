@@ -56,6 +56,9 @@ st_igr_as_sf <- function(
     precision = NULL,
     polygons = FALSE,
     tetrad = TRUE) {
+  if (!inherits(x, "data.frame")) {
+    stop_custom("not_df", "x must be a data.frame object")
+  }
   # if x includes column names in coords then stop
   coords_existing <- intersect(colnames(x), coords)
   if (length(coords_existing) > 0) {

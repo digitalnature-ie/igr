@@ -57,10 +57,7 @@ igr_to_ig <- function(x, coords = c("x", "y"), precision = NULL, tetrad = TRUE) 
   igr_len <- nchar(igr)
 
   igr_letter <- toupper(substring(igr, 1, 1))
-  # igr_tetrad <- ifelse(igr_len  == 4, toupper(as.character(substring(igr, 4, 4))), "A")
   igr_tetrad_letter <- toupper(substring(igr, 4, 4))
-
-  # igr_tetrad_letter[is.numeric(igr_tetrad_letter) | igr_tetrad_letter == ""] <- "A"  # not a tetrad so add no offset just like tetrad "A"
 
   igr_100_index <- match(igr_letter, igr_100$letter)
   igr_tetrad_index <- match(igr_tetrad_letter, igr_tetrad$letter, nomatch = 1) # if not a tetrad add no offset just like tetrad "A", index 1

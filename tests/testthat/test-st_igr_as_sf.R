@@ -113,6 +113,7 @@ test_that("polygons", {
 })
 
 test_that("catch invalid inputs", {
+  expect_error(st_igr_as_sf("A"), class = "not_df")
   expect_error(st_igr_as_sf(xe), class = "bad_input")
 })
 
