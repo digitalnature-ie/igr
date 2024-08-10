@@ -35,8 +35,8 @@ reference is optional.
 
 When converting Irish grid references to point locations (using
 `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`),
-the south west corners of the relevant Irish Grid squares are returned.
-When converting to polygons (using `st_igr_as_sf()` with
+the south west corners of the relevant Irish Grid squares are returned
+by default. When converting to polygons (using `st_igr_as_sf()` with
 `polygons=TRUE`), the polygons returned span the entire square of each
 grid reference.
 
@@ -101,13 +101,21 @@ igr_is_valid(igrs)
 # Sample grid references
 igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "R10H", "X")
 
-# Converting to Irish Grid coordinates
+# Converting south west corners of Irish grid references to Irish Grid coordinates
 igr_to_ig(igrs)
 #> $x
 #> [1]      0 310000 350000 150000 287600 212345 112000 200000
 #> 
 #> $y
 #> [1] 400000 420000 330000 290000 227400 150000 104000      0
+
+# Converting centroids of Irish grid references to Irish Grid coordinates
+igr_to_ig(igrs, centroids = TRUE)
+#> $x
+#> [1]  50000.0 315000.0 355000.0 150500.0 287650.0 212345.5 113000.0 250000.0
+#> 
+#> $y
+#> [1] 450000.0 425000.0 335000.0 290500.0 227450.0 150000.5 105000.0  50000.0
 
 # Sample grid references in a data.frame
 igrs_df <- data.frame(igr = igrs)
@@ -130,7 +138,7 @@ st_igr_as_sf(igrs_df, "igr")
 #> 8           X       POINT (2e+05 0)
 ```
 
-<img src="man/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south-west corner of each sample grid reference." width="100%" />
+<img src="man/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south west corner of each sample grid reference." width="100%" />
 
 ``` r
 # Converting to an sf object of POLYGON features

@@ -29,7 +29,7 @@ An Irish grid reference consists of a letter, optionally followed by an easting 
 
 This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2 km, 10 km and 100 km precision. Irish grid references can be of mixed precision, and whitespace between the components of the Irish grid reference is optional.
 
-When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
+When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned by default. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
 
 The functions `st_igr_as_sf()` and `st_irishgridrefs()` convert to and from [sf](https://r-spatial.github.io/sf/) (simple feature) objects in any coordinate reference system.
 
@@ -82,8 +82,11 @@ igr_is_valid(igrs)
 # Sample grid references
 igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "R10H", "X")
 
-# Converting to Irish Grid coordinates
+# Converting south west corners of Irish grid references to Irish Grid coordinates
 igr_to_ig(igrs)
+
+# Converting centroids of Irish grid references to Irish Grid coordinates
+igr_to_ig(igrs, centroids = TRUE)
 
 # Sample grid references in a data.frame
 igrs_df <- data.frame(igr = igrs)
@@ -92,7 +95,7 @@ igrs_df <- data.frame(igr = igrs)
 st_igr_as_sf(igrs_df, "igr")
 ```
 
-```{r example-igr-points, message=FALSE, echo=FALSE, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
+```{r example-igr-points, message=FALSE, echo=FALSE, fig.alt="A map of Ireland with a dot at the south west corner of each sample grid reference."}
 if (requireNamespace("maps", quietly = TRUE) &
   requireNamespace("tmap", quietly = TRUE) &
   requireNamespace("units", quietly = TRUE)) {

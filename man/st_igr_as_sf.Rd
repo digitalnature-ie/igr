@@ -11,6 +11,7 @@ st_igr_as_sf(
   remove = FALSE,
   add_coords = FALSE,
   coords = c("x", "y"),
+  centroids = FALSE,
   precision = NULL,
   polygons = FALSE,
   tetrad = TRUE
@@ -35,6 +36,9 @@ specified by \code{coords} be included in the result?}
 
 \item{coords}{A character vector of the names of the columns to contain the
 Irish Grid X and Y coordinates respectively.}
+
+\item{centroids}{Should the coordinates of the centroids of the Irish grid
+references be returned (rather than the south west corners)?}
 
 \item{precision}{The name of the column to contain the precision of each
 Irish grid reference in metres, if required.}

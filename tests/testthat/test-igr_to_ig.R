@@ -35,6 +35,23 @@ test_that("all precisions 100km > 1m", {
   expect_equal(igr_to_ig(c("A1234512345", "B11")), list(x = c(012345, 110000), y = c(412345, 410000)))
 })
 
+test_that("centroid", {
+  expect_equal(igr_to_ig("A", centroids = TRUE), list(x = 050000, y = 450000))
+  expect_equal(igr_to_ig("A11", centroids = TRUE), list(x = 015000, y = 415000))
+  expect_equal(igr_to_ig("A11A", centroids = TRUE), list(x = 011000, y = 411000))
+  expect_equal(igr_to_ig("A1212", centroids = TRUE), list(x = 012500, y = 412500))
+  expect_equal(igr_to_ig("A123123", centroids = TRUE), list(x = 012350, y = 412350))
+  expect_equal(igr_to_ig("A12341234", centroids = TRUE), list(x = 012345, y = 412345))
+  expect_equal(igr_to_ig("A1234512345", centroids = TRUE), list(x = 012345.5, y = 412345.5))
+  
+  expect_equal(igr_to_ig(c("A", "B11"), centroids = TRUE), list(x = c(050000, 115000), y = c(450000, 415000)))
+  expect_equal(igr_to_ig(c("A11", "B11"), centroids = TRUE), list(x = c(015000, 115000), y = c(415000, 415000)))
+  expect_equal(igr_to_ig(c("A1212", "B11"), centroids = TRUE), list(x = c(012500, 115000), y = c(412500, 415000)))
+  expect_equal(igr_to_ig(c("A123123", "B11"), centroids = TRUE), list(x = c(012350, 115000), y = c(412350, 415000)))
+  expect_equal(igr_to_ig(c("A12341234", "B11"), centroids = TRUE), list(x = c(012345, 115000), y = c(412345, 415000)))
+  expect_equal(igr_to_ig(c("A1234512345", "B11"), centroids = TRUE), list(x = c(012345.5, 115000), y = c(412345.5, 415000)))
+})
+
 test_that("tetrads valid", {
   expect_equal(igr_to_ig("A00A"), list(x = 000000, y = 400000))
   expect_equal(igr_to_ig("A00Z"), list(x = 008000, y = 408000))
