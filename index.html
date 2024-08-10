@@ -72,7 +72,7 @@
 <p>Convert between Irish grid references and Irish Grid coordinates or an sf object.</p>
 <p>An Irish grid reference consists of a letter, optionally followed by an easting and northing, and possibly a final letter. Each Irish grid reference refers to a square on the Irish Grid (<a href="https://epsg.io/29903" class="external-link">EPSG:29903</a>). A letter alone (e.g. “N”) refers to a particular 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. “N85”) refers to a 10 km square. A 5-digit easting and northing (e.g. “N 12345 67890”) refers to a 1 m square. The tetrad form of Irish grid reference consists of a 10 km square reference followed by a letter (e.g. “N85R”). This refers to a 2 km square.</p>
 <p>This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2 km, 10 km and 100 km precision. Irish grid references can be of mixed precision, and whitespace between the components of the Irish grid reference is optional.</p>
-<p>When converting Irish grid references to point locations (using <code><a href="reference/igr_to_ig.html">igr_to_ig()</a></code>, or <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with the default <code>polygons=FALSE</code>), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with <code>polygons=TRUE</code>), the polygons returned span the entire square of each grid reference.</p>
+<p>When converting Irish grid references to point locations (using <code><a href="reference/igr_to_ig.html">igr_to_ig()</a></code>, or <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with the default <code>polygons=FALSE</code>), the south west corners of the relevant Irish Grid squares are returned by default. When converting to polygons (using <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with <code>polygons=TRUE</code>), the polygons returned span the entire square of each grid reference.</p>
 <p>The functions <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> and <code><a href="reference/st_irishgridrefs.html">st_irishgridrefs()</a></code> convert to and from <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature) objects in any coordinate reference system.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -129,13 +129,21 @@
 <code class="sourceCode R"><span><span class="co"># Sample grid references</span></span>
 <span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D12"</span>, <span class="st">"J53"</span>, <span class="st">"M5090"</span>, <span class="st">"N876274"</span>, <span class="st">"S1234550000"</span>, <span class="st">"R10H"</span>, <span class="st">"X"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Converting to Irish Grid coordinates</span></span>
+<span><span class="co"># Converting south west corners of Irish grid references to Irish Grid coordinates</span></span>
 <span><span class="fu"><a href="reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">igrs</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $x</span></span>
 <span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 112000 200000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $y</span></span>
 <span><span class="co">#&gt; [1] 400000 420000 330000 290000 227400 150000 104000      0</span></span>
+<span></span>
+<span><span class="co"># Converting centroids of Irish grid references to Irish Grid coordinates</span></span>
+<span><span class="fu"><a href="reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">igrs</span>, centroids <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $x</span></span>
+<span><span class="co">#&gt; [1]  50000.0 315000.0 355000.0 150500.0 287650.0 212345.5 113000.0 250000.0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $y</span></span>
+<span><span class="co">#&gt; [1] 450000.0 425000.0 335000.0 290500.0 227450.0 150000.5 105000.0  50000.0</span></span>
 <span></span>
 <span><span class="co"># Sample grid references in a data.frame</span></span>
 <span><span class="va">igrs_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>igr <span class="op">=</span> <span class="va">igrs</span><span class="op">)</span></span>
@@ -156,7 +164,7 @@
 <span><span class="co">#&gt; 6 S1234550000 POINT (212345 150000)</span></span>
 <span><span class="co">#&gt; 7        R10H POINT (112000 104000)</span></span>
 <span><span class="co">#&gt; 8           X       POINT (2e+05 0)</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south-west corner of each sample grid reference." width="100%"></p>
+<p><img src="reference/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south west corner of each sample grid reference." width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Converting to an sf object of POLYGON features</span></span>
 <span><span class="fu"><a href="reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">igrs_df</span>, <span class="st">"igr"</span>, polygon <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
