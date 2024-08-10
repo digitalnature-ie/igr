@@ -22,7 +22,7 @@ Irish grid references are an alternative way of recording locations on the Irish
 
 There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/view=Spatial). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references to and from Irish Grid coordinates or sf objects that other R packages can work with. The igr package supports precisions of Irish grid reference from 1 m to 100 km including tetrads, mixes of precision, and Irish grid references with or without whitespace between the grid reference components.
 
-When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
+When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned by default. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the polygons returned span the entire square of each grid reference.
 
 The functions `st_igr_as_sf()` and `st_irishgridrefs()` convert to and from [sf](https://r-spatial.github.io/sf/) (simple feature) objects in any coordinate reference system.
 
@@ -63,12 +63,18 @@ igr_is_valid(igrs)
 ```
 ## Converting from Irish grid references
 
-To convert a vector of Irish grid references to Irish Grid coordinates use `igr_to_ig()`.
+To convert a vector of Irish grid references to Irish Grid coordinates use `igr_to_ig()`. By default the south west corners of the Irish grid references are returned.
 
 ```{r example-igr-1}
 igrs <- c("A", "D12", "J53", "M5090", "N876274", "S1234550000", "R10H", "X")
 
 igr_to_ig(igrs)
+```
+
+Alternatively, the centroids of the Irish grid references can be returned:
+
+```{r example-igr-1a}
+igr_to_ig(igrs, centroids = TRUE)
 ```
 
 The Irish grid references may have spaces between the grid reference components:
@@ -97,7 +103,7 @@ points_sf
 
 These points can be plotted by the [tmap](https://r-tmap.github.io/tmap/) package. A basic outline of Ireland and the United Kingdom can be retrieved from the [maps](https://cran.r-project.org/package=maps) package.
 
-```{r example-igr-poi-plot, fig.height=4, message=FALSE, fig.alt="A map of Ireland with a dot at the south-west corner of each sample grid reference."}
+```{r example-igr-poi-plot, fig.height=4, message=FALSE, fig.alt="A map of Ireland with a dot at the south west corner of each sample grid reference."}
 if (requireNamespace("maps", quietly = TRUE) &
   requireNamespace("tmap", quietly = TRUE) &
   requireNamespace("units", quietly = TRUE)) {

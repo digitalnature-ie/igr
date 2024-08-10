@@ -45,7 +45,7 @@
 #'
 #' # Convert into polygon features rather than point features
 #' st_igr_as_sf(x, "igr", polygons = TRUE)
-#' 
+#'
 st_igr_as_sf <- function(
     x,
     igrefs = "igr",
@@ -53,6 +53,7 @@ st_igr_as_sf <- function(
     remove = FALSE,
     add_coords = FALSE,
     coords = c("x", "y"),
+    centroids = FALSE,
     precision = NULL,
     polygons = FALSE,
     tetrad = TRUE) {
@@ -74,7 +75,7 @@ st_igr_as_sf <- function(
   if (is.null(x[[igrefs]])) {
     stop_custom("missing_igrefs", paste("igrefs column", igrefs, "does not exist."))
   }
-  
+
   if (polygons) {
     igr_precision <- "prec"
   } # grid reference precision is required
@@ -86,7 +87,13 @@ st_igr_as_sf <- function(
   # raise as error
   tryCatch(
     {
-      ig <- igr_to_ig(x[[igrefs]], coords = coords, precision = igr_precision, tetrad = tetrad)
+      ig <- igr_to_ig(
+        x[[igrefs]],
+        coords = coords,
+        centroids = centroids,
+        precision = igr_precision,
+        tetrad = tetrad
+      )
     },
     warning = function(w) {
       stop_custom(
@@ -100,7 +107,8 @@ st_igr_as_sf <- function(
   )
 
   if (polygons) {
-    # calculate centre of square of each grid reference
+    # calculate centre of square of each grid reference. Cannot calculate it in 
+    # call to igr_to_ig() in case add_coords is TRUE and centroids is FALSE
     ig[[1]] <- ig[[1]] + (ig[[3]] / 2) # x = x + 1/2 resolution
     ig[[2]] <- ig[[2]] + (ig[[3]] / 2) # y = y + 1/2 resolution
 

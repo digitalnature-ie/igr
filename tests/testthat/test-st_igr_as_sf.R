@@ -38,6 +38,23 @@ test_that("basic conversions", {
   )
 })
 
+test_that("centroid", {
+  expect_equal(
+    st_igr_as_sf(x1, centroids = TRUE),
+    sf::st_as_sf(data.frame(igr = c("A"), x = c(50000), y = c(450000)), crs = 29903, coords = c("x", "y"))
+  )
+  
+  expect_equal(
+    st_igr_as_sf(x2, centroids = TRUE),
+    sf::st_as_sf(data.frame(igr = c("A", "Z90"), x = c(50000, 495000), y = c(450000, 5000)), crs = 29903, coords = c("x", "y"))
+  )
+  
+  expect_equal(
+    st_igr_as_sf(x2t, centroids = TRUE),
+    sf::st_as_sf(data.frame(igr = c("A", "Z90Z"), x = c(50000, 499000), y = c(450000, 9000)), crs = 29903, coords = c("x", "y"))
+  )
+})
+
 test_that("igrefs", {
   expect_equal(
     st_igr_as_sf(x2, "igr"),
@@ -77,6 +94,10 @@ test_that("add_coords", {
   expect_equal(
     st_igr_as_sf(x3, "igrefs", add_coords = TRUE),
     sf::st_as_sf(data.frame(igrefs = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(0, 490000), y = c(400000, 0)), crs = 29903, coords = c("x", "y"), remove = FALSE)
+  )
+  expect_equal(
+    st_igr_as_sf(x3, "igrefs", add_coords = TRUE, centroids = TRUE),
+    sf::st_as_sf(data.frame(igrefs = c("A", "Z90"), foo = c("foo_A", "foo_Z90"), x = c(50000, 495000), y = c(450000, 5000)), crs = 29903, coords = c("x", "y"), remove = FALSE)
   )
 })
 

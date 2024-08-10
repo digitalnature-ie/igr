@@ -4,7 +4,13 @@
 \alias{igr_to_ig}
 \title{Convert Irish grid references to Irish Grid coordinates}
 \usage{
-igr_to_ig(x, coords = c("x", "y"), precision = NULL, tetrad = TRUE)
+igr_to_ig(
+  x,
+  coords = c("x", "y"),
+  centroids = FALSE,
+  precision = NULL,
+  tetrad = TRUE
+)
 }
 \arguments{
 \item{x}{A character vector of Irish grid references. See \code{\link[=igr_is_valid]{igr_is_valid()}}
@@ -12,6 +18,9 @@ for a definition of valid Irish grid references.}
 
 \item{coords}{A character vector of the names of the columns to contain the
 Irish Grid X and Y coordinates respectively.}
+
+\item{centroids}{Should the coordinates of the centroids of the Irish grid
+references be returned (rather than the south west corners)?}
 
 \item{precision}{The name of the column to contain the precision of each
 Irish grid reference in metres, if required.}
@@ -25,15 +34,19 @@ grid references return NA.
 }
 \description{
 \code{igr_to_ig()} converts Irish grid references into a list of Irish Grid
-(EPSG:29903) X and Y coordinates. The precision of each Irish grid reference
-in metres can be returned.
+(EPSG:29903) X and Y coordinates. By default the coordinates of the south
+west corners of each Irish grid reference are calculated. The precision of each
+Irish grid reference in metres can be returned.
 }
 \examples{
 # A vector of Irish grid references of different precisions
 v <- c("N8090", "D1234588800", "W34", "", "D12T")
 
-# Convert to Irish Grid coordinates
+# Convert south west corners of Irish grid references to Irish Grid coordinates
 igr_to_ig(v)
+
+# Convert centroids of Irish grid references to Irish Grid coordinates
+igr_to_ig(v, centroids = TRUE)
 
 # Specify column names
 igr_to_ig(v, coords = c("e", "n"))
