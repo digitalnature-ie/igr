@@ -80,9 +80,9 @@ igr_to_ig(igrs, centroids = TRUE)
 The Irish grid references may have spaces between the grid reference components:
 
 ```{r example-igr-2}
-igrs <- c("A", "D 12", "J 5 3", "M 50 90", "N 876 274", "S 12345 50000", "R10 H", "X")
+ws_igrs <- c("A", "D 12", "J 5 3", "M 50 90", "N 876 274", "S 12345 50000", "R10 H", "X")
 
-igr_to_ig(igrs)
+igr_to_ig(ws_igrs)
 ```
 
 These sample Irish grid references have a mix of precisions. The precisions in metres can be returned by supplying a column name for the precision data:
