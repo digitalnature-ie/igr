@@ -20,6 +20,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://digitalnature.ie/2024/08/igr-0-2-0-including-tetrad-irish-grid-reference-support/">igr 0.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://digitalnature.ie/2024/07/igr-an-r-package-supporting-irish-grid-references/">igr 0.1.1</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../news/index.html">Changelog</a></li>
@@ -39,10 +40,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="igr-development-version">igr (development version)<a class="anchor" aria-label="anchor" href="#igr-development-version"></a></h2>
-<ul><li>Tetrad support added (2000 m precision, “DINTY” system, e.g. “N85H”).</li>
-<li>tmap 4.0.0 compatibility in README &amp; vignitte.</li>
-<li>Improved unit tests, catching of invalid parameters.</li>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="igr-020">igr 0.2.0<a class="anchor" aria-label="anchor" href="#igr-020"></a></h2>
+<ul><li>All functions now support tetrads (2 km squares, also known as “DINTY” system, e.g. “N85H”) (<a href="https://github.com/digitalnature-ie/igr/issues/3" class="external-link">#3</a>).</li>
+<li>
+<code><a href="../reference/igr_to_ig.html">igr_to_ig()</a></code> and <code>st_igr_to_ig()</code> can (optionally) return centroids of Irish grid references (<a href="https://github.com/digitalnature-ie/igr/issues/8" class="external-link">#8</a>).</li>
+<li>All functions have additional hardening against invalid parameters (<a href="https://github.com/digitalnature-ie/igr/issues/5" class="external-link">#5</a>).</li>
+<li>README &amp; vignette refinements including compatibility with latest development version of tmap 4.0.0 (<a href="https://github.com/digitalnature-ie/igr/issues/4" class="external-link">#4</a>).</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="igr-011">igr 0.1.1<a class="anchor" aria-label="anchor" href="#igr-011"></a></h2><p class="text-muted">CRAN release: 2024-07-27</p>

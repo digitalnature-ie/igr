@@ -44,6 +44,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news">
 <li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://digitalnature.ie/2024/08/igr-0-2-0-including-tetrad-irish-grid-reference-support/">igr 0.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://digitalnature.ie/2024/07/igr-an-r-package-supporting-irish-grid-references/">igr 0.1.1</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="news/index.html">Changelog</a></li>
@@ -70,10 +71,10 @@
 <!-- badges: start -->
 
 <p>Convert between Irish grid references and Irish Grid coordinates or an sf object.</p>
-<p>An Irish grid reference consists of a letter, optionally followed by an easting and northing, and possibly a final letter. Each Irish grid reference refers to a square on the Irish Grid (<a href="https://epsg.io/29903" class="external-link">EPSG:29903</a>). A letter alone (e.g. “N”) refers to a particular 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. “N85”) refers to a 10 km square. A 5-digit easting and northing (e.g. “N 12345 67890”) refers to a 1 m square. The tetrad form of Irish grid reference consists of a 10 km square reference followed by a letter (e.g. “N85R”). This refers to a 2 km square.</p>
-<p>This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2 km, 10 km and 100 km precision. Irish grid references can be of mixed precision, and whitespace between the components of the Irish grid reference is optional.</p>
-<p>When converting Irish grid references to point locations (using <code><a href="reference/igr_to_ig.html">igr_to_ig()</a></code>, or <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with the default <code>polygons=FALSE</code>), the south west corners of the relevant Irish Grid squares are returned by default. When converting to polygons (using <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with <code>polygons=TRUE</code>), the polygons returned span the entire square of each grid reference.</p>
-<p>The functions <code><a href="reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> and <code><a href="reference/st_irishgridrefs.html">st_irishgridrefs()</a></code> convert to and from <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature) objects in any coordinate reference system.</p>
+<p>An Irish grid reference is a way of referring to a square of some size on the Irish Grid geographic coordinate system (<a href="https://epsg.io/29903" class="external-link">EPSG:29903</a>). Rather than an X and Y coordinate, an Irish grid reference consists of a letter, optionally followed by an easting, northing and possibly a final letter. The size of the square referred to - the precision of the Irish grid reference - is defined by the number of digits in the easting and northing and presence or absence of a final letter. Examples include “N” - referring to a particular 100 km square, “N16” - referring to a particular 10 km square within “N”, “N16K” - the tetrad form of grid reference referring to a particular 2 km square within “N16”, and “N 12345 67890” - referring to a particular 1 m square. Spaces between letters, easting and northing in an Irish grid reference are optional.</p>
+<p>This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2 km, 10 km and 100 km precision. Datasets containing a mix of precision are supported.</p>
+<p>Irish grid references can be converted to and from Irish Grid coordinates (X and Y), or to and from sf <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature) objects in any coordinate reference system.</p>
+<p>Irish grid references can be converted to point locations or polygons. Point locations can be either the south-west corner or the centroid of each Irish grid reference. Polygons each span the entire extent of an Irish grid reference - the size of each polygon is precision-aware.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>

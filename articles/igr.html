@@ -41,6 +41,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news">
 <li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://digitalnature.ie/2024/08/igr-0-2-0-including-tetrad-irish-grid-reference-support/">igr 0.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://digitalnature.ie/2024/07/igr-an-r-package-supporting-irish-grid-references/">igr 0.1.1</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../news/index.html">Changelog</a></li>
@@ -82,36 +83,39 @@ the Ordnance Survey Ireland (now <a href="https://www.tailte.ie" class="external
 Éireann</a>) and <a href="https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland" class="external-link">Ordnance
 Survey of Northern Ireland</a>, locations within the Irish Grid are
 defined by an X and Y coordinate.</p>
-<p>Irish grid references are an alternative way of recording locations
-on the Irish Grid. An Irish grid reference consists of a letter,
-optionally followed by an easting and northing. The letter (e.g. “N”)
-refers to a particular 100 km square on the Irish Grid. There are 25
-such 100 km squares - the letter “I” is skipped. The easting and
-northing refer to a square within the 100 km square. An Irish grid
-reference with a 1-digit easting and northing (e.g. “N85”) refers to a
-particular 10 km square wtihin the 100 km square “N”. A 5-digit easting
-and northing (e.g. “N 12345 67890”) refers to a particular 1 m square.
-The tetrad form of Irish grid reference consists of a 10 km square
-reference followed by a letter (e.g. “N85R”). This refers to a
-particular 2 km square.</p>
+<p>Irish grid references are an alternative way of referring to
+locations on the Irish Grid. An Irish grid reference consists of a
+letter, optionally followed by an easting, northing and possibly a final
+letter. The first letter (e.g. “N”) refers to a particular 100 km square
+on the Irish Grid. There are 25 such 100 km squares - the letter “I” is
+skipped. The easting and northing refer to a square within the 100 km
+square. An Irish grid reference with a 1-digit easting and northing
+(e.g. “N16”) refers to a particular 10 km square wtihin the 100 km
+square “N”. A 5-digit easting and northing (e.g. “N 12345 67890”) refers
+to a particular 1 m square. The tetrad form of Irish grid reference
+consists of a 10 km square reference followed by a letter (e.g. “N16K”).
+This refers to a particular 2 km square. There are 25 tetrads in a 10 km
+square - the letter “O” is not used.</p>
 <p>There are many R packages facilitating <a href="https://cran.r-project.org/view=Spatial" class="external-link">spatial data analysis and
 visualisation</a>. The igr package is designed to simplify using
 datasets containing Irish grid references in R. It translates Irish grid
-references to and from Irish Grid coordinates or sf objects that other R
-packages can work with. The igr package supports precisions of Irish
-grid reference from 1 m to 100 km including tetrads, mixes of precision,
-and Irish grid references with or without whitespace between the grid
-reference components.</p>
+references to and from Irish Grid coordinates (X and Y), or to and from
+<a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature)
+objects that other R packages can work with. The igr package supports
+precisions of Irish grid reference from 1 m to 100 km including tetrads,
+mixes of precision, and Irish grid references with or without whitespace
+between the letters, eastings and northings.</p>
 <p>When converting Irish grid references to point locations (using
 <code><a href="../reference/igr_to_ig.html">igr_to_ig()</a></code>, or <code><a href="../reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with the
 default <code>polygons=FALSE</code>), the south west corners of the
-relevant Irish Grid squares are returned by default. When converting to
-polygons (using <code><a href="../reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with
-<code>polygons=TRUE</code>), the polygons returned span the entire
-square of each grid reference.</p>
+relevant Irish Grid squares are returned by default. The centroids of
+the Irish Grid squares can be returned by using
+<code>centroids=TRUE</code>. When converting to polygons (using
+<code><a href="../reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> with <code>polygons=TRUE</code>), the size
+of each polygon is precision-aware.</p>
 <p>The functions <code><a href="../reference/st_igr_as_sf.html">st_igr_as_sf()</a></code> and
-<code><a href="../reference/st_irishgridrefs.html">st_irishgridrefs()</a></code> convert to and from <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature) objects
-in any coordinate reference system.</p>
+<code><a href="../reference/st_irishgridrefs.html">st_irishgridrefs()</a></code> convert to and from sf objects in any
+coordinate reference system.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -173,9 +177,9 @@ returned:</p>
 <p>The Irish grid references may have spaces between the grid reference
 components:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D 12"</span>, <span class="st">"J 5 3"</span>, <span class="st">"M 50 90"</span>, <span class="st">"N 876 274"</span>, <span class="st">"S 12345 50000"</span>, <span class="st">"R10 H"</span>, <span class="st">"X"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ws_igrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D 12"</span>, <span class="st">"J 5 3"</span>, <span class="st">"M 50 90"</span>, <span class="st">"N 876 274"</span>, <span class="st">"S 12345 50000"</span>, <span class="st">"R10 H"</span>, <span class="st">"X"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">igrs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/igr_to_ig.html">igr_to_ig</a></span><span class="op">(</span><span class="va">ws_igrs</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $x</span></span>
 <span><span class="co">#&gt; [1]      0 310000 350000 150000 287600 212345 112000 200000</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -209,15 +213,15 @@ reference, and the coordinate reference system is Irish Grid (<a href="https://e
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 350000 ymax: 420000</span></span>
 <span><span class="co">#&gt; Projected CRS: TM75 / Irish Grid</span></span>
-<span><span class="co">#&gt;             igr              geometry</span></span>
-<span><span class="co">#&gt; 1             A       POINT (0 4e+05)</span></span>
-<span><span class="co">#&gt; 2          D 12 POINT (310000 420000)</span></span>
-<span><span class="co">#&gt; 3         J 5 3 POINT (350000 330000)</span></span>
-<span><span class="co">#&gt; 4       M 50 90 POINT (150000 290000)</span></span>
-<span><span class="co">#&gt; 5     N 876 274 POINT (287600 227400)</span></span>
-<span><span class="co">#&gt; 6 S 12345 50000 POINT (212345 150000)</span></span>
-<span><span class="co">#&gt; 7         R10 H POINT (112000 104000)</span></span>
-<span><span class="co">#&gt; 8             X       POINT (2e+05 0)</span></span></code></pre></div>
+<span><span class="co">#&gt;           igr              geometry</span></span>
+<span><span class="co">#&gt; 1           A       POINT (0 4e+05)</span></span>
+<span><span class="co">#&gt; 2         D12 POINT (310000 420000)</span></span>
+<span><span class="co">#&gt; 3         J53 POINT (350000 330000)</span></span>
+<span><span class="co">#&gt; 4       M5090 POINT (150000 290000)</span></span>
+<span><span class="co">#&gt; 5     N876274 POINT (287600 227400)</span></span>
+<span><span class="co">#&gt; 6 S1234550000 POINT (212345 150000)</span></span>
+<span><span class="co">#&gt; 7        R10H POINT (112000 104000)</span></span>
+<span><span class="co">#&gt; 8           X       POINT (2e+05 0)</span></span></code></pre></div>
 <p>These points can be plotted by the <a href="https://r-tmap.github.io/tmap/" class="external-link">tmap</a> package. A basic outline
 of Ireland and the United Kingdom can be retrieved from the <a href="https://cran.r-project.org/package=maps" class="external-link">maps</a> package.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -264,15 +268,15 @@ polygons with different sizes.</p>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 360000 ymax: 5e+05</span></span>
 <span><span class="co">#&gt; Projected CRS: TM75 / Irish Grid</span></span>
-<span><span class="co">#&gt;             igr                       geometry</span></span>
-<span><span class="co">#&gt; 1             A POLYGON ((1e+05 5e+05, 1e+0...</span></span>
-<span><span class="co">#&gt; 2          D 12 POLYGON ((320000 430000, 32...</span></span>
-<span><span class="co">#&gt; 3         J 5 3 POLYGON ((360000 340000, 36...</span></span>
-<span><span class="co">#&gt; 4       M 50 90 POLYGON ((151000 291000, 15...</span></span>
-<span><span class="co">#&gt; 5     N 876 274 POLYGON ((287700 227500, 28...</span></span>
-<span><span class="co">#&gt; 6 S 12345 50000 POLYGON ((212346 150001, 21...</span></span>
-<span><span class="co">#&gt; 7         R10 H POLYGON ((114000 106000, 11...</span></span>
-<span><span class="co">#&gt; 8             X POLYGON ((3e+05 1e+05, 3e+0...</span></span></code></pre></div>
+<span><span class="co">#&gt;           igr                       geometry</span></span>
+<span><span class="co">#&gt; 1           A POLYGON ((1e+05 5e+05, 1e+0...</span></span>
+<span><span class="co">#&gt; 2         D12 POLYGON ((320000 430000, 32...</span></span>
+<span><span class="co">#&gt; 3         J53 POLYGON ((360000 340000, 36...</span></span>
+<span><span class="co">#&gt; 4       M5090 POLYGON ((151000 291000, 15...</span></span>
+<span><span class="co">#&gt; 5     N876274 POLYGON ((287700 227500, 28...</span></span>
+<span><span class="co">#&gt; 6 S1234550000 POLYGON ((212346 150001, 21...</span></span>
+<span><span class="co">#&gt; 7        R10H POLYGON ((114000 106000, 11...</span></span>
+<span><span class="co">#&gt; 8           X POLYGON ((3e+05 1e+05, 3e+0...</span></span></code></pre></div>
 <p>Plotting these polygons:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"ie_uk_sf"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -318,20 +322,20 @@ invalid Irish grid references can be filtered out using
 <code class="sourceCode R"><span><span class="va">some_invalid_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>igr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">igrs</span>, <span class="st">"BAD"</span>, <span class="st">"I"</span>, <span class="st">""</span>, <span class="st">"123"</span>, <span class="st">"N1"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">some_invalid_df</span></span>
-<span><span class="co">#&gt;              igr</span></span>
-<span><span class="co">#&gt; 1              A</span></span>
-<span><span class="co">#&gt; 2           D 12</span></span>
-<span><span class="co">#&gt; 3          J 5 3</span></span>
-<span><span class="co">#&gt; 4        M 50 90</span></span>
-<span><span class="co">#&gt; 5      N 876 274</span></span>
-<span><span class="co">#&gt; 6  S 12345 50000</span></span>
-<span><span class="co">#&gt; 7          R10 H</span></span>
-<span><span class="co">#&gt; 8              X</span></span>
-<span><span class="co">#&gt; 9            BAD</span></span>
-<span><span class="co">#&gt; 10             I</span></span>
-<span><span class="co">#&gt; 11              </span></span>
-<span><span class="co">#&gt; 12           123</span></span>
-<span><span class="co">#&gt; 13            N1</span></span>
+<span><span class="co">#&gt;            igr</span></span>
+<span><span class="co">#&gt; 1            A</span></span>
+<span><span class="co">#&gt; 2          D12</span></span>
+<span><span class="co">#&gt; 3          J53</span></span>
+<span><span class="co">#&gt; 4        M5090</span></span>
+<span><span class="co">#&gt; 5      N876274</span></span>
+<span><span class="co">#&gt; 6  S1234550000</span></span>
+<span><span class="co">#&gt; 7         R10H</span></span>
+<span><span class="co">#&gt; 8            X</span></span>
+<span><span class="co">#&gt; 9          BAD</span></span>
+<span><span class="co">#&gt; 10           I</span></span>
+<span><span class="co">#&gt; 11            </span></span>
+<span><span class="co">#&gt; 12         123</span></span>
+<span><span class="co">#&gt; 13          N1</span></span>
 <span><span class="va">valid_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">some_invalid_df</span><span class="op">[</span><span class="fu"><a href="../reference/igr_is_valid.html">igr_is_valid</a></span><span class="op">(</span><span class="va">some_invalid_df</span><span class="op">$</span><span class="va">igr</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">valid_sf</span></span>
@@ -340,15 +344,15 @@ invalid Irish grid references can be filtered out using
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 0 xmax: 350000 ymax: 420000</span></span>
 <span><span class="co">#&gt; Projected CRS: TM75 / Irish Grid</span></span>
-<span><span class="co">#&gt;             igr              geometry</span></span>
-<span><span class="co">#&gt; 1             A       POINT (0 4e+05)</span></span>
-<span><span class="co">#&gt; 2          D 12 POINT (310000 420000)</span></span>
-<span><span class="co">#&gt; 3         J 5 3 POINT (350000 330000)</span></span>
-<span><span class="co">#&gt; 4       M 50 90 POINT (150000 290000)</span></span>
-<span><span class="co">#&gt; 5     N 876 274 POINT (287600 227400)</span></span>
-<span><span class="co">#&gt; 6 S 12345 50000 POINT (212345 150000)</span></span>
-<span><span class="co">#&gt; 7         R10 H POINT (112000 104000)</span></span>
-<span><span class="co">#&gt; 8             X       POINT (2e+05 0)</span></span></code></pre></div>
+<span><span class="co">#&gt;           igr              geometry</span></span>
+<span><span class="co">#&gt; 1           A       POINT (0 4e+05)</span></span>
+<span><span class="co">#&gt; 2         D12 POINT (310000 420000)</span></span>
+<span><span class="co">#&gt; 3         J53 POINT (350000 330000)</span></span>
+<span><span class="co">#&gt; 4       M5090 POINT (150000 290000)</span></span>
+<span><span class="co">#&gt; 5     N876274 POINT (287600 227400)</span></span>
+<span><span class="co">#&gt; 6 S1234550000 POINT (212345 150000)</span></span>
+<span><span class="co">#&gt; 7        R10H POINT (112000 104000)</span></span>
+<span><span class="co">#&gt; 8           X       POINT (2e+05 0)</span></span></code></pre></div>
 <p>In tidy r this can be written as:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valid_sf</span> <span class="op">&lt;-</span> <span class="va">some_invalid_df</span> <span class="op">|&gt;</span></span>
