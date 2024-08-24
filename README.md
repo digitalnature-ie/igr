@@ -18,31 +18,33 @@ coverage](https://codecov.io/gh/digitalnature-ie/igr/branch/main/graph/badge.svg
 Convert between Irish grid references and Irish Grid coordinates or an
 sf object.
 
-An Irish grid reference consists of a letter, optionally followed by an
-easting and northing, and possibly a final letter. Each Irish grid
-reference refers to a square on the Irish Grid
-([EPSG:29903](https://epsg.io/29903)). A letter alone (e.g. “N”) refers
-to a particular 100 km square. An Irish grid reference with a 1-digit
-easting and northing (e.g. “N85”) refers to a 10 km square. A 5-digit
-easting and northing (e.g. “N 12345 67890”) refers to a 1 m square. The
-tetrad form of Irish grid reference consists of a 10 km square reference
-followed by a letter (e.g. “N85R”). This refers to a 2 km square.
+An Irish grid reference is a way of referring to a square of some size
+on the Irish Grid geographic coordinate system
+([EPSG:29903](https://epsg.io/29903)). Rather than an X and Y
+coordinate, an Irish grid reference consists of a letter, optionally
+followed by an easting, northing and possibly a final letter. The size
+of the square referred to - the precision of the Irish grid reference -
+is defined by the number of digits in the easting and northing and
+presence or absence of a final letter. Examples include “N” - referring
+to a particular 100 km square, “N16” - referring to a particular 10 km
+square within “N”, “N16K” - the tetrad form of grid reference referring
+to a particular 2 km square within “N16”, and “N 12345 67890” -
+referring to a particular 1 m square. Spaces between letters, easting
+and northing in an Irish grid reference are optional.
 
 This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2
-km, 10 km and 100 km precision. Irish grid references can be of mixed
-precision, and whitespace between the components of the Irish grid
-reference is optional.
+km, 10 km and 100 km precision. Datasets containing a mix of precision
+are supported.
 
-When converting Irish grid references to point locations (using
-`igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`),
-the south west corners of the relevant Irish Grid squares are returned
-by default. When converting to polygons (using `st_igr_as_sf()` with
-`polygons=TRUE`), the polygons returned span the entire square of each
-grid reference.
+Irish grid references can be converted to and from Irish Grid
+coordinates (X and Y), or to and from sf
+[sf](https://r-spatial.github.io/sf/) (simple feature) objects in any
+coordinate reference system.
 
-The functions `st_igr_as_sf()` and `st_irishgridrefs()` convert to and
-from [sf](https://r-spatial.github.io/sf/) (simple feature) objects in
-any coordinate reference system.
+Irish grid references can be converted to point locations or polygons.
+Point locations can be either the south-west corner or the centroid of
+each Irish grid reference. Polygons each span the entire extent of an
+Irish grid reference - the size of each polygon is precision-aware.
 
 ## Installation
 

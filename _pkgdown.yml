@@ -9,6 +9,9 @@ authors:
 
 news:
  releases:
+ - text: "igr 0.2.0"
+   href: https://digitalnature.ie/2024/08/igr-0-2-0-including-tetrad-irish-grid-reference-support/
+   
  - text: "igr 0.1.1"
    href: https://digitalnature.ie/2024/07/igr-an-r-package-supporting-irish-grid-references/
 
