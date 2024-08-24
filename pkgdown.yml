@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   igr: igr.html
-last_built: 2024-08-24T21:16Z
+last_built: 2024-08-24T23:24Z
 urls:
   reference: https://digitalnature-ie.github.io/igr/reference
   article: https://digitalnature-ie.github.io/igr/articles
