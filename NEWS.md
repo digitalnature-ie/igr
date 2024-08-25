@@ -1,5 +1,7 @@
 # igr (development version)
 
+* Documentation refinements.
+
 # igr 0.2.0
 
 * All functions now support tetrads (2 km squares, also known as "DINTY" system, e.g. "N85H") (#3).
