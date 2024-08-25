@@ -64,7 +64,7 @@ depending on the precision of each grid reference. The Irish Grid
 also be returned.
 }
 \examples{
-# A data.frame containing two Irish grid references
+# A data.frame containing Irish grid references
 x <- data.frame(igr = c("A00", "N8000", "D12T"))
 
 # Convert a data.frame of Irish grid references to an sf object in the

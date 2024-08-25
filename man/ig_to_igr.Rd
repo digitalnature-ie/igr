@@ -40,7 +40,7 @@ Either \code{digits} or \code{precision} must be specified. \code{precision} ove
 \code{digits}.
 }
 \examples{
-# A matrix of three Irish Grid coordinates
+# A matrix of Irish Grid coordinates
 m <- matrix(c(0, 412300, 0, 98700, 456000, 0), byrow = TRUE, ncol = 2)
 
 m

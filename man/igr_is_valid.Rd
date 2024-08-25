@@ -36,6 +36,6 @@ v <- c("N8090", "D 12 345 88800", "W34", "I30", "W", "A123", "B1234", "", "A12Z"
 # Check validity of Irish Grid coordinates
 igr_is_valid(v)
 
-# Check validity of Irish Grid coordinates, dissallowing tetrad form
+# Check validity of Irish Grid coordinates, disallowing tetrad form
 igr_is_valid(v, tetrad = FALSE) 
 }
