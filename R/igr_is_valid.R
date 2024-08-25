@@ -26,7 +26,7 @@
 #' # Check validity of Irish Grid coordinates
 #' igr_is_valid(v)
 #'
-#' # Check validity of Irish Grid coordinates, dissallowing tetrad form
+#' # Check validity of Irish Grid coordinates, disallowing tetrad form
 #' igr_is_valid(v, tetrad = FALSE) 
 igr_is_valid <- function(x, tetrad = TRUE) {
   if (is.null(x)) {
