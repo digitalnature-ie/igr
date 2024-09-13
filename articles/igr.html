@@ -392,9 +392,10 @@ digits are supported.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/ig_to_igr.html">ig_to_igr</a></span><span class="op">(</span><span class="va">p</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># 1 m precision</span></span>
 <span><span class="co">#&gt; [1] "A0000090000" "Z0000000000" "Z5300004000"</span></span></code></pre></div>
-<p>Precision can also be specified number of metres. Multiples of 10
-from 1 m to 100,000 m (100 km) are supported. Any value supplied for
-<code>precision</code> overrides any values for <code>digits</code>.</p>
+<p>Precision can also be specified in terms of metres. Supported values
+are 1, 10, 100, 1000 (1 km), 2000 (tetrad), 10000, and 100000 (100 km).
+Any value supplied for <code>precision</code> overrides any value
+supplied for <code>digits</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ig_to_igr.html">ig_to_igr</a></span><span class="op">(</span><span class="va">p</span>, precision <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span> <span class="co"># 10 km precision</span></span>
 <span><span class="co">#&gt; [1] "A09" "Z00" "Z50"</span></span>
