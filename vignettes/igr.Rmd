@@ -20,7 +20,7 @@ The Irish Grid ([EPSG:29903](https://epsg.io/29903)) is a coordinate reference s
 
 Irish grid references are an alternative way of referring to locations on the Irish Grid. An Irish grid reference consists of a letter, optionally followed by an easting, northing and possibly a final letter. The first letter (e.g. "N") refers to a particular 100 km square on the Irish Grid. There are 25 such 100 km squares - the letter "I" is skipped. The easting and northing refer to a square within the 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N16") refers to a particular 10 km square wtihin the 100 km square "N". A 5-digit easting and northing (e.g. "N 12345 67890") refers to a particular 1 m square. The tetrad form of Irish grid reference consists of a 10 km square reference followed by a letter (e.g. "N16K"). This refers to a particular 2 km square. There are 25 tetrads in a 10 km square - the letter "O" is not used.
 
-There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/view=Spatial). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references to and from Irish Grid coordinates (X and Y), or to and from [sf](https://r-spatial.github.io/sf/) (simple feature) objects that other R packages can work with. The igr package supports precisions of Irish grid reference from 1 m to 100 km including tetrads, mixes of precision, and Irish grid references with or without whitespace between the letters, eastings and northings.
+There are many R packages facilitating [spatial data analysis and visualisation](https://cran.r-project.org/view=Spatial). The igr package is designed to simplify using datasets containing Irish grid references in R. It translates Irish grid references to and from Irish Grid coordinates (X and Y), or to and from [sf](https://r-spatial.github.io/sf/) (simple feature) objects that other R packages can work with. The igr package supports precisions of Irish grid reference from 100 km to 1 m including tetrads, mixes of precision, and Irish grid references with or without whitespace between the letters, eastings and northings.
 
 When converting Irish grid references to point locations (using `igr_to_ig()`, or `st_igr_as_sf()` with the default `polygons=FALSE`), the south west corners of the relevant Irish Grid squares are returned by default. The centroids of the Irish Grid squares can be returned by using `centroids=TRUE`. When converting to polygons (using `st_igr_as_sf()` with `polygons=TRUE`), the size of each polygon is precision-aware.
 
@@ -97,6 +97,13 @@ A list or data.frame of Irish grid references can be converted to an sf object u
 igr_df <- data.frame(igr = igrs)
 
 points_sf <- st_igr_as_sf(igr_df, "igr")
+
+points_sf
+```
+
+Irish Grid References can be converted to coordinates in any coordinate reference system, e.g. Longitude and Latitude (WGS 84).
+```{r example-igr-poi-wgs84}
+points_sf <- st_igr_as_sf(igr_df, "igr", crs = 4326)
 
 points_sf
 ```

@@ -1,6 +1,6 @@
 #' Convert Irish Grid coordinates to Irish grid references
 #'
-#' `ig_to_igr()` converts valid Irish Grid(EPSG:29903) coordinates to Irish grid
+#' `ig_to_igr()` converts valid Irish Grid (EPSG:29903) coordinates to Irish grid
 #' references at the specified precision.
 #'
 #' Either `digits` or `precision` must be specified. `precision` overrides
@@ -80,7 +80,7 @@ ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
     }
   )
 
-  # look up 100km grid reference
+  # look up 100 km grid reference
   igr_letters <- mapply(lookup_igr_100,
     x = x[, 1],
     y = x[, 2]
@@ -103,30 +103,33 @@ ig_to_igr <- function(x, digits = 3, precision = NULL, sep = "") {
     )
   }
 
-  # for tetrads the base grid reference is the 10000 m grid reference
-  base_precision <- ifelse(precision == 2000, 10000, precision)
+  if (ifelse(is.null(precision), digits == 0, precision == 100000)) { # 100 km precision - finished
+    res <- igr_letters
+  } else {
+    # for tetrads the base grid reference is the 10000 m grid reference
+    base_precision <- ifelse(precision == 2000, 10000, precision)
 
-  # calculate x and y offsets within 100km square to 1m  precision
-  offsets_1m <- x %% 100000 |>
-    formatC(width = 5, format = "d", flag = "0")
+    # calculate x and y offsets within 100 km square to 1m precision
+    offsets_1m <- x %% 100000 |>
+      formatC(width = 5, format = "d", flag = "0")
 
-  offsets_base <- offsets_1m |>
-    strtrim(ifelse(is.null(precision), digits, 5 - log10(base_precision)))
+    offsets_base <- offsets_1m |>
+      strtrim(ifelse(is.null(precision), digits, 5 - log10(base_precision)))
 
-  sep_tetrads <- ""
+    sep_tetrads <- ""
 
-  if (!is.null(precision)) {
-    if (precision == 2000) {
-      sep_tetrads <- paste0(sep, mapply(lookup_tetrad, x = x[, 1], y = x[, 2]))
+    if (!is.null(precision)) {
+      if (precision == 2000) {
+        sep_tetrads <- paste0(sep, mapply(lookup_tetrad, x = x[, 1], y = x[, 2]))
+      }
     }
+
+    # concatenate into Irish Grid References
+    res <- ifelse(
+      invalid,
+      NA_character_,
+      paste0(igr_letters, sep, offsets_base[, 1], sep, offsets_base[, 2], sep_tetrads)
+    )
   }
-
-  # concatenate into Irish Grid References
-  res <- ifelse(
-    invalid,
-    NA_character_,
-    paste0(igr_letters, sep, offsets_base[, 1], sep, offsets_base[, 2], sep_tetrads)
-  )
-
   return(res)
 }

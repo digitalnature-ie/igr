@@ -32,6 +32,8 @@ test_that("sep", {
   expect_equal(ig_to_igr(x1, sep = " "), c("A 000 000"))
   expect_equal(ig_to_igr(x2, sep = "---"), c("A---000---000", "Z---900---000", "R---234---234"))
   expect_equal(ig_to_igr(x2, precision = 2000, sep = "-"), c("A-0-0-A", "Z-9-0-A", "R-2-2-G"))
+  expect_equal(ig_to_igr(x2, precision = 100000, sep = "-"), c("A", "Z", "R"))
+  expect_equal(ig_to_igr(x2, digits = 0, sep = "-"), c("A", "Z", "R"))
 })
 
 test_that("numeric x and y", {

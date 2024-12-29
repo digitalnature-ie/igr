@@ -6,38 +6,44 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/igr)](https://CRAN.R-project.org/package=igr)
 [![R-CMD-check](https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/digitalnature-ie/igr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/digitalnature-ie/igr?branch=main)
+
 <!-- badges: end -->
 
-Convert between Irish grid references and Irish Grid coordinates or an
-sf object.
+Convert between Irish grid references and Irish Grid coordinates, or an
+sf object in any coordinate reference system.
 
-An Irish grid reference is a way of referring to a square of some size
-on the Irish Grid geographic coordinate system
+An Irish grid reference is a way of referring to a square of certain
+size on the Irish Grid geographic coordinate system
 ([EPSG:29903](https://epsg.io/29903)). Rather than an X and Y
 coordinate, an Irish grid reference consists of a letter, optionally
 followed by an easting, northing and possibly a final letter. The size
 of the square referred to - the precision of the Irish grid reference -
 is defined by the number of digits in the easting and northing and
-presence or absence of a final letter. Examples include “N” - referring
-to a particular 100 km square, “N16” - referring to a particular 10 km
-square within “N”, “N16K” - the tetrad form of grid reference referring
-to a particular 2 km square within “N16”, and “N 12345 67890” -
-referring to a particular 1 m square. Spaces between letters, easting
-and northing in an Irish grid reference are optional.
+presence or absence of a final letter. Spaces are sometimes inserted
+between letters, easting and northing for legibility.
 
-This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2
-km, 10 km and 100 km precision. Datasets containing a mix of precision
-are supported.
+For example:
+
+- “N” refers to a particular 100 km square (“N” is the square
+  highlighted in orange in the igr logo)
+- “N16” refers to a particular 10 km square within “N”
+- “N16K” is the tetrad form of grid reference and refers to a particular
+  2 km square within “N16”
+- “N 12345 67890” refers to a particular 1 m square
+
+This package supports Irish grid references of 100 km, 10 km, 2 km, 1
+km, 100 m, 10 m, and 1 m precision. Datasets containing a mix of
+precision are supported.
 
 Irish grid references can be converted to and from Irish Grid
-coordinates (X and Y), or to and from sf
+coordinates (X and Y), or to and from
 [sf](https://r-spatial.github.io/sf/) (simple feature) objects in any
 coordinate reference system.
 
@@ -138,6 +144,23 @@ st_igr_as_sf(igrs_df, "igr")
 #> 6 S1234550000 POINT (212345 150000)
 #> 7        R10H POINT (112000 104000)
 #> 8           X       POINT (2e+05 0)
+
+# Converting to an sf object of POINT features in WGS 84 - Longitude and Latitude
+st_igr_as_sf(igrs_df, "igr", crs = 4326)
+#> Simple feature collection with 8 features and 1 field
+#> Geometry type: POINT
+#> Dimension:     XY
+#> Bounding box:  xmin: -11.1116 ymin: 51.25359 xmax: -5.702335 ymax: 55.01528
+#> Geodetic CRS:  WGS 84
+#>           igr                   geometry
+#> 1           A  POINT (-11.1116 54.80789)
+#> 2         D12 POINT (-6.281164 55.01528)
+#> 3         J53 POINT (-5.702335 54.19703)
+#> 4       M5090   POINT (-8.7606 53.85718)
+#> 5     N876274 POINT (-6.687144 53.28992)
+#> 6 S1234550000 POINT (-7.818534 52.60153)
+#> 7        R10H POINT (-9.287254 52.18127)
+#> 8           X POINT (-8.000721 51.25359)
 ```
 
 <img src="man/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south west corner of each sample grid reference." width="100%" />

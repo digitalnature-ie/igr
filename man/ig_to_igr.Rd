@@ -32,7 +32,7 @@ easting, northing, and tetrad.}
 A character vector of Irish grid references.
 }
 \description{
-\code{ig_to_igr()} converts valid Irish Grid(EPSG:29903) coordinates to Irish grid
+\code{ig_to_igr()} converts valid Irish Grid (EPSG:29903) coordinates to Irish grid
 references at the specified precision.
 }
 \details{
