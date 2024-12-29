@@ -101,7 +101,7 @@ points_sf <- st_igr_as_sf(igr_df, "igr")
 points_sf
 ```
 
-Irish Grid References can be converted to coordinates in any coordinate reference system, e.g. Longitude and Latitude (WGS 84).
+Irish grid references can be converted to coordinates in any coordinate reference system, e.g. Longitude and Latitude (WGS 84).
 ```{r example-igr-poi-wgs84}
 points_sf <- st_igr_as_sf(igr_df, "igr", crs = 4326)
 
