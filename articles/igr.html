@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">igr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -222,7 +222,7 @@ reference, and the coordinate reference system is Irish Grid (<a href="https://e
 <span><span class="co">#&gt; 6 S1234550000 POINT (212345 150000)</span></span>
 <span><span class="co">#&gt; 7        R10H POINT (112000 104000)</span></span>
 <span><span class="co">#&gt; 8           X       POINT (2e+05 0)</span></span></code></pre></div>
-<p>Irish Grid References can be converted to coordinates in any
+<p>Irish grid references can be converted to coordinates in any
 coordinate reference system, e.g. Longitude and Latitude (WGS 84).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">points_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">igr_df</span>, <span class="st">"igr"</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
