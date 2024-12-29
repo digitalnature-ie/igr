@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Irish Grid Reference Utilities">
 <meta name="description" content="Convert between Irish grid references and Irish Grid coordinates. Irish grid references can also be converted to or from an sf object in any coordinate reference system. Precisions from 1 m to 100 km including 2 km (tetrads) are supported, as are datasets with mixed precision. Conversion to sf polygons is precision-aware.">
 <meta property="og:description" content="Convert between Irish grid references and Irish Grid coordinates. Irish grid references can also be converted to or from an sf object in any coordinate reference system. Precisions from 1 m to 100 km including 2 km (tetrads) are supported, as are datasets with mixed precision. Conversion to sf polygons is precision-aware.">
@@ -70,10 +70,18 @@
 </div>
 <!-- badges: start -->
 
-<p>Convert between Irish grid references and Irish Grid coordinates or an sf object.</p>
-<p>An Irish grid reference is a way of referring to a square of some size on the Irish Grid geographic coordinate system (<a href="https://epsg.io/29903" class="external-link">EPSG:29903</a>). Rather than an X and Y coordinate, an Irish grid reference consists of a letter, optionally followed by an easting, northing and possibly a final letter. The size of the square referred to - the precision of the Irish grid reference - is defined by the number of digits in the easting and northing and presence or absence of a final letter. Examples include “N” - referring to a particular 100 km square, “N16” - referring to a particular 10 km square within “N”, “N16K” - the tetrad form of grid reference referring to a particular 2 km square within “N16”, and “N 12345 67890” - referring to a particular 1 m square. Spaces between letters, easting and northing in an Irish grid reference are optional.</p>
-<p>This package supports Irish grid references of 1 m, 10 m, 100 m, 1 km, 2 km, 10 km and 100 km precision. Datasets containing a mix of precision are supported.</p>
-<p>Irish grid references can be converted to and from Irish Grid coordinates (X and Y), or to and from sf <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature) objects in any coordinate reference system.</p>
+<!-- badges: end -->
+<p>Convert between Irish grid references and Irish Grid coordinates, or an sf object in any coordinate reference system.</p>
+<p>An Irish grid reference is a way of referring to a square of certain size on the Irish Grid geographic coordinate system (<a href="https://epsg.io/29903" class="external-link">EPSG:29903</a>). Rather than an X and Y coordinate, an Irish grid reference consists of a letter, optionally followed by an easting, northing and possibly a final letter. The size of the square referred to - the precision of the Irish grid reference - is defined by the number of digits in the easting and northing and presence or absence of a final letter. Spaces are sometimes inserted between letters, easting and northing for legibility.</p>
+<p>For example:</p>
+<ul>
+<li>“N” refers to a particular 100 km square (“N” is the square highlighted in orange in the igr logo)</li>
+<li>“N16” refers to a particular 10 km square within “N”</li>
+<li>“N16K” is the tetrad form of grid reference and refers to a particular 2 km square within “N16”</li>
+<li>“N 12345 67890” refers to a particular 1 m square</li>
+</ul>
+<p>This package supports Irish grid references of 100 km, 10 km, 2 km, 1 km, 100 m, 10 m, and 1 m precision. Datasets containing a mix of precision are supported.</p>
+<p>Irish grid references can be converted to and from Irish Grid coordinates (X and Y), or to and from <a href="https://r-spatial.github.io/sf/" class="external-link">sf</a> (simple feature) objects in any coordinate reference system.</p>
 <p>Irish grid references can be converted to point locations or polygons. Point locations can be either the south-west corner or the centroid of each Irish grid reference. Polygons each span the entire extent of an Irish grid reference - the size of each polygon is precision-aware.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -164,7 +172,24 @@
 <span><span class="co">#&gt; 5     N876274 POINT (287600 227400)</span></span>
 <span><span class="co">#&gt; 6 S1234550000 POINT (212345 150000)</span></span>
 <span><span class="co">#&gt; 7        R10H POINT (112000 104000)</span></span>
-<span><span class="co">#&gt; 8           X       POINT (2e+05 0)</span></span></code></pre></div>
+<span><span class="co">#&gt; 8           X       POINT (2e+05 0)</span></span>
+<span></span>
+<span><span class="co"># Converting to an sf object of POINT features in WGS 84 - Longitude and Latitude</span></span>
+<span><span class="fu"><a href="reference/st_igr_as_sf.html">st_igr_as_sf</a></span><span class="op">(</span><span class="va">igrs_df</span>, <span class="st">"igr"</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 8 features and 1 field</span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -11.1116 ymin: 51.25359 xmax: -5.702335 ymax: 55.01528</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt;           igr                   geometry</span></span>
+<span><span class="co">#&gt; 1           A  POINT (-11.1116 54.80789)</span></span>
+<span><span class="co">#&gt; 2         D12 POINT (-6.281164 55.01528)</span></span>
+<span><span class="co">#&gt; 3         J53 POINT (-5.702335 54.19703)</span></span>
+<span><span class="co">#&gt; 4       M5090   POINT (-8.7606 53.85718)</span></span>
+<span><span class="co">#&gt; 5     N876274 POINT (-6.687144 53.28992)</span></span>
+<span><span class="co">#&gt; 6 S1234550000 POINT (-7.818534 52.60153)</span></span>
+<span><span class="co">#&gt; 7        R10H POINT (-9.287254 52.18127)</span></span>
+<span><span class="co">#&gt; 8           X POINT (-8.000721 51.25359)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-igr-points-1.png" alt="A map of Ireland with a dot at the south west corner of each sample grid reference." width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Converting to an sf object of POLYGON features</span></span>
@@ -269,7 +294,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://CRAN.R-project.org/package=igr" class="external-link"><img src="https://www.r-pkg.org/badges/version/igr" alt="CRAN status"></a></li>
 <li><a href="https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/digitalnature-ie/igr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/digitalnature-ie/igr/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
@@ -286,7 +311,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
