@@ -1,3 +1,5 @@
+# igr (development version)
+
 # igr 1.0.0
 
 * `ig_to_igr()` no longer appends separators when converting to 100 km resolution Irish grid references (#13).
