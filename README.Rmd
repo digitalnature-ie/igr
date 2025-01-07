@@ -218,4 +218,4 @@ igr is written using base R where possible to minimise package dependencies, and
 
 # Feedback 
 
-Please log any unexpected behaviour or suggestions via GitHub [Issues](https://github.com/digitalnature-ie/igr/issues).
+Please log any unexpected behaviour or suggestions via GitHub [Issues](https://github.com/digitalnature-ie/igr/issues). If you find igr useful or interesting  please consider starring the project on [GitHub](https://github.com/digitalnature-ie/igr).

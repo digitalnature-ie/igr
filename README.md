@@ -236,4 +236,6 @@ Jennifer Bryan was of great assistance during package development.
 # Feedback
 
 Please log any unexpected behaviour or suggestions via GitHub
-[Issues](https://github.com/digitalnature-ie/igr/issues).
+[Issues](https://github.com/digitalnature-ie/igr/issues). If you find
+igr useful or interesting please consider starring the project on
+[GitHub](https://github.com/digitalnature-ie/igr).
