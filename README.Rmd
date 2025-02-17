@@ -124,24 +124,16 @@ if (requireNamespace("maps", quietly = TRUE) &
     sf::st_as_sf(ie_uk) |>
     sf::st_transform(29903)
 
-  if (packageVersion("tmap") > "3.99") {
-    tm_shape(points_sf, ext = 1.4) +
-      tm_dots(size = 1, fill = "cornflowerblue") +
-      tm_text("igr", ymod = 1) +
-      tm_shape(ie_uk_sf) +
-      tm_borders()
-  } else {
-    tm_shape(points_sf, ext = 1.4) +
-      tm_dots(size = 1, col = "cornflowerblue") +
-      tm_text("igr", ymod = 1) +
-      tm_shape(ie_uk_sf) +
-      tm_borders()
-  }
+  tm_shape(points_sf, ext = 1.4) +
+    tm_dots(size = 1, fill = "cornflowerblue") +
+    tm_text("igr", ymod = 1) +
+    tm_shape(ie_uk_sf) +
+    tm_borders()
 }
 ```
 
 
-```{r}
+```{r example-igrt-as-sf-polygons}
 # Converting to an sf object of POLYGON features
 st_igr_as_sf(igrs_df, "igr", polygon = TRUE)
 ```
@@ -154,35 +146,22 @@ if (requireNamespace("maps", quietly = TRUE) & requireNamespace("tmap", quietly 
   polygons_sf$area <- sf::st_area(polygons_sf)
   small_polygons_sf <- polygons_sf[polygons_sf$area <= units::set_units(5000000, m^2), ]
 
-  if (packageVersion("tmap") > "3.99") {
-    tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
-      tm_borders() +
-      tm_shape(polygons_sf) +
-      tm_polygons(size = 1, fill = "cornflowerblue", fill_alpha = 0.5) +
-      tm_text("igr", ymod = -1) +
-      tm_shape(small_polygons_sf) +
-      tm_bubbles(
-        fill_alpha = 0, col = "orangered", lwd = 2,
-        size = 0.8
-      )
-  } else {
-    tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
-      tm_borders() +
-      tm_shape(polygons_sf) +
-      tm_polygons(size = 1, col = "cornflowerblue", alpha = 0.5) +
-      tm_text("igr", ymod = -1) +
-      tm_shape(small_polygons_sf) +
-      tm_bubbles(
-        alpha = 0, border.col = "orangered", border.lwd = 2,
-        size = 0.8
-      )
-  }
+  tm_shape(ie_uk_sf, bbox = points_sf, ext = 1.4) +
+    tm_borders() +
+    tm_shape(polygons_sf) +
+    tm_polygons(fill = "cornflowerblue", fill_alpha = 0.5) +
+    tm_text("igr", ymod = -1) +
+    tm_shape(small_polygons_sf) +
+    tm_bubbles(
+      fill_alpha = 0, col = "orangered", lwd = 2,
+      size = 0.8
+    )
 }
 ```
 
 ### Convert to Irish grid references
 
-```{r example ig-to-igr}
+```{r example-ig-to-igr}
 # Sample Irish Grid coordinates
 p <- matrix(c(0, 490000, 400000, 0, 453000, 4000), ncol = 2, byrow = TRUE)
 colnames(p) <- c("x", "y")
@@ -199,7 +178,7 @@ p_sf <- sf::st_as_sf(data.frame(p), crs = 29903, coords = c("x", "y"))
 st_irishgridrefs(p_sf, sep = " ")
 ```
 
-```{r, eval = FALSE}
+```{r example-append-igr, eval = FALSE}
 # Append Irish grid references to original sf object (using base R)
 p_sf$igr <- st_irishgridrefs(p_sf)
 
