@@ -9,6 +9,9 @@ authors:
 
 news:
  releases:
+ - text: "igr 1.0.1"
+   href: https://digitalnature.ie/2025/09/igr-1-0-1-update-of-r-package-supporting-irish-grid-references/
+
  - text: "igr 1.0.0"
    href: https://digitalnature.ie/2025/01/igr-1-0-0-new-release-of-r-package-supporting-irish-grid-references/
 

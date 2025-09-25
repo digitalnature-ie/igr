@@ -33,7 +33,7 @@ A character vector of Irish grid references.
 \description{
 \code{st_irishgridrefs()} returns the Irish grid references for all features in an
 sf object of point geometries. Features located outside the Irish Grid
-(EPSG:29903) extent are returned as NA.
+(EPSG:29903) extent or with empty geometry are returned as NA.
 }
 \examples{
 # An sf object containing point data

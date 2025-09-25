@@ -1,5 +1,6 @@
-# igr (development version)
+# igr 1.0.1
 
+* `ig_to_igr()` and `st_irishgridrefs()` return Irish grid reference of NA for empty geometries, and raise a warning (#14).
 * Documentation updated to remove legacy tmap code.
 
 # igr 1.0.0

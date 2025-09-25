@@ -2,7 +2,7 @@
 #'
 #' `st_irishgridrefs()` returns the Irish grid references for all features in an
 #' sf object of point geometries. Features located outside the Irish Grid
-#' (EPSG:29903) extent are returned as NA.
+#' (EPSG:29903) extent or with empty geometry are returned as NA.
 #'
 #' @inheritParams ig_to_igr
 #' @param x An sf object containing geometries of type POINT.
@@ -49,7 +49,10 @@ st_irishgridrefs <- function(x, digits = 3, precision = NULL, sep = "") {
       )
     }
   }
-
+  # if (any(sf::st_is_empty(x))) {
+  #   stop_custom("empty_geometry", "x must contain non-empty geometries")
+  # }
+  
   res <- x |>
     sf::st_transform(crs = 29903) |>
     sf::st_coordinates() |>

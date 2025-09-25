@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The Irish Grid ([EPSG:29903](https://epsg.io/29903)) is a coordinate reference system spanning the island of Ireland. Created by the Ordnance Survey Ireland (now [Tailte Éireann](https://www.tailte.ie)) and [Ordnance Survey of Northern Ireland](https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland), locations within the Irish Grid are defined by an X and Y coordinate.
+The Irish Grid ([EPSG:29903](https://epsg.io/29903)) is a coordinate reference system spanning the island of Ireland. Created by the Ordnance Survey Ireland (now [Tailte Éireann](https://tailte.ie)) and [Ordnance Survey of Northern Ireland](https://www.nidirect.gov.uk/campaigns/ordnance-survey-of-northern-ireland), locations within the Irish Grid are defined by an X and Y coordinate.
 
 Irish grid references are an alternative way of referring to locations on the Irish Grid. An Irish grid reference consists of a letter, optionally followed by an easting, northing and possibly a final letter. The first letter (e.g. "N") refers to a particular 100 km square on the Irish Grid. There are 25 such 100 km squares - the letter "I" is skipped. The easting and northing refer to a square within the 100 km square. An Irish grid reference with a 1-digit easting and northing (e.g. "N16") refers to a particular 10 km square wtihin the 100 km square "N". A 5-digit easting and northing (e.g. "N 12345 67890") refers to a particular 1 m square. The tetrad form of Irish grid reference consists of a 10 km square reference followed by a letter (e.g. "N16K"). This refers to a particular 2 km square. There are 25 tetrads in a 10 km square - the letter "O" is not used.
 
