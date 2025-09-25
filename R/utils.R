@@ -21,12 +21,12 @@ valid_precisions <- c(1, 10, 100, 1000, 2000, 10000, 100000)
 #' @param y Irish Grid northing.
 #'
 #' @return Letter indicating the 100 km Irish Grid squares containing the
-#'   coordinate, or NA_character_ for an invalid Irish Grid coordinate.
+#'   coordinate, or NA for a missing or invalid Irish Grid coordinate.
 #'
 #' @noRd
 lookup_igr_100 <- function(x, y) {
-  if (!is.numeric(x) | x < 0 | x >= 500000 |
-    !is.numeric(y) | y < 0 | y >= 500000) {
+  if (!is.numeric(x) | x < 0 | x >= 500000 | is.nan(x) |
+      !is.numeric(y) | y < 0 | y >= 500000 | is.nan(y)) {
     NA_character_
   } else {
     igr_100$letter[

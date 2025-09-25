@@ -1,7 +1,10 @@
 x1_df <- data.frame(x = c(0), y = c(400000))
 x1_sf <- sf::st_as_sf(x1_df, crs = 29903, coords = c("x", "y"))
 x2_sf <- sf::st_as_sf(data.frame(x = c(0, 490000), y = c(400000, 0)), crs = 29903, coords = c("x", "y"))
+x3_sf <- x2_sf
+x3_sf[3,] = NULL  # test empty geometry
 xe_sf <- x2_sf |> sf::st_buffer(1)
+
 
 test_that("basic generations", {
   expect_equal(st_irishgridrefs(x1_sf), c("A000000"))
@@ -52,4 +55,9 @@ test_that("invalid precision detected", {
 
 test_that("no precision detected", {
   expect_error(st_irishgridrefs(x1_sf, digits = NA, precision = NULL), class = "no_precision")
+})
+
+test_that("empty geometry warning", {
+  expect_warning(temp <- st_irishgridrefs(x3_sf, precision = 100000)) 
+  expect_equal(temp, c("A", "Z", NA_character_))
 })
